@@ -1,0 +1,10 @@
+{
+ "cpu": {"model": "Intel(R) Core(TM) i9-10850K CPU @ 3.60GHz", "physical": 10, "logical": 20, "max_mhz": 5200,
+         "isa": ["avx2", "fma", "f16c"], "governor": "performance", "epp": "performance"},
+ "ram": {"total_gib": 32, "modules": 2, "type": "DDR4", "module_size": "16 GB", "configured_speed": "3000 MT/s (XMP on)", "rank": "1"},
+ "gpu": [{"vendor": "NVIDIA", "name": "NVIDIA GeForce RTX 3070", "vram_mib": 8192, "pcie": "Gen3 x16 (the CPU can't do Gen4)"}],
+ "os": {"distro": "Ubuntu 26.04", "system": "Linux"},
+ "llama_cpp": {"commit": "45b6604b20f17b7d7638042306c0cd1b6af5999c", "describe": "b12156", "dirty": false,
+               "cmake": {"GGML_CUDA": "ON", "CMAKE_CUDA_ARCHITECTURES": "86", "GGML_NATIVE": "ON", "CMAKE_BUILD_TYPE": "Release"}},
+ "model": {"file": "Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf", "size_bytes": 22349466112}
+}

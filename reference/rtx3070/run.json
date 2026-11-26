@@ -1,0 +1,12 @@
+{
+ "label": "RTX 3070 (reference)",
+ "started": "2026-11-05",
+ "model_file": "Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+ "note": "Stock llama.cpp 45b6604b2, no prefetch patch. llama-bench: data/gov-ab/llama-2-performance.jsonl (governor performance). STREAM: data/xmp-on/stream.txt. Replay: data/replay/ub4096.jsonl.",
+ "args": {"ncmoe": "40", "ubatch": "4096", "kv": "f16", "threads": 10, "fa": "on"},
+ "commands_shown": [
+  "llama-bench -m Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf -ngl 99 -ncmoe 40 -b 4096 -ub 4096 -fa on -t 10 -ctk f16 -ctv f16 -p 512,4096,16384 -n 128 -r 5 -o jsonl",
+  "llama-server -m Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf -ngl 99 --n-cpu-moe 40 -ub 4096 -fa on -t 10 -c 131072 -np 1",
+  "replay.py alle --label ub4096"
+ ]
+}

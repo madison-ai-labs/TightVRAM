@@ -5,6 +5,30 @@ Patches, benchmark tools and raw results from running a 35B MoE model on an 8 GB
 Everything here was measured on **one machine**. The numbers tell you what happened on that box with that
 build, not what will happen on yours. The tools are meant to let you measure your own.
 
+## Run it on your machine
+
+```sh
+git clone https://github.com/madison-ai-labs/TightVRAM && cd TightVRAM
+python3 tools/bench.py --model /path/to/model.gguf --llama /path/to/llama.cpp
+```
+
+That collects hardware and build info, measures RAM bandwidth, runs a short `llama-bench` grid (one process per
+configuration, so an OOM only loses that one) and writes `results/<label>-<time>/report.html`: a single
+self-contained page with your system, settings, exact commands and results next to our RTX 3070 numbers.
+`summary.md` next to it is the same as a Markdown table, ready to paste. Nothing is uploaded; the files
+contain no host name, user name or home directory, but read `system.json` before you share it.
+
+- Needs Python 3.8+ and a llama.cpp build (`--llama <checkout>` uses `<checkout>/build/bin`; `--bin <dir>` for
+  any other location; `llama-bench` on `PATH` works too). Any backend: CUDA, Vulkan, ROCm, Metal, CPU.
+- `--replay` also starts `llama-server` and replays real request shapes (chat, a 15k-token agent session with
+  tool turns). The agent scenario takes its prompt material from the llama.cpp source tree, so it needs `--llama`.
+- `--full` runs the bigger grid (ubatch 512–4096, KV f16 and q8_0, prompts up to 16k, 5 repetitions); expect hours
+  on slow prefill. Every knob is a flag: `python3 tools/bench.py --help`.
+- Discrete GPU smaller than the model: `--ncmoe 40` (or a list, `32,40`) keeps that many layers' experts in RAM.
+  iGPU, UMA or CPU: leave it at 0.
+- Comparing two setups, e.g. speculative decoding on and off: run twice with different `--label` and
+  `--server-extra "-md draft.gguf"`, then `python3 tools/report.py results/a results/b -o compare.html`.
+
 ## Hardware and software
 
 | Part | What it is |
@@ -42,6 +66,8 @@ prefill batch. Most of what follows is about that upload.
 patches/   changes to llama.cpp @45b6604b2
 tools/     benchmark and analysis tools
 data/      evaluations and small raw results, one directory per experiment
+reference/ the RTX 3070 numbers report.py compares against (copied from data/)
+results/   your runs (git-ignored)
 ```
 
 ## Patches
@@ -75,6 +101,8 @@ Server URLs and keys come from the environment: `LLAMA_URL` (default `http://127
 
 | Tool | Use |
 |---|---|
+| `tools/bench.py` | The one-command run above: system info, STREAM, `llama-bench` grid, optional replay, report. |
+| `tools/report.py` | One or more result directories into one HTML report plus Markdown summary; the reference is `reference/rtx3070/`. |
 | `tools/llama-sweep.sh` | Runs `llama-bench` over a grid, one process per configuration, so an OOM doesn't end the run. |
 | `tools/bench-table.py` | Turns `llama-bench -o jsonl` output into a Markdown table. |
 | `tools/replay.py` | Load test against a running `llama-server` with real request shapes (agent turns, long documents, fixed prompts); records prefill/generation timings and VRAM. `python3 tools/replay.py --help`. |
@@ -88,13 +116,14 @@ Each script has a header comment with inputs, outputs and how to run it.
 
 ### On other hardware
 
-`h2d.cu`, `gemm.cpp` and the patches are CUDA/discrete-GPU specific. These are portable:
+`h2d.cu`, `gemm.cpp` and the patches are CUDA/discrete-GPU specific: on an iGPU there is no upload to overlap.
+`bench.py`, `report.py`, `replay.py`, `llama-sweep.sh`, `ram-bench.sh` and `stream.c` are portable.
 
-- `ram-bench.sh` + `stream.c`: any Linux box. Thread counts default to 1 / physical / logical cores
-  (`THREADS_LIST` overrides); `mbw` and `dmidecode` are optional.
-- `llama-sweep.sh`: any llama.cpp backend. Set `THREADS` to your physical core count; on an iGPU / UMA
-  system use `--n-cpu-moe 0` configs (`"0:512 0:2048"`).
-- `replay.py`: any `llama-server`. Without `nvidia-smi` the VRAM peak is recorded as `null`.
+- Linux gives the most detail (`lscpu` ISA flags, governor, `dmidecode` RAM speed if `sudo -n` works, `nvidia-smi`,
+  amdgpu VRAM/GTT sizes, `vulkaninfo`). macOS and Windows get what `llama-bench` itself reports plus basics.
+- STREAM needs gcc with OpenMP (on macOS `brew install gcc libomp`); without it the step is skipped.
+- AMD APU with Vulkan: the report shows the VRAM carve-out and the GTT size the driver allows. A model that
+  doesn't fit there fails to load; check those two numbers first.
 
 When you share numbers, include the llama.cpp commit (`llama-commit.txt` is written next to the results),
 the backend and the exact serving arguments.
