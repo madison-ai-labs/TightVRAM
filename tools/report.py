@@ -169,7 +169,8 @@ def sys_rows(run):
         ("Backend", b0.get("backends")),
         ("Build flags", " ".join(f"{k}={v}" for k, v in flags.items()) or None),
         ("Model", " · ".join(x for x in (m.get("file") or run["run"].get("model_file"), b0.get("model_type"),
-                                         m.get("size_bytes") and f"{m['size_bytes']/2**30:.1f} GiB") if x) or None),
+                                         m.get("size_bytes") and f"{m['size_bytes']/2**30:.1f} GiB",
+                                         m.get("sha256") and f"sha256 {m['sha256'][:16]}…") if x) or None),
     ]
 
 

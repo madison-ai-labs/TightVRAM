@@ -1,0 +1,20 @@
+# One service, one model. Which one is /etc/llama-server/active.env, a symlink to a file in profiles/.
+# The profiles use /path/to/models: replace it with your model directory.
+[Unit]
+Description=llama-server (profile from /etc/llama-server/active.env)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=llama
+EnvironmentFile=/etc/llama-server/active.env
+# $LLAMA_ARGS unquoted: systemd splits it at spaces
+ExecStart=/opt/llama.cpp/current/llama-server $LLAMA_ARGS --no-webui --metrics
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target

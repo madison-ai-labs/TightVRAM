@@ -54,8 +54,12 @@ Serving arguments used as the "production" baseline (128k context, one slot):
 
 ```sh
 GGML_SCHED_PREFETCH_EXPERTS=3 llama-server -m Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf \
-  -ngl 99 --n-cpu-moe 40 -ub 4096 -fa on -t 10 -c 131072 -np 1 --load-mode dio
+  -ngl 99 --n-cpu-moe 40 -b 4096 -ub 4096 -fa on -t 10 -c 131072 -np 1 --fit off --cache-ram 4096 --load-mode dio
 ```
+
+The complete setup (board, BIOS, driver, kernel, OS settings, model revision and SHA256, every server profile
+with the reason for each flag, sampling) is in [`config/`](config/README.md). To reproduce the reference
+numbers: `python3 tools/bench.py --preset rtx3070 --model ... --llama ...`.
 
 `--n-cpu-moe 40` keeps the routed experts of 40 layers in system RAM; they are uploaded to the GPU for every
 prefill batch. Most of what follows is about that upload.
@@ -66,6 +70,7 @@ prefill batch. Most of what follows is about that upload.
 patches/   changes to llama.cpp @45b6604b2
 tools/     benchmark and analysis tools
 data/      evaluations and small raw results, one directory per experiment
+config/    our full configuration: hardware, OS, builds, server profiles
 reference/ the RTX 3070 numbers report.py compares against (copied from data/)
 results/   your runs (git-ignored)
 ```

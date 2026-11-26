@@ -314,6 +314,8 @@ def main():
     ap.add_argument("--bin", help="directory with llama-bench / llama-server, if not <checkout>/build/bin")
     ap.add_argument("--out", default=str(REPO / "results"), help="results root (default ./results)")
     g = ap.add_argument_group("llama-bench grid")
+    g.add_argument("--preset", choices=["rtx3070"], help="rtx3070: the exact arguments of our reference numbers "
+                   "(-ncmoe 40 -ub 4096 -t 10, pp512/4096/16384, 5 reps, 128k server context)")
     g.add_argument("--full", action="store_true", help="bigger grid: ubatch 512..4096, KV f16+q8_0, pp up to 16k, 5 reps")
     g.add_argument("--ncmoe", default="0", help="comma list of --n-cpu-moe values (0 = all on the GPU / UMA)")
     g.add_argument("--ubatch", default=None, help="comma list (quick: 512,2048; full: 512,1024,2048,4096)")
@@ -341,6 +343,11 @@ def main():
     s.add_argument("--hash", action="store_true", help="SHA256 the model file (a minute for 20 GB)")
     a = ap.parse_args()
 
+    if a.preset == "rtx3070":  # exactly the shape of reference/rtx3070/ (see config/README.md); explicit flags still win
+        for k, v in dict(ncmoe="40", ubatch="4096", kv="f16", prompts="512,4096,16384", reps=5, threads=10,
+                         ctx=131072, server_ub=4096).items():
+            if getattr(a, k) in (None, ap.get_default(k)): setattr(a, k, v)
+        a.server_extra = ("--fit off --cache-ram 4096 " + a.server_extra).strip()
     a.model = str(Path(os.path.expanduser(a.model)).resolve())
     if not Path(a.model).exists(): sys.exit(f"model not found: {a.model}")
     a.ubatch = a.ubatch or ("512,1024,2048,4096" if a.full else "512,2048")
