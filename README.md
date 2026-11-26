@@ -26,8 +26,22 @@ contain no host name, user name or home directory, but read `system.json` before
   on slow prefill. Every knob is a flag: `python3 tools/bench.py --help`.
 - Discrete GPU smaller than the model: `--ncmoe 40` (or a list, `32,40`) keeps that many layers' experts in RAM.
   iGPU, UMA or CPU: leave it at 0.
-- Comparing two setups, e.g. speculative decoding on and off: run twice with different `--label` and
-  `--server-extra "-md draft.gguf"`, then `python3 tools/report.py results/a results/b -o compare.html`.
+- Comparing two setups, e.g. speculative decoding on and off: run twice with different `--label`, then
+  put both result directories into one report (see below).
+
+### Comparing two setups
+
+Example: speculative decoding on and off. Use `--replay` here: acceptance rate depends on the kind of text,
+so real request shapes tell you more than `llama-bench` alone.
+
+```sh
+python3 tools/bench.py --replay --label nodraft --model /path/to/model.gguf --llama /path/to/llama.cpp
+python3 tools/bench.py --replay --label draft   --model /path/to/model.gguf --llama /path/to/llama.cpp \
+  --server-extra "-md /path/to/draft.gguf"
+python3 tools/report.py results/nodraft-* results/draft-* -o compare.html
+```
+
+Any other A/B works the same way: put whatever differs into `--server-extra` and give each run its own `--label`.
 
 ## Hardware and software
 
