@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Benchmarks | Madison AI Labs</title>
+<meta name="description" content="Measured effects of every setting and patch, with the decision taken.">
+<meta property="og:title" content="Benchmarks | Madison AI Labs">
+<meta property="og:description" content="Measured effects of every setting and patch, with the decision taken.">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#1b0b42">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="site-bar"><header class="site">
+  <a class="brand" href="index.html"><svg class="mark" viewBox="0 0 26 20" width="26" height="20" aria-hidden="true"><defs><linearGradient id="mark-grad" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5434e8"/><stop offset="1" stop-color="#b8a6ff"/></linearGradient></defs><rect x="0" y="14" width="5" height="6" rx="1"/><rect x="7" y="9" width="5" height="11" rx="1"/><rect x="14" y="5" width="5" height="15" rx="1"/><rect x="21" y="0" width="5" height="20" rx="1"/></svg><span>Madison <i>AI Labs</i></span></a>
+  <nav aria-label="Main"><a href="research.html">Research</a><a href="experiments.html">Experiments</a><a href="benchmarks.html" aria-current="page">Benchmarks</a><a href="hardware.html">Hardware</a><a href="posts/method.html">Method</a><a href="support.html">Support</a><a href="about.html">About</a></nav>
+</header></div>
+<main id="main">
+<header class="page-head">
+  <h1>Benchmarks</h1>
+  <p class="lede">Every setting and patch we measured on <a href="hardware.html">bench system 1</a>, each against the
+  configuration that was running at the time. Rows are not one benchmark series: read the condition next to the number.</p>
+</header>
+<section class="standing" aria-labelledby="standing-h"><h2 id="standing-h">Where it stands</h2>
+<div class="ledger">
+  <dl>
+    <div>
+      <dt>Prompt processing, 16k tokens</dt>
+      <dd><span class="from">was 1,402 t/s</span> <span class="to">2,438 t/s</span>
+      <span class="how">Pinned memory and a 187-line expert prefetch patch. Output is bit-identical. Real text, llama-server, same build.</span></dd>
+    </div>
+    <div>
+      <dt>Same, with a 64k context profile</dt>
+      <dd><span class="from">was 1,402 t/s</span> <span class="to">3,590 t/s</span>
+      <span class="how">Doubling the micro-batch to 8192 only fits if you give up half the context.</span></dd>
+    </div>
+    <div>
+      <dt>Generation</dt>
+      <dd><span class="from">was 31.2 t/s</span> <span class="to">36.5 t/s</span>
+      <span class="how">Almost all of it from turning on XMP. Every other idea for generation did nothing, made it slower, or cost more somewhere else.</span></dd>
+    </div>
+  </dl>
+</div>
+</section>
+<section class="scoreboard" id="scoreboard" aria-labelledby="board-h">
+  <h2 id="board-h">Scoreboard</h2>
+  <p class="section-intro">Every setting and patch we measured, against the configuration that was running at the time.
+  pp is prompt processing (prefill), tg is token generation.</p>
+  <div class="table-wrap">
+  <table class="board">
+    <thead><tr><th scope="col">What we tried</th><th scope="col">Effect</th><th scope="col">Decision</th></tr></thead>
+    <tbody>
+      <tr><td><a href="posts/the-setup.html">Micro-batch 1024 → 4096</a></td><td class="effect">pp16k 560 → 1,511 t/s<small>tg unchanged, max context 229k → 156k</small></td><td><span class="verdict v-kept"><span aria-hidden="true">✓</span> Kept</span></td></tr>
+      <tr><td><a href="posts/the-setup.html">KV cache q8_0 instead of f16</a></td><td class="effect">Speed ±0<small>PPL +0.17 %, top token differs 2.1 % of the time</small></td><td><span class="verdict v-rejected"><span aria-hidden="true">✕</span> Rejected</span></td></tr>
+      <tr><td><a href="posts/xmp-and-the-ram-mystery.html">XMP, DDR4-2133 → 3000</a></td><td class="effect">pp +16–20 %, tg +15–24 %<small>memtester 20 GB clean</small></td><td><span class="verdict v-kept"><span aria-hidden="true">✓</span> Kept</span></td></tr>
+      <tr><td><a href="posts/xmp-and-the-ram-mystery.html">CPU governor performance</a></td><td class="effect">tg +1 %, pp −1.5 %<small>STREAM doubled, inference did not care</small></td><td><span class="verdict v-rejected"><span aria-hidden="true">✕</span> Rejected</span></td></tr>
+      <tr><td><a href="posts/xmp-and-the-ram-mystery.html">Threads, pinning, --threads-batch</a></td><td class="effect">tg saturates at 6 threads<small>pinning and batch threads: no effect</small></td><td><span class="verdict v-rejected"><span aria-hidden="true">✕</span> Rejected</span></td></tr>
+      <tr><td><a href="posts/pinned-memory.html">Pinned experts (--load-mode dio)</a></td><td class="effect">pp +17 %, agent runs −11 %<small>20 GiB of RAM locked, load 14 s</small></td><td><span class="verdict v-kept"><span aria-hidden="true">✓</span> Kept</span></td></tr>
+      <tr><td><a href="posts/two-knobs-that-made-it-slower.html">VRAM expert cache (--moe-cache-mib)</a></td><td class="effect">tg −55 %<small>0.07 % hit rate</small></td><td><span class="verdict v-rejected"><span aria-hidden="true">✕</span> Rejected</span></td></tr>
+      <tr><td><a href="posts/two-knobs-that-made-it-slower.html">n-gram speculation (ngram-mod)</a></td><td class="effect">−8 % to +44 % wall time<small>changes answers at temperature 0</small></td><td><span class="verdict v-rejected"><span aria-hidden="true">✕</span> Rejected</span></td></tr>
+      <tr><td><a href="posts/gpu-unlock.html">gpu-unlock (tensor core rate)</a></td><td class="effect">GEMM +90 %, LLM pp +1–5 %, tg 0<small>image generation −14 to −32 % per image</small></td><td><span class="verdict v-rejected"><span aria-hidden="true">✕</span> Rejected</span></td></tr>
+      <tr><td><a href="posts/heretic-tool-calling.html">Abliterated model (Heretic)</a></td><td class="effect">Tool score 77.5 vs 81.5 of 84<small>followed a prompt injection 3 of 3 times</small></td><td><span class="verdict v-rejected"><span aria-hidden="true">✕</span> Rejected</span></td></tr>
+      <tr><td><a href="posts/vision-latency.html">Vision encoder on the GPU</a></td><td class="effect">Screenshot 11.8 → 2.8 s<small>costs half the context</small></td><td><span class="verdict v-mixed"><span aria-hidden="true">±</span> Trade-off</span></td></tr>
+      <tr><td><a href="posts/sampling-for-agents.html">Model card sampling for coding</a></td><td class="effect">Runs over 1,000 tokens 23 → 13 of 120<small>tool calls unchanged</small></td><td><span class="verdict v-kept"><span aria-hidden="true">✓</span> Kept</span></td></tr>
+      <tr><td><a href="posts/routing-trace-fork-and-mtp.html">Hot experts on the GPU (fork)</a></td><td class="effect">Predicted +23 %, measured −4.3 %<small>prefill 3.5–9.6× slower</small></td><td><span class="verdict v-rejected"><span aria-hidden="true">✕</span> Rejected</span></td></tr>
+      <tr><td><a href="posts/routing-trace-fork-and-mtp.html">Multi-token prediction (MTP)</a></td><td class="effect">tg +11 %, 32k prefill −22 %<small>missed the pre-registered bar</small></td><td><span class="verdict v-rejected"><span aria-hidden="true">✕</span> Rejected</span></td></tr>
+      <tr><td><a href="posts/prefetching-experts.html">Expert prefetch on a second stream</a></td><td class="effect">pp +37–50 %<small>bit-identical logits, +630 MiB VRAM</small></td><td><span class="verdict v-kept"><span aria-hidden="true">✓</span> Kept</span></td></tr>
+      <tr><td><a href="posts/prefetching-experts.html">Micro-batch 8192 at 64k context</a></td><td class="effect">pp16k 2,438 → 3,590 t/s<small>does not fit at 128k: the KQ mask alone takes 2 GiB</small></td><td><span class="verdict v-mixed"><span aria-hidden="true">±</span> Trade-off</span></td></tr>
+      <tr><td><a href="posts/quant-formats-as-transport.html">Smaller expert quants (Q3_K)</a></td><td class="effect">Bytes scale almost linearly (s ≈ 0.83–0.91)<small>quality test pending</small></td><td><span class="verdict v-open"><span aria-hidden="true">…</span> Open</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+</main>
+<footer class="site">
+  <div class="foot-brand"><svg class="mark" viewBox="0 0 26 20" width="26" height="20" aria-hidden="true"><defs><linearGradient id="mark-grad" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5434e8"/><stop offset="1" stop-color="#b8a6ff"/></linearGradient></defs><rect x="0" y="14" width="5" height="6" rx="1"/><rect x="7" y="9" width="5" height="11" rx="1"/><rect x="14" y="5" width="5" height="15" rx="1"/><rect x="21" y="0" width="5" height="20" rx="1"/></svg><span>Madison AI Labs</span></div>
+  <p>Independent research, Vienna. Every number on this site was measured on our own hardware unless it says
+  otherwise, and each one carries its evidence level. Corrections stay visible.</p>
+  <nav aria-label="Footer"><a href="research.html">Research</a><a href="experiments.html">Experiments</a><a href="benchmarks.html" aria-current="page">Benchmarks</a><a href="hardware.html">Hardware</a><a href="posts/method.html">Method</a><a href="support.html">Support</a><a href="about.html">About</a></nav>
+</footer>
+<script src="static/site.js" defer></script>
+</body>
+</html>

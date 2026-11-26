@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quant formats as a transport problem | Madison AI Labs</title>
+<meta name="description" content="We quantized real expert tensors of Qwen3.6 into 30 formats and measured error, CPU decode time, GPU time and upload cost for each. On this machine the right question isn&#x27;t &quot;how many bits&quot; but &quot;how many bytes per millisecond of unpacking&quot;.">
+<meta property="og:title" content="Quant formats as a transport problem | Madison AI Labs">
+<meta property="og:description" content="We quantized real expert tensors of Qwen3.6 into 30 formats and measured error, CPU decode time, GPU time and upload cost for each. On this machine the right question isn&#x27;t &quot;how many bits&quot; but &quot;how many bytes per millisecond of unpacking&quot;.">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#1b0b42">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="site-bar"><header class="site">
+  <a class="brand" href="../index.html"><svg class="mark" viewBox="0 0 26 20" width="26" height="20" aria-hidden="true"><defs><linearGradient id="mark-grad" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5434e8"/><stop offset="1" stop-color="#b8a6ff"/></linearGradient></defs><rect x="0" y="14" width="5" height="6" rx="1"/><rect x="7" y="9" width="5" height="11" rx="1"/><rect x="14" y="5" width="5" height="15" rx="1"/><rect x="21" y="0" width="5" height="20" rx="1"/></svg><span>Madison <i>AI Labs</i></span></a>
+  <nav aria-label="Main"><a href="../research.html">Research</a><a href="../experiments.html" aria-current="page">Experiments</a><a href="../benchmarks.html">Benchmarks</a><a href="../hardware.html">Hardware</a><a href="../posts/method.html">Method</a><a href="../support.html">Support</a><a href="../about.html">About</a></nav>
+</header></div>
+<main id="main">
+<article class="post">
+<header class="post-head">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../research.html">Research</a><a href="../research.html#efficient-inference">Efficient inference</a><span>INF-010</span></nav>
+<h1>Quant formats as a transport problem</h1>
+<p class="lede">We quantized real expert tensors of Qwen3.6 into 30 formats and measured error, CPU decode time, GPU time and upload cost for each. On this machine the right question isn&#x27;t &quot;how many bits&quot; but &quot;how many bytes per millisecond of unpacking&quot;.</p>
+</header>
+<div class="post-body">
+<aside class="post-aside"><dl class="facts"><div><dt>Date</dt><dd><time datetime="2026-11-25">25 November 2026</time></dd></div><div><dt>Evidence</dt><dd><span class="ev ev-measured" title="We ran it and kept the raw data."><svg viewBox="0 0 26 17" width="26" height="17" aria-hidden="true"><rect class="on" x="0" y="12" width="5" height="5" rx="1"/><rect class="on" x="7" y="8" width="5" height="9" rx="1"/><rect class="off" x="14" y="4" width="5" height="13" rx="1"/><rect class="off" x="21" y="0" width="5" height="17" rx="1"/></svg>Measured</span><small>We ran it and kept the raw data.</small></dd></div><div><dt>Decision</dt><dd><span class="verdict v-open"><span aria-hidden="true">…</span> Open</span></dd></div><div><dt>Result</dt><dd><span class="result">Q3_K: −21 % tg time, 2× the error</span></dd></div><div><dt>System</dt><dd><a href="../hardware.html">Bench system 1</a></dd></div><div><dt>Topics</dt><dd><span class="tag">quantization</span><span class="tag">transport</span></dd></div></dl><nav class="toc" aria-label="On this page"><p>On this page</p><ol><li><a href="#the-idea">The idea</a></li><li><a href="#setup">Setup</a></li><li><a href="#the-cpu-side-what-generation-would-cost">The CPU side: what generation would cost</a></li><li><a href="#the-gpu-side-prefill-with-uploads">The GPU side: prefill with uploads</a></li><li><a href="#and-the-ssd">And the SSD?</a></li></ol></nav></aside>
+<div class="prose">
+<h2 id="the-idea">The idea</h2>
+<p>A quant format is usually treated as a property of the model file. On a machine where the same expert weights are read by the CPU during generation and pushed over PCIe during prefill, it’s really a transport format. The cost is bytes divided by bandwidth, plus the time it takes to unpack them, and that second part differs a lot between formats.</p>
+<h2 id="setup">Setup</h2>
+<ul>
+<li><strong>Real tensors:</strong> experts of layers 5 and 20 (gate, up, down, 256 experts each) in BF16, fetched with HTTP range requests from the original Unsloth repository into a sparse file.</li>
+<li><strong>Quantized with ggml and Unsloth’s importance matrix</strong>, per expert, exactly as <code>llama-quantize</code> does it. As a check of the harness, Q4_K with the imatrix reproduces the shipped UD-Q4_K tensors exactly (0.06814 = 0.06814 for layer 5 gate).</li>
+<li><strong>Error:</strong> activation-weighted relative error <code>sqrt(Σ in_sum2·ΔW² / Σ in_sum2·W²)</code> over the calibration tokens. Without the weighting, the shipped file and a naive Q4_K would look equal, so the metric has to be weighted. This is a diagonal approximation, not a KL divergence.</li>
+<li><strong>Time:</strong> <code>MUL_MAT_ID</code> for one token, 8 random experts of 256, 10 threads, 300 repetitions, median, scaled to 40 layers. Only the MoE part of the network is counted.</li>
+<li>“A+B” formats are a base plus a quantized residual, like Q4_K plus a Q2_K correction.</li>
+</ul>
+<h2 id="the-cpu-side-what-generation-would-cost">The CPU side: what generation would cost</h2>
+<figure class="chart" id="chart-1">
+<figcaption class="chart-title">Generation, MoE part only, experts on the CPU</figcaption>
+<svg viewBox="0 0 720 358" role="img" aria-label="Generation, MoE part only, experts on the CPU" preserveAspectRatio="xMinYMin meet">
+<defs><linearGradient id="c1-s1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4a2fd6"/><stop offset="1" stop-color="#8b6cff"/></linearGradient><linearGradient id="c1-s2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a77bff"/><stop offset="1" stop-color="#eaa8ff"/></linearGradient><linearGradient id="c1-s3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3b6fe0"/><stop offset="1" stop-color="#7fb0ff"/></linearGradient><linearGradient id="c1-hl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9a6dff"/><stop offset="1" stop-color="#eaa8ff"/></linearGradient><linearGradient id="c1-dim" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2c2766"/><stop offset="1" stop-color="#463d9c"/></linearGradient></defs>
+<line class="grid base" x1="200.0" y1="4" x2="200.0" y2="336"/>
+<text class="tick" x="200.0" y="352" text-anchor="middle">0</text>
+<line class="grid" x1="312.5" y1="4" x2="312.5" y2="336"/>
+<text class="tick" x="312.5" y="352" text-anchor="middle">10</text>
+<line class="grid" x1="425.0" y1="4" x2="425.0" y2="336"/>
+<text class="tick" x="425.0" y="352" text-anchor="middle">20</text>
+<line class="grid" x1="537.5" y1="4" x2="537.5" y2="336"/>
+<text class="tick" x="537.5" y="352" text-anchor="middle">30</text>
+<line class="grid" x1="650.0" y1="4" x2="650.0" y2="336"/>
+<text class="tick" x="650.0" y="352" text-anchor="middle">40</text>
+<text class="tick unit" x="680" y="352">ms per token</text>
+<text class="rowlabel" x="188" y="23.0" text-anchor="end">Q8_0 (8.5 bpw)</text>
+<path class="dim" fill="url(#c1-dim)" d="M200,8 h342.5 q5,0 5,5 v12 q0,5 -5,5 h-342.5 z"><title>Q8_0 (8.5 bpw): 30.9 ms per token</title></path>
+<text class="value" x="554.5" y="23.5">30.9</text>
+<text class="rowlabel" x="188" y="59.0" text-anchor="end">Q6_K (6.56 bpw)</text>
+<path class="dim" fill="url(#c1-dim)" d="M200,44 h274.9 q5,0 5,5 v12 q0,5 -5,5 h-274.9 z"><title>Q6_K (6.56 bpw): 24.9 ms per token</title></path>
+<text class="value" x="486.9" y="59.5">24.9</text>
+<text class="rowlabel" x="188" y="95.0" text-anchor="end">Q5_K (5.5 bpw)</text>
+<path class="dim" fill="url(#c1-dim)" d="M200,80 h231.9 q5,0 5,5 v12 q0,5 -5,5 h-231.9 z"><title>Q5_K (5.5 bpw): 21.1 ms per token</title></path>
+<text class="value" x="443.9" y="95.5">21.1</text>
+<text class="rowlabel" x="188" y="131.0" text-anchor="end">Q4_K (4.5 bpw, ≈ shipped)</text>
+<path class="hl" fill="url(#c1-hl)" d="M200,116 h187.6 q5,0 5,5 v12 q0,5 -5,5 h-187.6 z"><title>Q4_K (4.5 bpw, ≈ shipped): 17.1 ms per token</title></path>
+<text class="value hl" x="399.6" y="131.5">17.1</text>
+<text class="rowlabel" x="188" y="167.0" text-anchor="end">IQ4_XS (4.25 bpw)</text>
+<path class="dim" fill="url(#c1-dim)" d="M200,152 h179.7 q5,0 5,5 v12 q0,5 -5,5 h-179.7 z"><title>IQ4_XS (4.25 bpw): 16.4 ms per token</title></path>
+<text class="value" x="391.7" y="167.5">16.4</text>
+<text class="rowlabel" x="188" y="203.0" text-anchor="end">IQ3_S (3.44 bpw)</text>
+<path class="dim" fill="url(#c1-dim)" d="M200,188 h218.4 q5,0 5,5 v12 q0,5 -5,5 h-218.4 z"><title>IQ3_S (3.44 bpw): 19.9 ms per token</title></path>
+<text class="value" x="430.4" y="203.5">19.9</text>
+<text class="rowlabel" x="188" y="239.0" text-anchor="end">Q3_K (3.44 bpw)</text>
+<path class="hl" fill="url(#c1-hl)" d="M200,224 h147.3 q5,0 5,5 v12 q0,5 -5,5 h-147.3 z"><title>Q3_K (3.44 bpw): 13.5 ms per token</title></path>
+<text class="value hl" x="359.3" y="239.5">13.5</text>
+<text class="rowlabel" x="188" y="275.0" text-anchor="end">IQ2_XXS (2.06 bpw)</text>
+<path class="dim" fill="url(#c1-dim)" d="M200,260 h138.4 q5,0 5,5 v12 q0,5 -5,5 h-138.4 z"><title>IQ2_XXS (2.06 bpw): 12.8 ms per token</title></path>
+<text class="value" x="350.4" y="275.5">12.8</text>
+<text class="rowlabel" x="188" y="311.0" text-anchor="end">Q2_K (2.62 bpw)</text>
+<path class="dim" fill="url(#c1-dim)" d="M200,296 h110.4 q5,0 5,5 v12 q0,5 -5,5 h-110.4 z"><title>Q2_K (2.62 bpw): 10.3 ms per token</title></path>
+<text class="value" x="322.4" y="311.5">10.3</text>
+</svg>
+<p class="chart-note">Median of 300 repetitions, 10 threads, AVX2. Same bits does not mean same time: IQ3_S has as many bits as Q3_K and takes 47 % longer.</p>
+<details class="chart-table"><summary>Show the numbers</summary><table><thead><tr><th></th>
+<th>ms per token (ms per token)</th>
+</tr></thead><tbody>
+<tr><th>Q8_0 (8.5 bpw)</th>
+<td>30.9</td>
+</tr>
+<tr><th>Q6_K (6.56 bpw)</th>
+<td>24.9</td>
+</tr>
+<tr><th>Q5_K (5.5 bpw)</th>
+<td>21.1</td>
+</tr>
+<tr><th>Q4_K (4.5 bpw, ≈ shipped)</th>
+<td>17.1</td>
+</tr>
+<tr><th>IQ4_XS (4.25 bpw)</th>
+<td>16.4</td>
+</tr>
+<tr><th>IQ3_S (3.44 bpw)</th>
+<td>19.9</td>
+</tr>
+<tr><th>Q3_K (3.44 bpw)</th>
+<td>13.5</td>
+</tr>
+<tr><th>IQ2_XXS (2.06 bpw)</th>
+<td>12.8</td>
+</tr>
+<tr><th>Q2_K (2.62 bpw)</th>
+<td>10.3</td>
+</tr>
+</tbody></table></details></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Format</th>
+<th style="text-align: right;">bpw</th>
+<th style="text-align: right;">Error</th>
+<th style="text-align: right;">CPU ms/token</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q8_0</td>
+<td style="text-align: right;">8.50</td>
+<td style="text-align: right;">0.0056</td>
+<td style="text-align: right;">30.9</td>
+</tr>
+<tr>
+<td>Q4_K + Q2_K residual</td>
+<td style="text-align: right;">7.12</td>
+<td style="text-align: right;">0.0166</td>
+<td style="text-align: right;">29.2</td>
+</tr>
+<tr>
+<td>Q6_K</td>
+<td style="text-align: right;">6.56</td>
+<td style="text-align: right;">0.0176</td>
+<td style="text-align: right;">24.9</td>
+</tr>
+<tr>
+<td>Q5_K</td>
+<td style="text-align: right;">5.50</td>
+<td style="text-align: right;">0.0349</td>
+<td style="text-align: right;">21.1</td>
+</tr>
+<tr>
+<td><strong>Q4_K</strong> (shipped UD-Q4_K_XL: 0.0695 at 4.50 bpw)</td>
+<td style="text-align: right;">4.50</td>
+<td style="text-align: right;">0.0693</td>
+<td style="text-align: right;">17.1</td>
+</tr>
+<tr>
+<td>IQ4_XS</td>
+<td style="text-align: right;">4.25</td>
+<td style="text-align: right;">0.0754</td>
+<td style="text-align: right;">16.4</td>
+</tr>
+<tr>
+<td>MXFP4</td>
+<td style="text-align: right;">4.25</td>
+<td style="text-align: right;">0.1163</td>
+<td style="text-align: right;">17.8</td>
+</tr>
+<tr>
+<td><strong>Q3_K</strong></td>
+<td style="text-align: right;">3.44</td>
+<td style="text-align: right;">0.1455</td>
+<td style="text-align: right;">13.5</td>
+</tr>
+<tr>
+<td>IQ3_S</td>
+<td style="text-align: right;">3.44</td>
+<td style="text-align: right;">0.1340</td>
+<td style="text-align: right;">19.9</td>
+</tr>
+<tr>
+<td>IQ3_XXS</td>
+<td style="text-align: right;">3.06</td>
+<td style="text-align: right;">0.1755</td>
+<td style="text-align: right;">17.0</td>
+</tr>
+<tr>
+<td>Q2_K</td>
+<td style="text-align: right;">2.62</td>
+<td style="text-align: right;">0.2597</td>
+<td style="text-align: right;">10.3</td>
+</tr>
+<tr>
+<td>IQ1_M</td>
+<td style="text-align: right;">1.75</td>
+<td style="text-align: right;">0.4347</td>
+<td style="text-align: right;">13.0</td>
+</tr>
+</tbody>
+</table></div>
+<p>What stands out:</p>
+<ul>
+<li><strong>The i-quants are compute-bound on AVX2.</strong> IQ3_S has the bits of Q3_K and is slower than Q4_K. IQ1_M at 1.75 bpw is slower than Q3_K. For the CPU path on this machine, the K-quants win at every size below 5 bits.</li>
+<li><strong>Base-plus-residual formats don’t pay on the CPU.</strong> Q4_K + Q2_K reaches Q6_K-like error at more bits and more time. The second dot product costs more than the bytes it saves.</li>
+<li><strong>Q3_K versus the shipped Q4_K:</strong> −21 % time in the MoE part, at about twice the weighted error. The calibration in the <a href="routing-trace-fork-and-mtp.html">previous post</a> says that time saving really shows up in tokens per second (s ≈ 0.83–0.91).</li>
+</ul>
+<h2 id="the-gpu-side-prefill-with-uploads">The GPU side: prefill with uploads</h2>
+<p>For a 4096-token micro-batch, per layer, with experts uploaded from pinned memory:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Format</th>
+<th style="text-align: right;">GPU compute</th>
+<th style="text-align: right;">+ upload, serial</th>
+<th style="text-align: right;">Overlapped</th>
+<th>Prefill, MoE only, serial → overlapped</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q8_0</td>
+<td style="text-align: right;">8.5 ms</td>
+<td style="text-align: right;">77.4 ms</td>
+<td style="text-align: right;">68.9 ms</td>
+<td>1,323 → 1,487 t/s</td>
+</tr>
+<tr>
+<td>Q6_K</td>
+<td style="text-align: right;">8.1 ms</td>
+<td style="text-align: right;">61.3 ms</td>
+<td style="text-align: right;">53.2 ms</td>
+<td>1,671 → 1,926 t/s</td>
+</tr>
+<tr>
+<td>Q4_K</td>
+<td style="text-align: right;">7.3 ms</td>
+<td style="text-align: right;">43.8 ms</td>
+<td style="text-align: right;">36.5 ms</td>
+<td>2,340 → 2,807 t/s</td>
+</tr>
+<tr>
+<td>Q3_K</td>
+<td style="text-align: right;">7.5 ms</td>
+<td style="text-align: right;">35.4 ms</td>
+<td style="text-align: right;">27.9 ms</td>
+<td>2,894 → 3,675 t/s</td>
+</tr>
+<tr>
+<td>IQ2_XXS</td>
+<td style="text-align: right;">6.8 ms</td>
+<td style="text-align: right;">23.5 ms</td>
+<td style="text-align: right;">16.7 ms</td>
+<td>4,351 → 6,123 t/s</td>
+</tr>
+</tbody>
+</table></div>
+<p>On the GPU every format computes in 7–9 ms per layer, and uploading the experts takes 4–9× as long. Prefill is an upload problem, which is what the <a href="prefetching-experts.html">prefetch post</a> is about. These numbers cover only the MoE part, so they’re upper bounds.</p>
+<h2 id="and-the-ssd">And the SSD?</h2>
+<p>The NVMe drive peaks at 3.58 GB/s with O_DIRECT (2 threads, 4 MiB blocks). If experts came from disk instead of RAM, a token would cost 158 ms at Q4_K and 121 ms at Q3_K: 6–8 tokens per second. With 32 GB of RAM and a 22 GB model, the SSD isn’t on the hot path, and we confirmed it: under load, the server had 6 major page faults per minute and read 0 bytes.</p>
+<div class="decision">
+<p><strong>Status: open.</strong> Q3_K experts are the largest remaining single lever, on both sides: fewer bytes for the CPU in generation and fewer bytes over PCIe in prefill. The next step is Unsloth’s UD-Q3_K_XL with a proper KL divergence test against Q8_0 and our tool-use test.</p>
+</div>
+
+</div>
+</div>
+<nav class="pager" aria-label="More experiments"><a class="prev" href="routing-trace-fork-and-mtp.html"><span>INF-009, earlier</span>The simulation said +23 %. The measurement said −4 %.</a><a class="next" href="prefetching-experts.html"><span>INF-011, later</span>Prefetching experts: +45 % prefill in 187 lines</a></nav>
+</article>
+</main>
+<footer class="site">
+  <div class="foot-brand"><svg class="mark" viewBox="0 0 26 20" width="26" height="20" aria-hidden="true"><defs><linearGradient id="mark-grad" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5434e8"/><stop offset="1" stop-color="#b8a6ff"/></linearGradient></defs><rect x="0" y="14" width="5" height="6" rx="1"/><rect x="7" y="9" width="5" height="11" rx="1"/><rect x="14" y="5" width="5" height="15" rx="1"/><rect x="21" y="0" width="5" height="20" rx="1"/></svg><span>Madison AI Labs</span></div>
+  <p>Independent research, Vienna. Every number on this site was measured on our own hardware unless it says
+  otherwise, and each one carries its evidence level. Corrections stay visible.</p>
+  <nav aria-label="Footer"><a href="../research.html">Research</a><a href="../experiments.html" aria-current="page">Experiments</a><a href="../benchmarks.html">Benchmarks</a><a href="../hardware.html">Hardware</a><a href="../posts/method.html">Method</a><a href="../support.html">Support</a><a href="../about.html">About</a></nav>
+</footer>
+<script src="../static/site.js" defer></script>
+</body>
+</html>

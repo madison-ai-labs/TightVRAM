@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Two knobs that made it slower, and why | Madison AI Labs</title>
+<meta name="description" content="A VRAM cache for experts cut generation in half at a 0.07 % hit rate. N-gram speculation helped only when the answer repeated the prompt word for word, and it changed answers at temperature 0.">
+<meta property="og:title" content="Two knobs that made it slower, and why | Madison AI Labs">
+<meta property="og:description" content="A VRAM cache for experts cut generation in half at a 0.07 % hit rate. N-gram speculation helped only when the answer repeated the prompt word for word, and it changed answers at temperature 0.">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#1b0b42">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="site-bar"><header class="site">
+  <a class="brand" href="../index.html"><svg class="mark" viewBox="0 0 26 20" width="26" height="20" aria-hidden="true"><defs><linearGradient id="mark-grad" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5434e8"/><stop offset="1" stop-color="#b8a6ff"/></linearGradient></defs><rect x="0" y="14" width="5" height="6" rx="1"/><rect x="7" y="9" width="5" height="11" rx="1"/><rect x="14" y="5" width="5" height="15" rx="1"/><rect x="21" y="0" width="5" height="20" rx="1"/></svg><span>Madison <i>AI Labs</i></span></a>
+  <nav aria-label="Main"><a href="../research.html">Research</a><a href="../experiments.html" aria-current="page">Experiments</a><a href="../benchmarks.html">Benchmarks</a><a href="../hardware.html">Hardware</a><a href="../posts/method.html">Method</a><a href="../support.html">Support</a><a href="../about.html">About</a></nav>
+</header></div>
+<main id="main">
+<article class="post">
+<header class="post-head">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../research.html">Research</a><a href="../research.html#efficient-inference">Efficient inference</a><span>INF-004</span></nav>
+<h1>Two knobs that made it slower, and why</h1>
+<p class="lede">A VRAM cache for experts cut generation in half at a 0.07 % hit rate. N-gram speculation helped only when the answer repeated the prompt word for word, and it changed answers at temperature 0.</p>
+</header>
+<div class="post-body">
+<aside class="post-aside"><dl class="facts"><div><dt>Date</dt><dd><time datetime="2026-11-06">6 November 2026</time></dd></div><div><dt>Evidence</dt><dd><span class="ev ev-measured" title="We ran it and kept the raw data."><svg viewBox="0 0 26 17" width="26" height="17" aria-hidden="true"><rect class="on" x="0" y="12" width="5" height="5" rx="1"/><rect class="on" x="7" y="8" width="5" height="9" rx="1"/><rect class="off" x="14" y="4" width="5" height="13" rx="1"/><rect class="off" x="21" y="0" width="5" height="17" rx="1"/></svg>Measured</span><small>We ran it and kept the raw data.</small></dd></div><div><dt>Decision</dt><dd><span class="verdict v-rejected"><span aria-hidden="true">✕</span> Rejected</span></dd></div><div><dt>Result</dt><dd><span class="result">tg −55 %</span></dd></div><div><dt>System</dt><dd><a href="../hardware.html">Bench system 1</a></dd></div><div><dt>Topics</dt><dd><span class="tag">expert cache</span><span class="tag">n-gram speculation</span></dd></div></dl></aside>
+<div class="prose">
+<p>Both options sound like obvious wins for an MoE model with experts in system RAM. Both lost, and the reasons are more useful than the verdicts.</p>
+<h2 id="the-vram-expert-cache---moe-cache-mib">The VRAM expert cache: <code>--moe-cache-mib</code></h2>
+<p>The idea: keep recently used experts in a VRAM cache so the hot ones don’t have to come from RAM. We expected no gain for generation, on the assumption that the CPU computes experts directly. Reading <code>llama-moe-cache.cpp</code> corrected that assumption before the run. <strong>With a cache budget set, batches up to 32 tokens no longer run on the CPU.</strong> They go through <code>ffn_moe_slots</code> and <code>ggml_mul_mat_id</code> on the GPU, which means every missing expert has to be uploaded first.</p>
+<p>Three instances per budget in a Latin square, <code>dio</code> cold:</p>
+<figure class="chart" id="chart-1">
+<figcaption class="chart-title">Interactive generation speed by cache budget</figcaption>
+<svg viewBox="0 0 720 178" role="img" aria-label="Interactive generation speed by cache budget" preserveAspectRatio="xMinYMin meet">
+<defs><linearGradient id="c1-s1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4a2fd6"/><stop offset="1" stop-color="#8b6cff"/></linearGradient><linearGradient id="c1-s2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a77bff"/><stop offset="1" stop-color="#eaa8ff"/></linearGradient><linearGradient id="c1-s3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3b6fe0"/><stop offset="1" stop-color="#7fb0ff"/></linearGradient><linearGradient id="c1-hl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9a6dff"/><stop offset="1" stop-color="#eaa8ff"/></linearGradient><linearGradient id="c1-dim" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2c2766"/><stop offset="1" stop-color="#463d9c"/></linearGradient></defs>
+<line class="grid base" x1="200.0" y1="4" x2="200.0" y2="156"/>
+<text class="tick" x="200.0" y="172" text-anchor="middle">0</text>
+<line class="grid" x1="312.5" y1="4" x2="312.5" y2="156"/>
+<text class="tick" x="312.5" y="172" text-anchor="middle">10</text>
+<line class="grid" x1="425.0" y1="4" x2="425.0" y2="156"/>
+<text class="tick" x="425.0" y="172" text-anchor="middle">20</text>
+<line class="grid" x1="537.5" y1="4" x2="537.5" y2="156"/>
+<text class="tick" x="537.5" y="172" text-anchor="middle">30</text>
+<line class="grid" x1="650.0" y1="4" x2="650.0" y2="156"/>
+<text class="tick" x="650.0" y="172" text-anchor="middle">40</text>
+<text class="tick unit" x="680" y="172">t/s</text>
+<text class="rowlabel" x="188" y="23.0" text-anchor="end">No cache</text>
+<path class="hl" fill="url(#c1-hl)" d="M200,8 h403.4 q5,0 5,5 v12 q0,5 -5,5 h-403.4 z"><title>No cache: 36.3 t/s</title></path>
+<text class="value hl" x="615.4" y="23.5">36.3</text>
+<text class="rowlabel" x="188" y="59.0" text-anchor="end">128 MiB</text>
+<path class="dim" fill="url(#c1-dim)" d="M200,44 h188.5 q5,0 5,5 v12 q0,5 -5,5 h-188.5 z"><title>128 MiB: 17.2 t/s</title></path>
+<text class="value" x="400.5" y="59.5">17.2</text>
+<text class="rowlabel" x="188" y="95.0" text-anchor="end">256 MiB</text>
+<path class="dim" fill="url(#c1-dim)" d="M200,80 h179.5 q5,0 5,5 v12 q0,5 -5,5 h-179.5 z"><title>256 MiB: 16.4 t/s</title></path>
+<text class="value" x="391.5" y="95.5">16.4</text>
+<text class="rowlabel" x="188" y="131.0" text-anchor="end">512 MiB (n = 1)</text>
+<path class="dim" fill="url(#c1-dim)" d="M200,116 h182.9 q5,0 5,5 v12 q0,5 -5,5 h-182.9 z"><title>512 MiB (n = 1): 16.7 t/s</title></path>
+<text class="value" x="394.9" y="131.5">16.7</text>
+</svg>
+<p class="chart-note">Spread across instances at most 1.5 % per budget.</p>
+<details class="chart-table"><summary>Show the numbers</summary><table><thead><tr><th></th>
+<th>t/s (t/s)</th>
+</tr></thead><tbody>
+<tr><th>No cache</th>
+<td>36.3</td>
+</tr>
+<tr><th>128 MiB</th>
+<td>17.2</td>
+</tr>
+<tr><th>256 MiB</th>
+<td>16.4</td>
+</tr>
+<tr><th>512 MiB (n = 1)</th>
+<td>16.7</td>
+</tr>
+</tbody></table></details></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Budget</th>
+<th>Agent, total</th>
+<th>Hit rate, small batches</th>
+<th>Uploaded</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>31.2 s</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>128 MiB</td>
+<td>46.9 s (+50 %)</td>
+<td>0.00 %</td>
+<td>522,449 MiB</td>
+</tr>
+<tr>
+<td>256 MiB</td>
+<td>46.0 s (+47 %)</td>
+<td>0.07 %</td>
+<td>548,316 MiB</td>
+</tr>
+<tr>
+<td>512 MiB</td>
+<td>45.6 s (+46 %)</td>
+<td>1.60 %</td>
+<td>540,586 MiB</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Why:</strong> one token needs 40 layers × 8 experts = 320 experts, about 608 MiB. A cache smaller than one token’s working set evicts cyclically under LRU: by the time layer 1’s experts come around again, they’re gone. At 256 MiB that’s ~577 MiB of uploads per generated token, and generation goes from ~28 ms to ~61 ms per token. The extra 33 ms match a PCIe transfer at about 16 GB/s.</p>
+<p>That doesn’t mean routing is random. A later <a href="routing-trace-fork-and-mtp.html">routing trace</a> found that 38 % of a token’s experts were already used by the previous token. The cache simply never had room for the reuse to show.</p>
+<p>The outputs changed too: all answers were identical <em>within</em> a budget, but only 1–2 of 11 matched <em>between</em> budgets. Tool calls stayed valid. If you rely on reproducible outputs, don’t change the budget.</p>
+<h2 id="n-gram-speculation---spec-type-ngram-mod">N-gram speculation: <code>--spec-type ngram-mod</code></h2>
+<p>Speculative decoding without a draft model: when the recent output matches an n-gram in the context, propose the continuation and verify it in one batch. Ideal for code edits and JSON that repeat the input. Temperature 0, ABBAAB, 3 instances each:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Wall off</th>
+<th>Wall on</th>
+<th>Acceptance</th>
+<th>Output on vs off</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JSON, repetitive, 4,500 tokens</td>
+<td>130.0 s</td>
+<td>187.0 s (<strong>+44 %</strong>)</td>
+<td>49 %</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Code, repetitive, 1,140 tokens</td>
+<td>33.2 s</td>
+<td>30.5 s (<strong>−8 %</strong>)</td>
+<td>69 %</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Novel text, 1,193 tokens</td>
+<td>35.9 s</td>
+<td>34.7 s</td>
+<td>no drafts</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Agent, cold</td>
+<td>31.5 s</td>
+<td>31.7 s</td>
+<td>27 %</td>
+<td>1 of 6 turns differs</td>
+</tr>
+<tr>
+<td>Agent, warm</td>
+<td>21.0 s</td>
+<td>27.3 s (<strong>+30 %</strong>)</td>
+<td>5 %</td>
+<td><strong>all 6 turns differ</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="why-the-break-even-is-so-high">Why the break-even is so high</h3>
+<p>Qwen3.6 is a hybrid: 30 of its 40 layers carry a recurrent state instead of a KV cache. You can’t just truncate a recurrent state when a draft is partly rejected. In this mode the server saves a checkpoint (62.8 MiB), and on partial acceptance it <strong>restores the checkpoint and decodes the accepted part again</strong> (<code>spec_is_replay</code> in <code>server-context.cpp</code>). A draft batch of ~64 tokens takes 0.82–0.84 s, and restoring takes 7 ms, so the cost is in the recompute.</p>
+<p>From the counters: one draft costs ~1.1–1.3 s, a normal token ~28 ms. A 63-token draft has to land 40–47 tokens to pay for itself, so the <strong>break-even is at roughly 65–75 % acceptance</strong>. Even repetitive JSON missed it, because the changed values break every chain.</p>
+<h3 id="it-changes-answers-at-temperature-0">It changes answers at temperature 0</h3>
+<p>This is the more important finding. With speculation on, answers change wherever the text isn’t forced. In the warm agent run, all 6 turns diverged from the first draft on, with different tool calls (<code>grep</code> instead of <code>read_file</code>) and 445 instead of 359 tokens. Within one mode everything was reproducible (21 of 21 requests per mode identical across 3 instances).</p>
+<p>Our hypothesis, not proven: the draft runs as a larger batch through a different kernel path, the logits differ numerically, and wherever the top two tokens are close the argmax flips. The same thing happened with the MoE cache. It would be testable by comparing <code>n_probs</code> logits for identical prompts.</p>
+<div class="decision">
+<p><strong>Decision:</strong> both off. The MoE cache loses on this card with this model at every budget we could afford. N-gram speculation wins only on near-verbatim repetition, loses as soon as small changes appear, slows down agents, and makes outputs non-comparable.</p>
+</div>
+
+</div>
+</div>
+<nav class="pager" aria-label="More experiments"><a class="prev" href="pinned-memory.html"><span>INF-003, earlier</span>Pinned memory: --load-mode none, auto and dio</a><a class="next" href="gpu-unlock.html"><span>INF-005, later</span>gpu-unlock: +90 % on GEMM, +1 % on tokens</a></nav>
+</article>
+</main>
+<footer class="site">
+  <div class="foot-brand"><svg class="mark" viewBox="0 0 26 20" width="26" height="20" aria-hidden="true"><defs><linearGradient id="mark-grad" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5434e8"/><stop offset="1" stop-color="#b8a6ff"/></linearGradient></defs><rect x="0" y="14" width="5" height="6" rx="1"/><rect x="7" y="9" width="5" height="11" rx="1"/><rect x="14" y="5" width="5" height="15" rx="1"/><rect x="21" y="0" width="5" height="20" rx="1"/></svg><span>Madison AI Labs</span></div>
+  <p>Independent research, Vienna. Every number on this site was measured on our own hardware unless it says
+  otherwise, and each one carries its evidence level. Corrections stay visible.</p>
+  <nav aria-label="Footer"><a href="../research.html">Research</a><a href="../experiments.html" aria-current="page">Experiments</a><a href="../benchmarks.html">Benchmarks</a><a href="../hardware.html">Hardware</a><a href="../posts/method.html">Method</a><a href="../support.html">Support</a><a href="../about.html">About</a></nav>
+</footer>
+<script src="../static/site.js" defer></script>
+</body>
+</html>

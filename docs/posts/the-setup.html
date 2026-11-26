@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A 35B model on an 8 GB card | Madison AI Labs</title>
+<meta name="description" content="The machine, the model, and the first sweep. Prefill depends on the micro-batch, not on how many layers sit on the GPU, and the KV cache type changes nothing but quality.">
+<meta property="og:title" content="A 35B model on an 8 GB card | Madison AI Labs">
+<meta property="og:description" content="The machine, the model, and the first sweep. Prefill depends on the micro-batch, not on how many layers sit on the GPU, and the KV cache type changes nothing but quality.">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#1b0b42">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="site-bar"><header class="site">
+  <a class="brand" href="../index.html"><svg class="mark" viewBox="0 0 26 20" width="26" height="20" aria-hidden="true"><defs><linearGradient id="mark-grad" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5434e8"/><stop offset="1" stop-color="#b8a6ff"/></linearGradient></defs><rect x="0" y="14" width="5" height="6" rx="1"/><rect x="7" y="9" width="5" height="11" rx="1"/><rect x="14" y="5" width="5" height="15" rx="1"/><rect x="21" y="0" width="5" height="20" rx="1"/></svg><span>Madison <i>AI Labs</i></span></a>
+  <nav aria-label="Main"><a href="../research.html">Research</a><a href="../experiments.html" aria-current="page">Experiments</a><a href="../benchmarks.html">Benchmarks</a><a href="../hardware.html">Hardware</a><a href="../posts/method.html">Method</a><a href="../support.html">Support</a><a href="../about.html">About</a></nav>
+</header></div>
+<main id="main">
+<article class="post">
+<header class="post-head">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../research.html">Research</a><a href="../research.html#efficient-inference">Efficient inference</a><span>INF-001</span></nav>
+<h1>A 35B model on an 8 GB card</h1>
+<p class="lede">The machine, the model, and the first sweep. Prefill depends on the micro-batch, not on how many layers sit on the GPU, and the KV cache type changes nothing but quality.</p>
+</header>
+<div class="post-body">
+<aside class="post-aside"><dl class="facts"><div><dt>Date</dt><dd><time datetime="2026-11-05">5 November 2026</time></dd></div><div><dt>Evidence</dt><dd><span class="ev ev-measured" title="We ran it and kept the raw data."><svg viewBox="0 0 26 17" width="26" height="17" aria-hidden="true"><rect class="on" x="0" y="12" width="5" height="5" rx="1"/><rect class="on" x="7" y="8" width="5" height="9" rx="1"/><rect class="off" x="14" y="4" width="5" height="13" rx="1"/><rect class="off" x="21" y="0" width="5" height="17" rx="1"/></svg>Measured</span><small>We ran it and kept the raw data.</small></dd></div><div><dt>Decision</dt><dd><span class="verdict v-kept"><span aria-hidden="true">✓</span> Kept</span></dd></div><div><dt>Result</dt><dd><span class="result">pp16k 560 → 1,511 t/s</span></dd></div><div><dt>System</dt><dd><a href="../hardware.html">Bench system 1</a></dd></div><div><dt>Topics</dt><dd><span class="tag">MoE</span><span class="tag">llama.cpp</span><span class="tag">micro-batch</span><span class="tag">KV cache</span></dd></div></dl><nav class="toc" aria-label="On this page"><p>On this page</p><ol><li><a href="#the-machine">The machine</a></li><li><a href="#why-this-works-at-all">Why this works at all</a></li><li><a href="#the-first-sweep">The first sweep</a></li><li><a href="#why-the-micro-batch-matters-this-much">Why the micro-batch matters this much</a></li><li><a href="#kv-cache-f16-stays">KV cache: f16 stays</a></li><li><a href="#how-much-context-fits">How much context fits</a></li></ol></nav></aside>
+<div class="prose">
+<h2 id="the-machine">The machine</h2>
+<p>A gaming PC turned headless inference server. Nothing about it is special, and that’s why it’s worth writing about.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Part</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPU</td>
+<td>RTX 3070, 8 GB GDDR6, headless, so all 8 GB are usable</td>
+</tr>
+<tr>
+<td>Link</td>
+<td>PCIe 3.0 x16. The card could do Gen4, the Comet Lake CPU can’t</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>Intel Core i9-10850K, 10 cores / 20 threads</td>
+</tr>
+<tr>
+<td>RAM</td>
+<td>2 × 16 GB DDR4 (Corsair CM4X16GD3000C16), single rank, dual channel</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>Ubuntu 26.04, headless</td>
+</tr>
+<tr>
+<td>Software</td>
+<td>llama.cpp built from source, CUDA 12.4, driver 595</td>
+</tr>
+</tbody>
+</table></div>
+<p>The model is <strong>Qwen3.6-35B-A3B</strong> in Unsloth’s <code>UD-Q4_K_XL</code> quant: 22.4 GB on disk, 40 layers, a hybrid of Gated DeltaNet and full attention (only every fourth layer has a KV cache), and a mixture of experts with 256 experts per layer, 8 of which are active per token. As a control we ran <strong>Qwen3.5-9B Q4_K_M</strong> (5.7 GB), which fits entirely in VRAM.</p>
+<h2 id="why-this-works-at-all">Why this works at all</h2>
+<p>An MoE model of this size has about 18.8 GB of routed experts and about 2 GB of everything else. llama.cpp’s <code>--n-cpu-moe N</code> keeps the expert tensors of the first N layers in system RAM. Attention, the KV cache, the router and the shared expert stay on the card.</p>
+<p>That changes what each phase costs:</p>
+<ul>
+<li><strong>Generation (tg)</strong>: each token touches 8 of 256 experts per layer. The CPU computes them directly from RAM. Nothing crosses PCIe.</li>
+<li><strong>Prompt processing (pp)</strong>: a batch of thousands of tokens touches nearly all experts. For batches of 32 tokens and up, llama.cpp copies the experts to the GPU and computes there, once per micro-batch (ubatch).</li>
+</ul>
+<p>Keep these two paths in mind. Every later post is about one of them.</p>
+<h2 id="the-first-sweep">The first sweep</h2>
+<p><code>llama-bench</code> with <code>-ngl 99 -fa on -t 10</code>, 5 repetitions, every configuration in its own process so an out-of-memory error doesn’t take down the run. A probe grid first found the Pareto points: each layer of experts on the GPU costs about 464 MiB, so the micro-batch you can afford depends on how many layers you push to the CPU. ub 2048 needs nc ≥ 34, ub 4096 needs nc ≥ 38, ub 8192 never fits.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>n-cpu-moe</th>
+<th>ubatch</th>
+<th>pp512</th>
+<th>pp4096</th>
+<th>pp16384</th>
+<th>tg128</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>32</td>
+<td>1024</td>
+<td>335</td>
+<td>556</td>
+<td>545</td>
+<td>36.4</td>
+</tr>
+<tr>
+<td>34</td>
+<td>2048</td>
+<td>319</td>
+<td>908</td>
+<td>891</td>
+<td>33.2</td>
+</tr>
+<tr>
+<td>38</td>
+<td>4096</td>
+<td>291</td>
+<td>1,364</td>
+<td>1,340</td>
+<td>32.8</td>
+</tr>
+<tr>
+<td>40</td>
+<td>4096</td>
+<td>285</td>
+<td>1,339</td>
+<td>1,309</td>
+<td>31.2</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>t/s, mean of 5 runs, KV f16, XMP still off. Standard deviations were 0.1–9 t/s.</em></p>
+<p>The striking part is what <em>doesn’t</em> matter. Moving eight more layers of experts onto the GPU (nc 40 → 32) barely changes generation and makes prefill <em>worse</em>, because it forces a smaller ubatch. Prefill tracks the ubatch almost perfectly:</p>
+<figure class="chart" id="chart-1">
+<figcaption class="chart-title">Prefill at 16k tokens follows the micro-batch</figcaption>
+<svg viewBox="0 0 720 142" role="img" aria-label="Prefill at 16k tokens follows the micro-batch" preserveAspectRatio="xMinYMin meet">
+<defs><linearGradient id="c1-s1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4a2fd6"/><stop offset="1" stop-color="#8b6cff"/></linearGradient><linearGradient id="c1-s2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a77bff"/><stop offset="1" stop-color="#eaa8ff"/></linearGradient><linearGradient id="c1-s3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3b6fe0"/><stop offset="1" stop-color="#7fb0ff"/></linearGradient><linearGradient id="c1-hl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9a6dff"/><stop offset="1" stop-color="#eaa8ff"/></linearGradient><linearGradient id="c1-dim" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2c2766"/><stop offset="1" stop-color="#463d9c"/></linearGradient></defs>
+<line class="grid base" x1="200.0" y1="4" x2="200.0" y2="120"/>
+<text class="tick" x="200.0" y="136" text-anchor="middle">0</text>
+<line class="grid" x1="312.5" y1="4" x2="312.5" y2="120"/>
+<text class="tick" x="312.5" y="136" text-anchor="middle">500</text>
+<line class="grid" x1="425.0" y1="4" x2="425.0" y2="120"/>
+<text class="tick" x="425.0" y="136" text-anchor="middle">1,000</text>
+<line class="grid" x1="537.5" y1="4" x2="537.5" y2="120"/>
+<text class="tick" x="537.5" y="136" text-anchor="middle">1,500</text>
+<line class="grid" x1="650.0" y1="4" x2="650.0" y2="120"/>
+<text class="tick" x="650.0" y="136" text-anchor="middle">2,000</text>
+<text class="tick unit" x="680" y="136">t/s</text>
+<text class="rowlabel" x="188" y="23.0" text-anchor="end">ub 1024</text>
+<path class="s1" fill="url(#c1-s1)" d="M200,8 h121.0 q5,0 5,5 v12 q0,5 -5,5 h-121.0 z"><title>ub 1024: 560 t/s</title></path>
+<text class="value" x="333.0" y="23.5">560</text>
+<text class="rowlabel" x="188" y="59.0" text-anchor="end">ub 2048</text>
+<path class="s1" fill="url(#c1-s1)" d="M200,44 h208.3 q5,0 5,5 v12 q0,5 -5,5 h-208.3 z"><title>ub 2048: 948 t/s</title></path>
+<text class="value" x="420.3" y="59.5">948</text>
+<text class="rowlabel" x="188" y="95.0" text-anchor="end">ub 4096</text>
+<path class="s1" fill="url(#c1-s1)" d="M200,80 h335.0 q5,0 5,5 v12 q0,5 -5,5 h-335.0 z"><title>ub 4096: 1,511 t/s</title></path>
+<text class="value" x="547.0" y="95.5">1,511</text>
+</svg>
+<p class="chart-note">nc 40, KV f16, XMP on, mean of 3 separate llama-bench runs of 5 repetitions each.</p>
+<details class="chart-table"><summary>Show the numbers</summary><table><thead><tr><th></th>
+<th>t/s (t/s)</th>
+</tr></thead><tbody>
+<tr><th>ub 1024</th>
+<td>560</td>
+</tr>
+<tr><th>ub 2048</th>
+<td>948</td>
+</tr>
+<tr><th>ub 4096</th>
+<td>1,511</td>
+</tr>
+</tbody></table></details></figure>
+<h2 id="why-the-micro-batch-matters-this-much">Why the micro-batch matters this much</h2>
+<p>The experts are streamed to the GPU once per ubatch, regardless of how many tokens are in it. We confirmed it with the memory controller’s own counters (<code>perf stat -e uncore_imc/data_reads/</code>), taking the slope over prompt length so warm-up doesn’t count:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>ubatch</th>
+<th>time per ubatch</th>
+<th>RAM read per ubatch</th>
+<th>RAM written per ubatch</th>
+<th>traffic for a 16k prompt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1024</td>
+<td>1.86 s</td>
+<td>28.9 GB</td>
+<td>14.2 GB</td>
+<td>699 GB</td>
+</tr>
+<tr>
+<td>2048</td>
+<td>2.17 s</td>
+<td>31.4 GB</td>
+<td>15.5 GB</td>
+<td>384 GB</td>
+</tr>
+<tr>
+<td>4096</td>
+<td>2.72 s</td>
+<td>33.4 GB</td>
+<td>16.5 GB</td>
+<td>210 GB</td>
+</tr>
+</tbody>
+</table></div>
+<p>Four times as many tokens per ubatch cost only 16 % more reads. A 16k prompt at ub 1024 moves 699 GB through the memory controller. At ub 4096 it moves 210 GB.</p>
+<p>Two things in that table didn’t add up yet. Reads are 1.5–1.7× the size of all experts (19.7 GB), and there are writes at all. We wrote it down as unexplained. The answer came a day later, in the <a href="pinned-memory.html">post about pinned memory</a>.</p>
+<p>Short prompts can’t amortize anything: <strong>pp512 stays at 285–335 t/s</strong> in every configuration. An agent turn that adds 1,500 tokens to a cached prefix pays the full streaming cost. That makes the prompt cache the most important feature for agent workloads, and it works: in a replay of a real agent session, follow-up turns recomputed only 1.3–1.5k of ~20k tokens.</p>
+<h2 id="kv-cache-f16-stays">KV cache: f16 stays</h2>
+<p>Because only 10 of 40 layers have a KV cache, its type doesn’t change speed. Differences of ±2 t/s in tg turned out to be noise between processes (more on that in the <a href="xmp-and-the-ram-mystery.html">next post</a>). Quality does change, measurably:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>wikitext-2, 8 × 4096 tokens</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Perplexity f16 / q8_0</td>
+<td>5.8456 / 5.8555 (+0.17 % ± 0.08 %)</td>
+</tr>
+<tr>
+<td>Mean KL divergence</td>
+<td>0.0031 (99th percentile 0.031, max 0.29)</td>
+</tr>
+<tr>
+<td>Same top token</td>
+<td>97.86 %</td>
+</tr>
+</tbody>
+</table></div>
+<p>No speed for a measurable quality cost. q8_0 only makes sense if the context doesn’t fit otherwise.</p>
+<h2 id="how-much-context-fits">How much context fits</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>VRAM after start</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nc 38, ub 4096, f16, 64k</td>
+<td>6.2 GB</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>nc 38, ub 4096, f16, 128k</td>
+<td></td>
+<td>OOM, compute buffer 2.1 GB</td>
+</tr>
+<tr>
+<td><strong>nc 40, ub 4096, f16, 128k</strong></td>
+<td><strong>7.0 GB</strong></td>
+<td><strong>chosen</strong></td>
+</tr>
+<tr>
+<td>nc 36, ub 2048, f16, 128k</td>
+<td>7.8 GB</td>
+<td>too tight</td>
+</tr>
+</tbody>
+</table></div>
+<p>At ub 4096 the largest context that starts is 155,648 tokens. That run filled to 149k tokens, prefilled at 1,047 t/s and left 62 MiB free. We stayed at 128k with 734 MiB of headroom. A smaller ubatch would buy more context (213k at ub 2048, 229k at ub 1024), but every long document would take 1.5–2.6× as long.</p>
+<div class="decision">
+<p><strong>Decision:</strong> <code>-ngl 99 --n-cpu-moe 40 -ub 4096 -fa on -t 10</code>, KV f16, 128k context, one slot. A smoke test with a 12.5k-token tool prompt took 14.0 s cold and 2.3 s for the second request, both with correct tool calls.</p>
+</div>
+
+</div>
+</div>
+<nav class="pager" aria-label="More experiments"><a class="next" href="xmp-and-the-ram-mystery.html"><span>INF-002, later</span>XMP, and the RAM bandwidth that wasn&#x27;t</a></nav>
+</article>
+</main>
+<footer class="site">
+  <div class="foot-brand"><svg class="mark" viewBox="0 0 26 20" width="26" height="20" aria-hidden="true"><defs><linearGradient id="mark-grad" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5434e8"/><stop offset="1" stop-color="#b8a6ff"/></linearGradient></defs><rect x="0" y="14" width="5" height="6" rx="1"/><rect x="7" y="9" width="5" height="11" rx="1"/><rect x="14" y="5" width="5" height="15" rx="1"/><rect x="21" y="0" width="5" height="20" rx="1"/></svg><span>Madison AI Labs</span></div>
+  <p>Independent research, Vienna. Every number on this site was measured on our own hardware unless it says
+  otherwise, and each one carries its evidence level. Corrections stay visible.</p>
+  <nav aria-label="Footer"><a href="../research.html">Research</a><a href="../experiments.html" aria-current="page">Experiments</a><a href="../benchmarks.html">Benchmarks</a><a href="../hardware.html">Hardware</a><a href="../posts/method.html">Method</a><a href="../support.html">Support</a><a href="../about.html">About</a></nav>
+</footer>
+<script src="../static/site.js" defer></script>
+</body>
+</html>

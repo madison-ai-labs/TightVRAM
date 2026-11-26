@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The thinking loop that wasn&#x27;t a loop | Madison AI Labs</title>
+<meta name="description" content="A coding agent thought for 15 minutes and 32,894 tokens without calling a tool. 280 replays of that first step later, the endless loop turned out to be rare, and the model card&#x27;s coding sampler halved the long tail.">
+<meta property="og:title" content="The thinking loop that wasn&#x27;t a loop | Madison AI Labs">
+<meta property="og:description" content="A coding agent thought for 15 minutes and 32,894 tokens without calling a tool. 280 replays of that first step later, the endless loop turned out to be rare, and the model card&#x27;s coding sampler halved the long tail.">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#1b0b42">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="site-bar"><header class="site">
+  <a class="brand" href="../index.html"><svg class="mark" viewBox="0 0 26 20" width="26" height="20" aria-hidden="true"><defs><linearGradient id="mark-grad" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5434e8"/><stop offset="1" stop-color="#b8a6ff"/></linearGradient></defs><rect x="0" y="14" width="5" height="6" rx="1"/><rect x="7" y="9" width="5" height="11" rx="1"/><rect x="14" y="5" width="5" height="15" rx="1"/><rect x="21" y="0" width="5" height="20" rx="1"/></svg><span>Madison <i>AI Labs</i></span></a>
+  <nav aria-label="Main"><a href="../research.html">Research</a><a href="../experiments.html" aria-current="page">Experiments</a><a href="../benchmarks.html">Benchmarks</a><a href="../hardware.html">Hardware</a><a href="../posts/method.html">Method</a><a href="../support.html">Support</a><a href="../about.html">About</a></nav>
+</header></div>
+<main id="main">
+<article class="post">
+<header class="post-head">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../research.html">Research</a><a href="../research.html#efficient-inference">Efficient inference</a><span>INF-008</span></nav>
+<h1>The thinking loop that wasn&#x27;t a loop</h1>
+<p class="lede">A coding agent thought for 15 minutes and 32,894 tokens without calling a tool. 280 replays of that first step later, the endless loop turned out to be rare, and the model card&#x27;s coding sampler halved the long tail.</p>
+</header>
+<div class="post-body">
+<aside class="post-aside"><dl class="facts"><div><dt>Date</dt><dd><time datetime="2026-11-15">15 November 2026</time></dd></div><div><dt>Evidence</dt><dd><span class="ev ev-measured" title="We ran it and kept the raw data."><svg viewBox="0 0 26 17" width="26" height="17" aria-hidden="true"><rect class="on" x="0" y="12" width="5" height="5" rx="1"/><rect class="on" x="7" y="8" width="5" height="9" rx="1"/><rect class="off" x="14" y="4" width="5" height="13" rx="1"/><rect class="off" x="21" y="0" width="5" height="17" rx="1"/></svg>Measured</span><small>We ran it and kept the raw data.</small></dd></div><div><dt>Decision</dt><dd><span class="verdict v-kept"><span aria-hidden="true">✓</span> Kept</span></dd></div><div><dt>Result</dt><dd><span class="result">long runs 23 → 13 of 120</span></dd></div><div><dt>System</dt><dd><a href="../hardware.html">Bench system 1</a></dd></div><div><dt>Topics</dt><dd><span class="tag">sampling</span><span class="tag">coding agents</span></dd></div></dl><nav class="toc" aria-label="On this page"><p>On this page</p><ol><li><a href="#what-happened">What happened</a></li><li><a href="#what-the-sources-say">What the sources say</a></li><li><a href="#the-experiment">The experiment</a></li><li><a href="#what-it-shows">What it shows</a></li></ol></nav></aside>
+<div class="prose">
+<h2 id="what-happened">What happened</h2>
+<p>A coding agent on our server spent its whole 900-second lease on the very first step: 32,894 tokens of thinking, zero tool calls. Qwen3.6 went in circles (“Wait, …”, “Self-correction”, “Let’s go.”) with almost no literal repetition, so repetition penalties had nothing to grab onto.</p>
+<p>The sampling up to then was llama-server’s default: temperature 1.0, top_k 20 and top_p 0.95 (taken from the GGUF), plus the server’s own defaults min_p 0.05 and presence penalty 0.</p>
+<h2 id="what-the-sources-say">What the sources say</h2>
+<ul>
+<li><strong>Qwen’s model card</strong>, thinking mode, general tasks: T 1.0, top_p 0.95, top_k 20, min_p 0, presence 1.5. Thinking mode, precise coding: <strong>T 0.6</strong>, top_p 0.95, top_k 20, min_p 0, presence 0. The card adds that presence between 0 and 2 dampens endless loops, and that high values occasionally cause language mixing.</li>
+<li><strong>Unsloth’s docs</strong> set presence 0 for both thinking cases and 1.5 only without thinking.</li>
+<li><strong>The GGUF</strong> carries temp 1.0, top_k 20 and top_p 0.95, but no min_p and no presence.</li>
+</ul>
+<h2 id="the-experiment">The experiment</h2>
+<p>We replayed the exact first step of the agent (same system prompt, same tool definitions, same user prompt) with thinking on and <code>max_tokens</code> 4096, directly against the production server, with the arms alternating. In the second series a small wrapper only sent when the slot had been idle for 5 minutes, because another client was running 92k-token contexts on the same slot.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Arm</th>
+<th>n</th>
+<th>Hit the limit</th>
+<th>&gt; 1,000 tokens</th>
+<th>&gt; 1,500 tokens</th>
+<th>p50 / p90 / mean</th>
+<th>First call <code>update_plan</code></th>
+<th>Broken arguments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Old default (T 1.0, min_p 0.05, presence 0)</td>
+<td>120</td>
+<td>1</td>
+<td>23</td>
+<td>8</td>
+<td>424 / 1,435 / 643</td>
+<td>119</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>Card, coding</strong> (T 0.6, min_p 0, presence 0)</td>
+<td>120</td>
+<td>0</td>
+<td><strong>13</strong></td>
+<td><strong>4</strong></td>
+<td>370 / 1,115 / 520</td>
+<td>118</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Card, general (T 1.0, min_p 0, presence 1.5)</td>
+<td>40</td>
+<td>1</td>
+<td>10</td>
+<td>7</td>
+<td>612 / 2,078 / 881</td>
+<td>39</td>
+<td>0</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="chart" id="chart-1">
+<figcaption class="chart-title">Share of first steps that thought for more than 1,000 tokens</figcaption>
+<svg viewBox="0 0 720 142" role="img" aria-label="Share of first steps that thought for more than 1,000 tokens" preserveAspectRatio="xMinYMin meet">
+<defs><linearGradient id="c1-s1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4a2fd6"/><stop offset="1" stop-color="#8b6cff"/></linearGradient><linearGradient id="c1-s2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a77bff"/><stop offset="1" stop-color="#eaa8ff"/></linearGradient><linearGradient id="c1-s3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3b6fe0"/><stop offset="1" stop-color="#7fb0ff"/></linearGradient><linearGradient id="c1-hl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9a6dff"/><stop offset="1" stop-color="#eaa8ff"/></linearGradient><linearGradient id="c1-dim" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2c2766"/><stop offset="1" stop-color="#463d9c"/></linearGradient></defs>
+<line class="grid base" x1="200.0" y1="4" x2="200.0" y2="120"/>
+<text class="tick" x="200.0" y="136" text-anchor="middle">0</text>
+<line class="grid" x1="312.5" y1="4" x2="312.5" y2="120"/>
+<text class="tick" x="312.5" y="136" text-anchor="middle">6.25</text>
+<line class="grid" x1="425.0" y1="4" x2="425.0" y2="120"/>
+<text class="tick" x="425.0" y="136" text-anchor="middle">12.5</text>
+<line class="grid" x1="537.5" y1="4" x2="537.5" y2="120"/>
+<text class="tick" x="537.5" y="136" text-anchor="middle">18.8</text>
+<line class="grid" x1="650.0" y1="4" x2="650.0" y2="120"/>
+<text class="tick" x="650.0" y="136" text-anchor="middle">25</text>
+<text class="tick unit" x="680" y="136">%</text>
+<text class="rowlabel" x="188" y="23.0" text-anchor="end">Old default</text>
+<path class="dim" fill="url(#c1-dim)" d="M200,8 h340.6 q5,0 5,5 v12 q0,5 -5,5 h-340.6 z"><title>Old default: 19.2 %</title></path>
+<text class="value" x="552.6" y="23.5">19.2</text>
+<text class="rowlabel" x="188" y="59.0" text-anchor="end">Card, coding (T 0.6)</text>
+<path class="hl" fill="url(#c1-hl)" d="M200,44 h189.4 q5,0 5,5 v12 q0,5 -5,5 h-189.4 z"><title>Card, coding (T 0.6): 10.8 %</title></path>
+<text class="value hl" x="401.4" y="59.5">10.8</text>
+<text class="rowlabel" x="188" y="95.0" text-anchor="end">Card, general (presence 1.5)</text>
+<path class="dim" fill="url(#c1-dim)" d="M200,80 h445.0 q5,0 5,5 v12 q0,5 -5,5 h-445.0 z"><title>Card, general (presence 1.5): 25 %</title></path>
+<text class="value" x="657.0" y="95.5">25</text>
+</svg>
+<p class="chart-note">n = 120, 120 and 40 replays of the same request.</p>
+<details class="chart-table"><summary>Show the numbers</summary><table><thead><tr><th></th>
+<th>% (%)</th>
+</tr></thead><tbody>
+<tr><th>Old default</th>
+<td>19.2</td>
+</tr>
+<tr><th>Card, coding (T 0.6)</th>
+<td>10.8</td>
+</tr>
+<tr><th>Card, general (presence 1.5)</th>
+<td>25</td>
+</tr>
+</tbody></table></details></figure>
+<h2 id="what-it-shows">What it shows</h2>
+<ul>
+<li><strong>The endless loop is rare.</strong> 1 of 120 with the old sampling. On the day it happened it had been 1 of 8, which was bad luck at small n. Whether T 0.6 <em>prevents</em> the loop, this data can’t say (0 vs 1).</li>
+<li><strong>The shorter tail is real.</strong> Half as many runs above 1,000 and above 1,500 tokens. A loop starts out as a long run. The direction is clear, the significance weak (23 vs 13 of 120).</li>
+<li><strong>Presence 1.5 is worse in thinking mode:</strong> the longest tail of the three. “Use presence 1.5 against loops” is true for the card’s general recommendation, not for this case.</li>
+<li>Tool behavior didn’t change: the same first call, no broken arguments.</li>
+</ul>
+<p>The decision rule was fixed before the second series: switch if limit hits don’t get worse, runs above 1,500 tokens don’t increase, and tool behavior stays the same. All three held.</p>
+<div class="decision">
+<p><strong>Decision:</strong> <code>--temp 0.6 --top-p 0.95 --top-k 20 --min-p 0.0 --presence-penalty 0.0 --repeat-penalty 1.0</code> for the coding profiles. Because clients don’t send their own sampling fields, this also applies to chat. The card recommends T 0.7, top_p 0.8 and presence 1.5 for chat without thinking. We haven’t measured that.</p>
+</div>
+<p><strong>Deployed on 2026-11-26</strong> in all coding profiles. The control run afterwards matched the old one: tool calling 81.5/84, boundaries 24/24, no broken calls, and screenshot transcription at 1280 px within run-to-run noise of the T 0 baseline.</p>
+
+</div>
+</div>
+<nav class="pager" aria-label="More experiments"><a class="prev" href="vision-latency.html"><span>INF-007, earlier</span>Why a screenshot takes 12 seconds</a><a class="next" href="routing-trace-fork-and-mtp.html"><span>INF-009, later</span>The simulation said +23 %. The measurement said −4 %.</a></nav>
+</article>
+</main>
+<footer class="site">
+  <div class="foot-brand"><svg class="mark" viewBox="0 0 26 20" width="26" height="20" aria-hidden="true"><defs><linearGradient id="mark-grad" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5434e8"/><stop offset="1" stop-color="#b8a6ff"/></linearGradient></defs><rect x="0" y="14" width="5" height="6" rx="1"/><rect x="7" y="9" width="5" height="11" rx="1"/><rect x="14" y="5" width="5" height="15" rx="1"/><rect x="21" y="0" width="5" height="20" rx="1"/></svg><span>Madison AI Labs</span></div>
+  <p>Independent research, Vienna. Every number on this site was measured on our own hardware unless it says
+  otherwise, and each one carries its evidence level. Corrections stay visible.</p>
+  <nav aria-label="Footer"><a href="../research.html">Research</a><a href="../experiments.html" aria-current="page">Experiments</a><a href="../benchmarks.html">Benchmarks</a><a href="../hardware.html">Hardware</a><a href="../posts/method.html">Method</a><a href="../support.html">Support</a><a href="../about.html">About</a></nav>
+</footer>
+<script src="../static/site.js" defer></script>
+</body>
+</html>

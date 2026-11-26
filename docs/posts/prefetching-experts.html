@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prefetching experts: +45 % prefill in 187 lines | Madison AI Labs</title>
+<meta name="description" content="Prefill spends 59 to 65 % of its time uploading experts, and llama.cpp does that strictly before computing each layer. Loading the next layer&#x27;s experts on a second CUDA stream gave +37 to +50 %, with bit-identical output. It&#x27;s now in production.">
+<meta property="og:title" content="Prefetching experts: +45 % prefill in 187 lines | Madison AI Labs">
+<meta property="og:description" content="Prefill spends 59 to 65 % of its time uploading experts, and llama.cpp does that strictly before computing each layer. Loading the next layer&#x27;s experts on a second CUDA stream gave +37 to +50 %, with bit-identical output. It&#x27;s now in production.">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#1b0b42">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="site-bar"><header class="site">
+  <a class="brand" href="../index.html"><svg class="mark" viewBox="0 0 26 20" width="26" height="20" aria-hidden="true"><defs><linearGradient id="mark-grad" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5434e8"/><stop offset="1" stop-color="#b8a6ff"/></linearGradient></defs><rect x="0" y="14" width="5" height="6" rx="1"/><rect x="7" y="9" width="5" height="11" rx="1"/><rect x="14" y="5" width="5" height="15" rx="1"/><rect x="21" y="0" width="5" height="20" rx="1"/></svg><span>Madison <i>AI Labs</i></span></a>
+  <nav aria-label="Main"><a href="../research.html">Research</a><a href="../experiments.html" aria-current="page">Experiments</a><a href="../benchmarks.html">Benchmarks</a><a href="../hardware.html">Hardware</a><a href="../posts/method.html">Method</a><a href="../support.html">Support</a><a href="../about.html">About</a></nav>
+</header></div>
+<main id="main">
+<article class="post">
+<header class="post-head">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../research.html">Research</a><a href="../research.html#efficient-inference">Efficient inference</a><span>INF-011</span></nav>
+<h1>Prefetching experts: +45 % prefill in 187 lines</h1>
+<p class="lede">Prefill spends 59 to 65 % of its time uploading experts, and llama.cpp does that strictly before computing each layer. Loading the next layer&#x27;s experts on a second CUDA stream gave +37 to +50 %, with bit-identical output. It&#x27;s now in production.</p>
+</header>
+<div class="post-body">
+<aside class="post-aside"><dl class="facts"><div><dt>Date</dt><dd><time datetime="2026-11-25">25 November 2026</time></dd></div><div><dt>Evidence</dt><dd><span class="ev ev-measured" title="We ran it and kept the raw data."><svg viewBox="0 0 26 17" width="26" height="17" aria-hidden="true"><rect class="on" x="0" y="12" width="5" height="5" rx="1"/><rect class="on" x="7" y="8" width="5" height="9" rx="1"/><rect class="off" x="14" y="4" width="5" height="13" rx="1"/><rect class="off" x="21" y="0" width="5" height="17" rx="1"/></svg>Measured</span><small>We ran it and kept the raw data.</small></dd></div><div><dt>Decision</dt><dd><span class="verdict v-kept"><span aria-hidden="true">✓</span> Kept</span></dd></div><div><dt>Result</dt><dd><span class="result">pp16k 1,629 → 2,438 t/s</span></dd></div><div><dt>System</dt><dd><a href="../hardware.html">Bench system 1</a></dd></div><div><dt>Topics</dt><dd><span class="tag">prefetch</span><span class="tag">CUDA streams</span><span class="tag">PCIe</span></dd></div></dl><nav class="toc" aria-label="On this page"><p>On this page</p><ol><li><a href="#upload-then-compute-then-upload">Upload, then compute, then upload</a></li><li><a href="#measuring-it-properly">Measuring it properly</a></li><li><a href="#what-overlap-could-be-worth">What overlap could be worth</a></li><li><a href="#someone-had-already-written-it">Someone had already written it</a></li><li><a href="#doubling-the-micro-batch">Doubling the micro-batch</a></li><li><a href="#whats-in-the-compute-buffer">What’s in the compute buffer</a></li><li><a href="#and-with-a-different-cpu">And with a different CPU?</a></li></ol></nav></aside>
+<div class="prose">
+<h2 id="upload-then-compute-then-upload">Upload, then compute, then upload</h2>
+<p>We read the scheduler in build <code>45b6604b2</code>. <code>ggml_backend_sched_compute_splits</code> copies each split’s inputs first, with host-resident weights last, which calls <code>sched_copy_experts</code>. Only then does the split run with <code>graph_compute_async</code>, <strong>on the same backend and the same CUDA stream.</strong> The upload for layer L+1 can’t start until layer L has finished computing. On top of that, <code>sched_copy_experts</code> reads the router’s ids back to the host with a synchronize, once per layer, to find out which experts to upload.</p>
+<p>A first estimate from bandwidth alone: pinned host-to-device measures <strong>12.4 GB/s</strong> (256 MiB, 20 copies × 3 runs, and 12.1 GB/s in 640 KiB chunks the size of one expert matrix). 19.7 GB of experts per micro-batch gives ~1.59 s of upload. A pp4096 micro-batch takes 2.22 s with pinned memory and 2.62 s with mmap. Subtract the upload at each mode’s own rate and both leave almost exactly the same rest, 0.63 and 0.69 s. <strong>Upload and compute add up, and the whole <code>dio</code> gain is explained by the faster transfer.</strong></p>
+<h2 id="measuring-it-properly">Measuring it properly</h2>
+<p>To stop guessing, we built a profiling variant of the production binary (patch: timers in <code>compute_splits</code> with explicit synchronizes, a separate graph view for the first <code>MUL_MAT_ID</code> node of each split, and per-tensor byte counts in <code>sched_copy_experts</code>). The timers cost 0.5 % throughput. We ran real text, not random tokens, through llama-server with the exact production arguments:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Profile</th>
+<th>Prompt</th>
+<th style="text-align: right;">ms per 4k batch</th>
+<th style="text-align: right;">Upload</th>
+<th style="text-align: right;">Expert compute</th>
+<th style="text-align: right;">Attention etc.</th>
+<th style="text-align: right;">Upload share</th>
+<th style="text-align: right;">H2D rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mmap</td>
+<td>4,096</td>
+<td style="text-align: right;">2,963</td>
+<td style="text-align: right;">1,912</td>
+<td style="text-align: right;">322</td>
+<td style="text-align: right;">649</td>
+<td style="text-align: right;"><strong>65 %</strong></td>
+<td style="text-align: right;">9.9 GB/s</td>
+</tr>
+<tr>
+<td>mmap</td>
+<td>65,536</td>
+<td style="text-align: right;">3,258</td>
+<td style="text-align: right;">1,923</td>
+<td style="text-align: right;">315</td>
+<td style="text-align: right;">931</td>
+<td style="text-align: right;">59 %</td>
+<td style="text-align: right;">9.9 GB/s</td>
+</tr>
+<tr>
+<td>dio (pinned)</td>
+<td>4,096</td>
+<td style="text-align: right;">2,597</td>
+<td style="text-align: right;">1,545</td>
+<td style="text-align: right;">320</td>
+<td style="text-align: right;">653</td>
+<td style="text-align: right;"><strong>59 %</strong></td>
+<td style="text-align: right;">12.3 GB/s</td>
+</tr>
+<tr>
+<td>dio (pinned)</td>
+<td>65,536</td>
+<td style="text-align: right;">2,885</td>
+<td style="text-align: right;">1,547</td>
+<td style="text-align: right;">315</td>
+<td style="text-align: right;">933</td>
+<td style="text-align: right;">54 %</td>
+<td style="text-align: right;">12.3 GB/s</td>
+</tr>
+</tbody>
+</table></div>
+<p>Expert math is only 10–13 % of prefill. 12.3 GB/s is effectively the ceiling of PCIe 3.0 x16, and the link reports <code>pcie.link.gen.max 3</code>, so the transfer can’t get any faster on this board with this CPU.</p>
+<p><strong>Random tokens lie here.</strong> With real text, a 4096-token batch uses on average <strong>98 %</strong> of the 256 experts per layer (minimum 90 %). With llama-bench’s random tokens it’s 85 %, which is why llama-bench reports 10 % more prefill than the server. For our purposes, real text means you can upload <em>all</em> experts of the next layer without knowing the routing. That costs only 2–6 % more bytes.</p>
+<h2 id="what-overlap-could-be-worth">What overlap could be worth</h2>
+<p>A per-layer model built from these measured parts:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th style="text-align: right;">dio 4k</th>
+<th style="text-align: right;">dio 16k</th>
+<th style="text-align: right;">dio 64k</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A: reorder within a layer (upload up/down while gate computes)</td>
+<td style="text-align: right;">+8 %</td>
+<td style="text-align: right;">+8 %</td>
+<td style="text-align: right;">+7 %</td>
+</tr>
+<tr>
+<td><strong>B: load all experts of layer L+1 on a second stream while L computes</strong></td>
+<td style="text-align: right;"><strong>+43 %</strong></td>
+<td style="text-align: right;"><strong>+46 %</strong></td>
+<td style="text-align: right;"><strong>+48 %</strong></td>
+</tr>
+<tr>
+<td>C: like B, but only the experts actually used (oracle)</td>
+<td style="text-align: right;">+46 %</td>
+<td style="text-align: right;">+54 %</td>
+<td style="text-align: right;">+50 %</td>
+</tr>
+</tbody>
+</table></div>
+<p>Reordering inside a layer is pointless, because there’s too little expert compute to hide anything behind. Routing prediction is pointless too: the oracle barely beats “load everything”. What’s left is B, at the cost of a second buffer for one full layer of experts (~0.5 GB). Even with B, prefill stays upload-bound in the 30 DeltaNet layers (39 ms upload against 21 ms compute). Only the 10 full-attention layers at long context have enough compute to hide the upload completely.</p>
+<h2 id="someone-had-already-written-it">Someone had already written it</h2>
+<p>A branch by thecodacus (<code>prefetch-experts</code>, <code>5e7f627</code>) implements B for an older llama.cpp. Upstream has since moved the input copy into <code>ggml_backend_sched_copy_input</code>. We ported the logic with a script into our build: <strong>+187 lines, only in <code>ggml-backend.cpp</code></strong>, enabled with <code>GGML_SCHED_PREFETCH_EXPERTS=3</code> (3 slots). Without the variable the binary behaves exactly like the production build (1,643 / 1,629 / 1,418 t/s against 1,637 / 1,630 / 1,422).</p>
+<figure class="chart" id="chart-1">
+<figcaption class="chart-title">Prefill with and without expert prefetch, pinned memory, ub 4096, 128k context</figcaption>
+<svg viewBox="0 0 720 252" role="img" aria-label="Prefill with and without expert prefetch, pinned memory, ub 4096, 128k context" preserveAspectRatio="xMinYMin meet">
+<defs><linearGradient id="c1-s1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4a2fd6"/><stop offset="1" stop-color="#8b6cff"/></linearGradient><linearGradient id="c1-s2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a77bff"/><stop offset="1" stop-color="#eaa8ff"/></linearGradient><linearGradient id="c1-s3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3b6fe0"/><stop offset="1" stop-color="#7fb0ff"/></linearGradient><linearGradient id="c1-hl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9a6dff"/><stop offset="1" stop-color="#eaa8ff"/></linearGradient><linearGradient id="c1-dim" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2c2766"/><stop offset="1" stop-color="#463d9c"/></linearGradient></defs>
+<rect class="s1" fill="url(#c1-s1)" x="200" y="4" width="12" height="12" rx="3"/>
+<text class="legend" x="218" y="14">Without prefetch</text>
+<rect class="s2" fill="url(#c1-s2)" x="358" y="4" width="12" height="12" rx="3"/>
+<text class="legend" x="376" y="14">With prefetch</text>
+<line class="grid base" x1="200.0" y1="26" x2="200.0" y2="230"/>
+<text class="tick" x="200.0" y="246" text-anchor="middle">0</text>
+<line class="grid" x1="312.5" y1="26" x2="312.5" y2="230"/>
+<text class="tick" x="312.5" y="246" text-anchor="middle">625</text>
+<line class="grid" x1="425.0" y1="26" x2="425.0" y2="230"/>
+<text class="tick" x="425.0" y="246" text-anchor="middle">1,250</text>
+<line class="grid" x1="537.5" y1="26" x2="537.5" y2="230"/>
+<text class="tick" x="537.5" y="246" text-anchor="middle">1,875</text>
+<line class="grid" x1="650.0" y1="26" x2="650.0" y2="230"/>
+<text class="tick" x="650.0" y="246" text-anchor="middle">2,500</text>
+<text class="tick unit" x="680" y="246">t/s</text>
+<text class="rowlabel" x="188" y="51.5" text-anchor="end">4k tokens</text>
+<path class="s1" fill="url(#c1-s1)" d="M200,30 h290.7 q5,0 5,5 v6 q0,5 -5,5 h-290.7 z"><title>4k tokens · Without prefetch: 1,643 t/s</title></path>
+<text class="value" x="502.7" y="42.5">1,643</text>
+<path class="s2" fill="url(#c1-s2)" d="M200,49 h424.1 q5,0 5,5 v6 q0,5 -5,5 h-424.1 z"><title>4k tokens · With prefetch: 2,384 t/s</title></path>
+<text class="value" x="636.1" y="61.5">2,384</text>
+<text class="rowlabel" x="188" y="100.5" text-anchor="end">16k tokens</text>
+<path class="s1" fill="url(#c1-s1)" d="M200,79 h288.2 q5,0 5,5 v6 q0,5 -5,5 h-288.2 z"><title>16k tokens · Without prefetch: 1,629 t/s</title></path>
+<text class="value" x="500.2" y="91.5">1,629</text>
+<path class="s2" fill="url(#c1-s2)" d="M200,98 h433.8 q5,0 5,5 v6 q0,5 -5,5 h-433.8 z"><title>16k tokens · With prefetch: 2,438 t/s</title></path>
+<text class="value" x="645.8" y="110.5">2,438</text>
+<text class="rowlabel" x="188" y="149.5" text-anchor="end">64k tokens</text>
+<path class="s1" fill="url(#c1-s1)" d="M200,128 h250.2 q5,0 5,5 v6 q0,5 -5,5 h-250.2 z"><title>64k tokens · Without prefetch: 1,418 t/s</title></path>
+<text class="value" x="462.2" y="140.5">1,418</text>
+<path class="s2" fill="url(#c1-s2)" d="M200,147 h364.2 q5,0 5,5 v6 q0,5 -5,5 h-364.2 z"><title>64k tokens · With prefetch: 2,051 t/s</title></path>
+<text class="value" x="576.2" y="159.5">2,051</text>
+<text class="rowlabel" x="188" y="198.5" text-anchor="end">120k tokens</text>
+<path class="s1" fill="url(#c1-s1)" d="M200,177 h217.7 q5,0 5,5 v6 q0,5 -5,5 h-217.7 z"><title>120k tokens · Without prefetch: 1,237 t/s</title></path>
+<text class="value" x="429.7" y="189.5">1,237</text>
+<path class="s2" fill="url(#c1-s2)" d="M200,196 h300.3 q5,0 5,5 v6 q0,5 -5,5 h-300.3 z"><title>120k tokens · With prefetch: 1,696 t/s</title></path>
+<text class="value" x="512.3" y="208.5">1,696</text>
+</svg>
+<p class="chart-note">llama-server, real text, exact production arguments, cache_prompt off. Mean of 3 requests (1 at 120k).</p>
+<details class="chart-table"><summary>Show the numbers</summary><table><thead><tr><th></th>
+<th>Without prefetch</th>
+<th>With prefetch</th>
+</tr></thead><tbody>
+<tr><th>4k tokens</th>
+<td>1,643</td>
+<td>2,384</td>
+</tr>
+<tr><th>16k tokens</th>
+<td>1,629</td>
+<td>2,438</td>
+</tr>
+<tr><th>64k tokens</th>
+<td>1,418</td>
+<td>2,051</td>
+</tr>
+<tr><th>120k tokens</th>
+<td>1,237</td>
+<td>1,696</td>
+</tr>
+</tbody></table></details></figure>
+<ul>
+<li><strong>dio: +45 / +50 / +45 / +37 %.</strong> That’s exactly where the model put it. The gain at 120k is smaller because attention takes a larger share there.</li>
+<li><strong>mmap: +37 / +41 / +40 %.</strong> This answered an open question: uploads from pageable memory do overlap with kernels on a second stream. The gap to pinned stays at ~20 % (9.9 vs 12.3 GB/s).</li>
+<li><strong>Output is bit-identical.</strong> 64 generated tokens at temperature 0 gave the same text in all pairs, and the top-10 logprobs matched with a maximum |Δ| of 0. Prefetch only activates when <code>n_used · n_tokens ≥ 2 · n_expert</code>, so it’s off during generation.</li>
+<li><strong>Cost:</strong> +630 MiB of VRAM (3 slots × the largest expert tensor). At 128k context with pinned memory the peak is 7,793 of 8,192 MiB, about 0.4 GB free. Tight, but stable, including at 120k and 130k tokens.</li>
+</ul>
+<h2 id="doubling-the-micro-batch">Doubling the micro-batch</h2>
+<p>With the upload hidden, a bigger micro-batch amortizes the remaining fixed cost. But ub 8192 doesn’t fit at 128k context:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>ub</th>
+<th>Context</th>
+<th>Starts?</th>
+<th>Compute buffer that fails</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4096</td>
+<td>131,072</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>6144</td>
+<td>131,072</td>
+<td>no</td>
+<td>2,978 MiB</td>
+</tr>
+<tr>
+<td>8192</td>
+<td>131,072</td>
+<td>no</td>
+<td>3,842 MiB</td>
+</tr>
+<tr>
+<td>8192</td>
+<td>65,536</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>12288</td>
+<td>65,536</td>
+<td>starts, crashes on the first request</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<p>At 64k context, the combination of pinned memory, ub 8192 and prefetch reaches <strong>3,590 t/s at 16k tokens</strong>: 2.2× pinned memory without prefetch, and 2.6× the mmap profile that was in production that morning. At 64k tokens it’s 2,768 t/s.</p>
+<figure class="chart" id="chart-2">
+<figcaption class="chart-title">Prefill at 16k tokens, real text, on the same day</figcaption>
+<svg viewBox="0 0 720 178" role="img" aria-label="Prefill at 16k tokens, real text, on the same day" preserveAspectRatio="xMinYMin meet">
+<defs><linearGradient id="c2-s1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4a2fd6"/><stop offset="1" stop-color="#8b6cff"/></linearGradient><linearGradient id="c2-s2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a77bff"/><stop offset="1" stop-color="#eaa8ff"/></linearGradient><linearGradient id="c2-s3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3b6fe0"/><stop offset="1" stop-color="#7fb0ff"/></linearGradient><linearGradient id="c2-hl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9a6dff"/><stop offset="1" stop-color="#eaa8ff"/></linearGradient><linearGradient id="c2-dim" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2c2766"/><stop offset="1" stop-color="#463d9c"/></linearGradient></defs>
+<line class="grid base" x1="200.0" y1="4" x2="200.0" y2="156"/>
+<text class="tick" x="200.0" y="172" text-anchor="middle">0</text>
+<line class="grid" x1="312.5" y1="4" x2="312.5" y2="156"/>
+<text class="tick" x="312.5" y="172" text-anchor="middle">1,000</text>
+<line class="grid" x1="425.0" y1="4" x2="425.0" y2="156"/>
+<text class="tick" x="425.0" y="172" text-anchor="middle">2,000</text>
+<line class="grid" x1="537.5" y1="4" x2="537.5" y2="156"/>
+<text class="tick" x="537.5" y="172" text-anchor="middle">3,000</text>
+<line class="grid" x1="650.0" y1="4" x2="650.0" y2="156"/>
+<text class="tick" x="650.0" y="172" text-anchor="middle">4,000</text>
+<text class="tick unit" x="680" y="172">t/s</text>
+<text class="rowlabel" x="188" y="23.0" text-anchor="end">mmap (old production)</text>
+<path class="dim" fill="url(#c2-dim)" d="M200,8 h152.7 q5,0 5,5 v12 q0,5 -5,5 h-152.7 z"><title>mmap (old production): 1,402 t/s</title></path>
+<text class="value" x="364.7" y="23.5">1,402</text>
+<text class="rowlabel" x="188" y="59.0" text-anchor="end">Pinned memory (dio)</text>
+<path class="dim" fill="url(#c2-dim)" d="M200,44 h178.3 q5,0 5,5 v12 q0,5 -5,5 h-178.3 z"><title>Pinned memory (dio): 1,629 t/s</title></path>
+<text class="value" x="390.3" y="59.5">1,629</text>
+<text class="rowlabel" x="188" y="95.0" text-anchor="end">dio + prefetch (new production)</text>
+<path class="hl" fill="url(#c2-hl)" d="M200,80 h269.3 q5,0 5,5 v12 q0,5 -5,5 h-269.3 z"><title>dio + prefetch (new production): 2,438 t/s</title></path>
+<text class="value hl" x="481.3" y="95.5">2,438</text>
+<text class="rowlabel" x="188" y="131.0" text-anchor="end">dio + prefetch + ub 8192, 64k context</text>
+<path class="dim" fill="url(#c2-dim)" d="M200,116 h398.9 q5,0 5,5 v12 q0,5 -5,5 h-398.9 z"><title>dio + prefetch + ub 8192, 64k context: 3,590 t/s</title></path>
+<text class="value" x="610.9" y="131.5">3,590</text>
+</svg>
+<p class="chart-note">llama-server with production arguments. The last row only works with half the context.</p>
+<details class="chart-table"><summary>Show the numbers</summary><table><thead><tr><th></th>
+<th>t/s (t/s)</th>
+</tr></thead><tbody>
+<tr><th>mmap (old production)</th>
+<td>1,402</td>
+</tr>
+<tr><th>Pinned memory (dio)</th>
+<td>1,629</td>
+</tr>
+<tr><th>dio + prefetch (new production)</th>
+<td>2,438</td>
+</tr>
+<tr><th>dio + prefetch + ub 8192, 64k context</th>
+<td>3,590</td>
+</tr>
+</tbody></table></details></figure>
+<h2 id="whats-in-the-compute-buffer">What’s in the compute buffer</h2>
+<p>Why does ub 8192 need 3.8 GB at 128k context? We patched <code>ggml-alloc.c</code> to dump all live tensors at every new peak. The dump is planned before <code>cudaMalloc</code>, so it also covers the configurations that fail, and its peak matched the failing allocation to the byte (2,978.05 and 3,842.06 MiB).</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>ub</th>
+<th>Context</th>
+<th style="text-align: right;">Peak</th>
+<th style="text-align: right;">KQ mask</th>
+<th style="text-align: right;">MoE down + weighted</th>
+<th style="text-align: right;">Activations</th>
+<th style="text-align: right;">Gaps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4096</td>
+<td>65,536</td>
+<td style="text-align: right;">1,602</td>
+<td style="text-align: right;">512</td>
+<td style="text-align: right;">256 + 256</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">482</td>
+</tr>
+<tr>
+<td>4096</td>
+<td>131,072</td>
+<td style="text-align: right;">2,114</td>
+<td style="text-align: right;"><strong>1,024</strong></td>
+<td style="text-align: right;">256 + 256</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">482</td>
+</tr>
+<tr>
+<td>8192</td>
+<td>65,536</td>
+<td style="text-align: right;">2,818</td>
+<td style="text-align: right;">1,024</td>
+<td style="text-align: right;">512 + 512</td>
+<td style="text-align: right;">192</td>
+<td style="text-align: right;">578</td>
+</tr>
+<tr>
+<td>8192</td>
+<td>131,072</td>
+<td style="text-align: right;">3,842</td>
+<td style="text-align: right;"><strong>2,048</strong></td>
+<td style="text-align: right;">512 + 512</td>
+<td style="text-align: right;">192</td>
+<td style="text-align: right;">578</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>MiB, at the peak of the prefill graph.</em></p>
+<ul>
+<li><strong>The KQ mask is the biggest single item.</strong> It’s one f16 tensor <code>attn_inp_kq_mask</code> of shape <code>n_kv × n_tokens</code>, live across the whole graph, and the reserve sizes <code>n_kv</code> at the full context. At ub 8192 and 128k, that’s 2 GiB just for a mask that is mostly zeros and minus infinity.</li>
+<li><strong>Second item:</strong> <code>ffn_moe_down</code> and <code>ffn_moe_weighted</code> sit side by side at f32. The multiply could run in place, but the allocator doesn’t reuse the parent here. We haven’t found out why yet. In place would save up to 512 MiB.</li>
+<li>Without the mask, ub 8192 needs ~1,794 MiB, less than ub 4096 needs at 128k today. That’s calculated from the measured parts, not tested.</li>
+</ul>
+<p>A fork by stew675 derives the mask on the fly instead of storing it. That saves 2 GiB exactly, with an estimated 2–4 days to port. It has two catches for us: with an image in context it falls back to the dense mask (M-RoPE), and on NVIDIA it lacks the causal tile skip.</p>
+<h2 id="and-with-a-different-cpu">And with a different CPU?</h2>
+<p>The board is a Z590, which supports PCIe 4.0 at the GPU slot, but only with an 11th-gen CPU. With prefetch the compute is almost fully hidden, so prefill now scales with the link. At an assumed ~24 GB/s on Gen4, the upload per micro-batch would halve, and pp4096 would land around 4,000–4,500 t/s instead of 2,384. That’s an estimate, and there’s no budget for it.</p>
+<div class="decision">
+<p><strong>Decision:</strong> in production since 25 November, 23:08, as a new build next to the old one (rollback is one symlink). The default profile uses pinned memory, ub 4096, 128k context and prefetch. A second profile with ub 8192 at 64k is installed for long prompts and gets switched by hand. Stability tests passed for random lengths up to 130,000 tokens, prefix reuse, tool calls, images and concurrent requests. Not yet tested: hours of sustained load. RAM is now the scarcer resource: 26.6 GB in use, 4.8 GB available after the test.</p>
+</div>
+
+</div>
+</div>
+<nav class="pager" aria-label="More experiments"><a class="prev" href="quant-formats-as-transport.html"><span>INF-010, earlier</span>Quant formats as a transport problem</a><a class="next" href="pcie4-scaling.html"><span>INF-012, later</span>Does PCIe 4.0 remove the prefill bottleneck?</a></nav>
+</article>
+</main>
+<footer class="site">
+  <div class="foot-brand"><svg class="mark" viewBox="0 0 26 20" width="26" height="20" aria-hidden="true"><defs><linearGradient id="mark-grad" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5434e8"/><stop offset="1" stop-color="#b8a6ff"/></linearGradient></defs><rect x="0" y="14" width="5" height="6" rx="1"/><rect x="7" y="9" width="5" height="11" rx="1"/><rect x="14" y="5" width="5" height="15" rx="1"/><rect x="21" y="0" width="5" height="20" rx="1"/></svg><span>Madison AI Labs</span></div>
+  <p>Independent research, Vienna. Every number on this site was measured on our own hardware unless it says
+  otherwise, and each one carries its evidence level. Corrections stay visible.</p>
+  <nav aria-label="Footer"><a href="../research.html">Research</a><a href="../experiments.html" aria-current="page">Experiments</a><a href="../benchmarks.html">Benchmarks</a><a href="../hardware.html">Hardware</a><a href="../posts/method.html">Method</a><a href="../support.html">Support</a><a href="../about.html">About</a></nav>
+</footer>
+<script src="../static/site.js" defer></script>
+</body>
+</html>

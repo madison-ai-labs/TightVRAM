@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The simulation said +23 %. The measurement said −4 %. | Madison AI Labs</title>
+<meta name="description" content="We traced the expert routing of 43,000 tokens, simulated a fork that keeps hot experts on the GPU, and predicted +23 % generation speed. Measured, it was 4 % slower. Multi-token prediction gave a real +11 %, and we still left it out.">
+<meta property="og:title" content="The simulation said +23 %. The measurement said −4 %. | Madison AI Labs">
+<meta property="og:description" content="We traced the expert routing of 43,000 tokens, simulated a fork that keeps hot experts on the GPU, and predicted +23 % generation speed. Measured, it was 4 % slower. Multi-token prediction gave a real +11 %, and we still left it out.">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#1b0b42">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="site-bar"><header class="site">
+  <a class="brand" href="../index.html"><svg class="mark" viewBox="0 0 26 20" width="26" height="20" aria-hidden="true"><defs><linearGradient id="mark-grad" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5434e8"/><stop offset="1" stop-color="#b8a6ff"/></linearGradient></defs><rect x="0" y="14" width="5" height="6" rx="1"/><rect x="7" y="9" width="5" height="11" rx="1"/><rect x="14" y="5" width="5" height="15" rx="1"/><rect x="21" y="0" width="5" height="20" rx="1"/></svg><span>Madison <i>AI Labs</i></span></a>
+  <nav aria-label="Main"><a href="../research.html">Research</a><a href="../experiments.html" aria-current="page">Experiments</a><a href="../benchmarks.html">Benchmarks</a><a href="../hardware.html">Hardware</a><a href="../posts/method.html">Method</a><a href="../support.html">Support</a><a href="../about.html">About</a></nav>
+</header></div>
+<main id="main">
+<article class="post">
+<header class="post-head">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../research.html">Research</a><a href="../research.html#efficient-inference">Efficient inference</a><span>INF-009</span></nav>
+<h1>The simulation said +23 %. The measurement said −4 %.</h1>
+<p class="lede">We traced the expert routing of 43,000 tokens, simulated a fork that keeps hot experts on the GPU, and predicted +23 % generation speed. Measured, it was 4 % slower. Multi-token prediction gave a real +11 %, and we still left it out.</p>
+</header>
+<div class="post-body">
+<aside class="post-aside"><dl class="facts"><div><dt>Date</dt><dd><time datetime="2026-11-25">25 November 2026</time></dd></div><div><dt>Evidence</dt><dd><span class="ev ev-measured" title="We ran it and kept the raw data."><svg viewBox="0 0 26 17" width="26" height="17" aria-hidden="true"><rect class="on" x="0" y="12" width="5" height="5" rx="1"/><rect class="on" x="7" y="8" width="5" height="9" rx="1"/><rect class="off" x="14" y="4" width="5" height="13" rx="1"/><rect class="off" x="21" y="0" width="5" height="17" rx="1"/></svg>Measured</span><small>We ran it and kept the raw data.</small></dd></div><div><dt>Decision</dt><dd><span class="verdict v-rejected"><span aria-hidden="true">✕</span> Rejected</span></dd></div><div><dt>Result</dt><dd><span class="result">predicted +23 %, measured −4.3 %</span></dd></div><div><dt>System</dt><dd><a href="../hardware.html">Bench system 1</a></dd></div><div><dt>Topics</dt><dd><span class="tag">expert routing</span><span class="tag">simulation</span><span class="tag">MTP</span></dd></div></dl><nav class="toc" aria-label="On this page"><p>On this page</p><ol><li><a href="#where-generation-time-goes">Where generation time goes</a></li><li><a href="#tracing-the-router">Tracing the router</a></li><li><a href="#simulating-the-fork">Simulating the fork</a></li><li><a href="#measuring-it">Measuring it</a></li><li><a href="#mtp-real-gain-still-out">MTP: real gain, still out</a></li><li><a href="#the-useful-by-product">The useful by-product</a></li></ol></nav></aside>
+<div class="prose">
+<h2 id="where-generation-time-goes">Where generation time goes</h2>
+<p>From the earlier posts: one token takes ~27 ms. About 20 ms of that is the CPU reading 615 MB of experts from RAM, and about 7 ms is the GPU. The GPU part reads 2,039 MiB of weights per token at 448 GB/s, which is ~4.8 ms in theory and ~5.5 ms in practice. That leaves at most ~1.5 ms for synchronization and kernel launches. <strong>Generation speed is decided in the CPU phase.</strong></p>
+<p>An external analysis suggested five levers: predict and preload experts, cache experts, speculate (MTP), drop the weakest experts, or quantize experts lower. Preloading only helps if experts are streamed, and in generation they aren’t. A byte over PCIe 3.0 costs 2.4× as much time as a byte the CPU reads from RAM. The LRU cache <a href="two-knobs-that-made-it-slower.html">already lost</a>. What remained was a <strong>fixed set of hot experts on the GPU</strong>, plus MTP.</p>
+<h2 id="tracing-the-router">Tracing the router</h2>
+<p>We wrote a small tool on top of llama.cpp’s eval callback that runs a prompt and records, for every layer and token, which 8 experts the router picked and with what weight. Six prompts covering agent tool use, 14k tokens of C++ source, new code, German documentation, English chat and a code review: 43,335 tokens, 3,844 of them generated.</p>
+<p>The first run produced garbage, for two reasons worth knowing if you try this yourself. <code>ffn_moe_topk</code> is a view on the argsort result and isn’t contiguous, so it has to be read along its strides. And layer 39 only computes the output row during prefill (<code>inp_out_ids</code>), so it has to be excluded.</p>
+<p><strong>The routing is skewed.</strong> Within a layer, the top 5 % of experts get 31 % of the calls (12–47 % depending on the layer, flattest in early layers), and the top 10 % get 46 %. Reuse is high: 37.7 % of a token’s experts were used by the previous token, 66.5 % within the last 8 tokens. Uniform routing would give 3 %.</p>
+<p>A fixed set of experts on the GPU, chosen from five prompts and tested on the sixth (leave-one-prompt-out, generated tokens only):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>VRAM budget</th>
+<th>Uniform</th>
+<th>Leave-one-out</th>
+<th>In-sample</th>
+<th>tg estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>800 MiB (free at 128k)</td>
+<td>4.3 %</td>
+<td><strong>18.4 %</strong></td>
+<td>39.5 %</td>
+<td>42.9 t/s (+16 %)</td>
+</tr>
+<tr>
+<td>1,024 MiB</td>
+<td>5.4 %</td>
+<td>21.7 %</td>
+<td>44.4 %</td>
+<td>44.1 t/s</td>
+</tr>
+<tr>
+<td>2,600 MiB (≈ free at 64k)</td>
+<td>13.9 %</td>
+<td><strong>37.9 %</strong></td>
+<td>67.0 %</td>
+<td>51.5 t/s (+39 %)</td>
+</tr>
+</tbody>
+</table></div>
+<p>In-sample is about twice leave-one-out, so which experts are hot depends strongly on the prompt. A set that adapts at runtime should land between the two.</p>
+<h2 id="simulating-the-fork">Simulating the fork</h2>
+<p>A llama.cpp fork (<code>llama-wackMall</code>, grown out of closed PR #26563) does exactly this: it keeps a heat map per layer and swaps hot experts into GPU slots while generating. We read the code first and found that tiering applies to micro-batches of up to 16 tokens, so an MTP verify of 2–3 tokens would also go through it. Swaps are synchronous, at most one per layer per update, with hysteresis.</p>
+<p>Then we replayed its exact policy on our traces, including the cost of each swap (1.83 MiB at 12.4 GB/s = 0.155 ms):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Budget</th>
+<th>Slots per layer</th>
+<th>Fixed (leave-one-out)</th>
+<th>Seeded + adaptive</th>
+<th><strong>Empty + adaptive</strong></th>
+<th>Swaps per token</th>
+<th>tg estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>800 MiB</td>
+<td>10</td>
+<td>18.1 %</td>
+<td>19.6 %</td>
+<td><strong>25.7 %</strong></td>
+<td>0.66</td>
+<td><strong>45.5 t/s (+23 %)</strong></td>
+</tr>
+<tr>
+<td>2,600 MiB</td>
+<td>35</td>
+<td>39.1 %</td>
+<td>41.2 %</td>
+<td><strong>50.1 %</strong></td>
+<td>2.46</td>
+<td>57.6 t/s (+56 %)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Swap costs were negligible at 0.1–0.4 ms per token. Starting from a heat-map seed was <em>worse</em> than starting empty, because the large seeded scores never let the hysteresis swap anything. The author’s own figure of ~50 t/s on a 3070 fell between our rows. Everything looked consistent.</p>
+<h2 id="measuring-it">Measuring it</h2>
+<p>Production server stopped, the card claimed, three prompts per process, temperature 0, arms in the order ABCDDCBAABCD, three processes per arm. <strong>The rule was written down before the run:</strong> a winner needs a median of at least 1.15× baseline <em>and</em> a minimum above the baseline’s maximum.</p>
+<figure class="chart" id="chart-1">
+<figcaption class="chart-title">Generation speed per arm, median of 3 processes</figcaption>
+<svg viewBox="0 0 720 142" role="img" aria-label="Generation speed per arm, median of 3 processes" preserveAspectRatio="xMinYMin meet">
+<defs><linearGradient id="c1-s1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4a2fd6"/><stop offset="1" stop-color="#8b6cff"/></linearGradient><linearGradient id="c1-s2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a77bff"/><stop offset="1" stop-color="#eaa8ff"/></linearGradient><linearGradient id="c1-s3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3b6fe0"/><stop offset="1" stop-color="#7fb0ff"/></linearGradient><linearGradient id="c1-hl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9a6dff"/><stop offset="1" stop-color="#eaa8ff"/></linearGradient><linearGradient id="c1-dim" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2c2766"/><stop offset="1" stop-color="#463d9c"/></linearGradient></defs>
+<line class="grid base" x1="200.0" y1="4" x2="200.0" y2="120"/>
+<text class="tick" x="200.0" y="136" text-anchor="middle">0</text>
+<line class="grid" x1="312.5" y1="4" x2="312.5" y2="120"/>
+<text class="tick" x="312.5" y="136" text-anchor="middle">10</text>
+<line class="grid" x1="425.0" y1="4" x2="425.0" y2="120"/>
+<text class="tick" x="425.0" y="136" text-anchor="middle">20</text>
+<line class="grid" x1="537.5" y1="4" x2="537.5" y2="120"/>
+<text class="tick" x="537.5" y="136" text-anchor="middle">30</text>
+<line class="grid" x1="650.0" y1="4" x2="650.0" y2="120"/>
+<text class="tick" x="650.0" y="136" text-anchor="middle">40</text>
+<text class="tick unit" x="680" y="136">t/s</text>
+<text class="rowlabel" x="188" y="23.0" text-anchor="end">A: our build (baseline)</text>
+<path class="hl" fill="url(#c1-hl)" d="M200,8 h390.4 q5,0 5,5 v12 q0,5 -5,5 h-390.4 z"><title>A: our build (baseline): 35.1 t/s</title></path>
+<text class="value hl" x="602.4" y="23.5">35.1</text>
+<text class="rowlabel" x="188" y="59.0" text-anchor="end">C: fork, adaptive tiering</text>
+<path class="dim" fill="url(#c1-dim)" d="M200,44 h373.4 q5,0 5,5 v12 q0,5 -5,5 h-373.4 z"><title>C: fork, adaptive tiering: 33.6 t/s</title></path>
+<text class="value" x="585.5" y="59.5">33.6</text>
+<text class="rowlabel" x="188" y="95.0" text-anchor="end">D: fork + MTP</text>
+<path class="dim" fill="url(#c1-dim)" d="M200,80 h441.4 q5,0 5,5 v12 q0,5 -5,5 h-441.4 z"><title>D: fork + MTP: 39.7 t/s</title></path>
+<text class="value" x="653.4" y="95.5">39.7</text>
+</svg>
+<p class="chart-note">B (MTP on our build) ran out of memory at startup in all three processes.</p>
+<details class="chart-table"><summary>Show the numbers</summary><table><thead><tr><th></th>
+<th>t/s (t/s)</th>
+</tr></thead><tbody>
+<tr><th>A: our build (baseline)</th>
+<td>35.1</td>
+</tr>
+<tr><th>C: fork, adaptive tiering</th>
+<td>33.6</td>
+</tr>
+<tr><th>D: fork + MTP</th>
+<td>39.7</td>
+</tr>
+</tbody></table></details></figure>
+<p><strong>C, the tiering fork, came out 4.3 % slower instead of 23 % faster.</strong> The tiering itself was running (<code>10 slots/layer, 0.79 GiB pinned</code>). Its reported hit rate of 23 % turned out to be counted over prefill tokens too: we recomputed <code>(9,336 prompt + 1,096 generated) × 8 × 40 = 3,338,240</code>, which matches the reported total of 3,338,560. In a later run with almost only generation, the fork’s own counter showed <strong>26.2 % against our simulated 25.7 %</strong>. The simulation of the hit rate was right. The hits just didn’t turn into speed.</p>
+<p>Why not? A later arm F, the same fork with tiering disabled, ran at 32.85 t/s, <strong>−5.6 % against our build</strong>. The fork’s base is 2,002 commits older than ours and slower on its own. With tiering on, it wasn’t slower than without. Tiering costs nothing and gains little.</p>
+<p>The fork also forces a micro-batch of 256 for prefill, which made prompt processing 3.5–9.6× slower:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Request</th>
+<th>A (our build)</th>
+<th>D (fork + MTP)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent with tools</td>
+<td>11.7 s</td>
+<td>19.1 s</td>
+</tr>
+<tr>
+<td>New code</td>
+<td>12.0 s</td>
+<td>10.7 s</td>
+</tr>
+<tr>
+<td>Code review</td>
+<td>16.9 s</td>
+<td>65.5 s</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="mtp-real-gain-still-out">MTP: real gain, still out</h2>
+<p>Qwen3.6 has a multi-token-prediction head. Our build supports <code>--spec-type draft-mtp</code>, and reading the code showed something important: unlike n-gram speculation, MTP <strong>does not replay</strong> on rejection. It keeps a snapshot of the recurrent state per token and rolls back. That moves the theoretical break-even from ~73 % to ~46 % acceptance.</p>
+<p>First attempt on our build: out of memory. The draft context allocates its own compute buffer at the same ubatch of 4096 (1,344 MiB, ~8.5 GB in total). The fix is <code>--spec-draft-n-ubatch 256</code>. Second window, rules again fixed in advance, with the decision made on the arm that uses the production sampler:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Arm</th>
+<th>tg median</th>
+<th>vs A</th>
+<th>Acceptance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A: production profile</td>
+<td>34.79 t/s</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>MTP, greedy</td>
+<td>39.70 t/s</td>
+<td>+14.1 %</td>
+<td>0.851</td>
+</tr>
+<tr>
+<td><strong>MTP, production sampling</strong></td>
+<td><strong>38.68 t/s</strong></td>
+<td><strong>+11.2 %</strong></td>
+<td>0.830</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Pre-registered criterion</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tg median ≥ 1.15 × A (40.01 t/s)</td>
+<td><strong>missed</strong>: 38.68</td>
+</tr>
+<tr>
+<td>min(MTP) &gt; max(A)</td>
+<td>met: 38.32 &gt; 35.26</td>
+</tr>
+<tr>
+<td>End-to-end per prompt at most 5 % worse</td>
+<td><strong>missed</strong>: 32k document +12.8 %, its prefill 25.9 → 31.7 s</td>
+</tr>
+<tr>
+<td>Tool calls valid</td>
+<td>met</td>
+</tr>
+<tr>
+<td>VRAM peak ≤ 7,680 MiB</td>
+<td><strong>missed by 7 MiB</strong>: 7,687</td>
+</tr>
+</tbody>
+</table></div>
+<p>The generation gain is real and deterministic: draft counts and tokens were identical across processes. But the draft context reads the prompt too, at ubatch 256, and that costs 22 % prefill on a 32k document. For agent work, where requests read far more tokens than they write, the prefill loss outweighs the generation gain.</p>
+<h2 id="the-useful-by-product">The useful by-product</h2>
+<p>The same window calibrated how generation time scales with expert bytes, by forcing the model to use fewer experts per token (<code>expert_used_count</code> 8 → 6 → 4):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Experts per token</th>
+<th>ms per token</th>
+<th>Scaling factor s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8</td>
+<td>28.30</td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td>23.93</td>
+<td>0.83</td>
+</tr>
+<tr>
+<td>4</td>
+<td>18.74</td>
+<td>0.91</td>
+</tr>
+</tbody>
+</table></div>
+<p>s = 1 means time scales perfectly with bytes, and s = 0 means it’s all fixed per-op overhead. At 0.83–0.91, <strong>expert bytes are what costs time.</strong> That makes smaller expert quants the most promising remaining lever for generation. See <a href="quant-formats-as-transport.html">quant formats as transport</a>.</p>
+<div class="decision">
+<p><strong>Decision:</strong> don’t port the tiering, because the fork’s base is slower and tiering gains little on top of it. MTP stays out of the production profile: +11 % generation doesn’t make up for −22 % prefill and a VRAM peak that broke our own limit. Next lever: Q3_K experts.</p>
+</div>
+
+</div>
+</div>
+<nav class="pager" aria-label="More experiments"><a class="prev" href="sampling-for-agents.html"><span>INF-008, earlier</span>The thinking loop that wasn&#x27;t a loop</a><a class="next" href="quant-formats-as-transport.html"><span>INF-010, later</span>Quant formats as a transport problem</a></nav>
+</article>
+</main>
+<footer class="site">
+  <div class="foot-brand"><svg class="mark" viewBox="0 0 26 20" width="26" height="20" aria-hidden="true"><defs><linearGradient id="mark-grad" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5434e8"/><stop offset="1" stop-color="#b8a6ff"/></linearGradient></defs><rect x="0" y="14" width="5" height="6" rx="1"/><rect x="7" y="9" width="5" height="11" rx="1"/><rect x="14" y="5" width="5" height="15" rx="1"/><rect x="21" y="0" width="5" height="20" rx="1"/></svg><span>Madison AI Labs</span></div>
+  <p>Independent research, Vienna. Every number on this site was measured on our own hardware unless it says
+  otherwise, and each one carries its evidence level. Corrections stay visible.</p>
+  <nav aria-label="Footer"><a href="../research.html">Research</a><a href="../experiments.html" aria-current="page">Experiments</a><a href="../benchmarks.html">Benchmarks</a><a href="../hardware.html">Hardware</a><a href="../posts/method.html">Method</a><a href="../support.html">Support</a><a href="../about.html">About</a></nav>
+</footer>
+<script src="../static/site.js" defer></script>
+</body>
+</html>

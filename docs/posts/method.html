@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How we measure | Madison AI Labs</title>
+<meta name="description" content="The rules behind every number on this site, and the ways we got it wrong before we had them.">
+<meta property="og:title" content="How we measure | Madison AI Labs">
+<meta property="og:description" content="The rules behind every number on this site, and the ways we got it wrong before we had them.">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#1b0b42">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="site-bar"><header class="site">
+  <a class="brand" href="../index.html"><svg class="mark" viewBox="0 0 26 20" width="26" height="20" aria-hidden="true"><defs><linearGradient id="mark-grad" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5434e8"/><stop offset="1" stop-color="#b8a6ff"/></linearGradient></defs><rect x="0" y="14" width="5" height="6" rx="1"/><rect x="7" y="9" width="5" height="11" rx="1"/><rect x="14" y="5" width="5" height="15" rx="1"/><rect x="21" y="0" width="5" height="20" rx="1"/></svg><span>Madison <i>AI Labs</i></span></a>
+  <nav aria-label="Main"><a href="../research.html">Research</a><a href="../experiments.html">Experiments</a><a href="../benchmarks.html">Benchmarks</a><a href="../hardware.html">Hardware</a><a href="../posts/method.html" aria-current="page">Method</a><a href="../support.html">Support</a><a href="../about.html">About</a></nav>
+</header></div>
+<main id="main">
+<article class="post">
+<header class="post-head">
+
+<h1>How we measure</h1>
+<p class="lede">The rules behind every number on this site, and the ways we got it wrong before we had them.</p>
+</header>
+<div class="post-body">
+<aside class="post-aside"><nav class="toc" aria-label="On this page"><p>On this page</p><ol><li><a href="#one-machine-one-build">One machine, one build</a></li><li><a href="#separate-processes-alternating-order">Separate processes, alternating order</a></li><li><a href="#real-text-real-server">Real text, real server</a></li><li><a href="#rules-before-results">Rules before results</a></li><li><a href="#measured-calculated-claimed">Measured, calculated, claimed</a></li><li><a href="#check-that-the-harness-measures-what-you-think">Check that the harness measures what you think</a></li><li><a href="#corrections-stay-visible">Corrections stay visible</a></li><li><a href="#shared-machine">Shared machine</a></li><li><a href="#what-we-dont-claim">What we don’t claim</a></li></ol></nav></aside>
+<div class="prose">
+<h2 id="one-machine-one-build">One machine, one build</h2>
+<p>Every number comes from one machine: RTX 3070 8 GB on PCIe 3.0 x16, i9-10850K, 2 × 16 GB DDR4-3000, Ubuntu 26.04, llama.cpp build b12156 (<code>45b6604b2</code>) compiled with CUDA 12.4 for arch 86. Model files are verified by SHA256 against the Hugging Face LFS checksums. <strong>Comparisons are only valid within one build.</strong> When the build changes, the baselines are measured again.</p>
+<h2 id="separate-processes-alternating-order">Separate processes, alternating order</h2>
+<p>Generation speed scatters between 30 and 37 t/s across processes with identical parameters, while the repetitions <em>inside</em> one llama-bench process agree to a few tenths. The ± that llama-bench prints is therefore not the uncertainty you care about. So:</p>
+<ul>
+<li>every arm runs in <strong>several separate processes</strong>, usually three, often six;</li>
+<li>arms alternate (ABBA, ABCDDCBA, Latin squares, randomized blocks with a fixed seed) so drift over time doesn’t look like an effect;</li>
+<li>differences under about 3 t/s from single runs count as nothing.</li>
+</ul>
+<h2 id="real-text-real-server">Real text, real server</h2>
+<p>llama-bench feeds random tokens. For an MoE model that changes the routing: a 4096-token batch of random tokens uses 85 % of the experts, while real text uses 98 %. That made llama-bench report 10 % more prefill than the server delivers. Decisions are based on <strong>llama-server with the exact production arguments and real text</strong> (source code and documentation, sent as token arrays, cache disabled), or on replays of real agent sessions with tool calls.</p>
+<h2 id="rules-before-results">Rules before results</h2>
+<p>For the larger experiments, the decision rule was written down and committed before the measurement window opened. For example: “a winner needs a median of at least 1.15× baseline, a minimum above the baseline’s maximum, end-to-end time per prompt at most 5 % worse, valid tool calls, and a VRAM peak of at most 7,680 MiB.” MTP missed that last one by 7 MiB, and it stayed out. A rule you bend after the fact isn’t a rule.</p>
+<h2 id="measured-calculated-claimed">Measured, calculated, claimed</h2>
+<p>The lab notes mark every statement as one of three things:</p>
+<ul>
+<li><strong>measured</strong>: we ran it and have the raw data;</li>
+<li><strong>calculated</strong>: derived from measured parts, not run as such;</li>
+<li><strong>claimed</strong>: someone else’s number or explanation, not checked.</li>
+</ul>
+<p>Certainty is stated explicitly (high, medium, low), together with the reason. “The routing is skewed” is high: six prompts and 3,844 generated tokens. “A 2 GiB saving from deriving the mask” is calculated, and nothing was started.</p>
+<h2 id="check-that-the-harness-measures-what-you-think">Check that the harness measures what you think</h2>
+<ul>
+<li>The profiling build’s timers cost 0.5 % throughput, which was measured against the unpatched binary.</li>
+<li>The quant harness had to reproduce the shipped tensors exactly before any of its other numbers counted.</li>
+<li>The allocator dump had to match the failing <code>cudaMalloc</code> size to the byte.</li>
+<li>A routing trace that produced plausible-looking numbers was wrong twice (a non-contiguous view, a layer that only computes one row in prefill). It was caught by an invariant check: marker tokens must equal routing rows.</li>
+<li>A run that coincided with another job on the machine (a benchmark suite in containers) was declared invalid and repeated. A watchdog checked the machine every 30 seconds during the repeat.</li>
+</ul>
+<h2 id="corrections-stay-visible">Corrections stay visible</h2>
+<p>When something turns out wrong, the correction goes next to the original statement, with the commit that made the mistake. Examples on this site: the “solved” RAM bandwidth question, a mixed-up baseline in a prefill estimate (1,650 → 2,260 should have been 1,577 → 2,257), and a code reference that pointed at the wrong attention path.</p>
+<h2 id="shared-machine">Shared machine</h2>
+<p>The GPU is shared by several sessions and a production server. Heavy measurements run in a claimed window: the server is stopped through its service tool, the card is claimed, and the server is restored and health-checked afterwards. Other sessions’ experiments are never interrupted to make room.</p>
+<h2 id="what-we-dont-claim">What we don’t claim</h2>
+<p>Small samples are called small. Three seeds per tool-use scenario give a 95 % upper bound of 0.21 on the failure rate, and that is written next to the score. Outputs that differ at temperature 0 are reported as “different”, not as “worse”. Quality was not part of those measurements.</p>
+
+</div>
+</div>
+
+</article>
+</main>
+<footer class="site">
+  <div class="foot-brand"><svg class="mark" viewBox="0 0 26 20" width="26" height="20" aria-hidden="true"><defs><linearGradient id="mark-grad" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5434e8"/><stop offset="1" stop-color="#b8a6ff"/></linearGradient></defs><rect x="0" y="14" width="5" height="6" rx="1"/><rect x="7" y="9" width="5" height="11" rx="1"/><rect x="14" y="5" width="5" height="15" rx="1"/><rect x="21" y="0" width="5" height="20" rx="1"/></svg><span>Madison AI Labs</span></div>
+  <p>Independent research, Vienna. Every number on this site was measured on our own hardware unless it says
+  otherwise, and each one carries its evidence level. Corrections stay visible.</p>
+  <nav aria-label="Footer"><a href="../research.html">Research</a><a href="../experiments.html">Experiments</a><a href="../benchmarks.html">Benchmarks</a><a href="../hardware.html">Hardware</a><a href="../posts/method.html" aria-current="page">Method</a><a href="../support.html">Support</a><a href="../about.html">About</a></nav>
+</footer>
+<script src="../static/site.js" defer></script>
+</body>
+</html>

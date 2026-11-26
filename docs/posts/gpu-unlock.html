@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>gpu-unlock: +90 % on GEMM, +1 % on tokens | Madison AI Labs</title>
+<meta name="description" content="A boot-time firmware exploit lifts the RTX 3070&#x27;s halved tensor-core rate for FP16 with FP32 accumulation. Matrix multiplies got almost twice as fast. Our quantized LLM barely noticed, and image generation got 14 to 32 % faster.">
+<meta property="og:title" content="gpu-unlock: +90 % on GEMM, +1 % on tokens | Madison AI Labs">
+<meta property="og:description" content="A boot-time firmware exploit lifts the RTX 3070&#x27;s halved tensor-core rate for FP16 with FP32 accumulation. Matrix multiplies got almost twice as fast. Our quantized LLM barely noticed, and image generation got 14 to 32 % faster.">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#1b0b42">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="site-bar"><header class="site">
+  <a class="brand" href="../index.html"><svg class="mark" viewBox="0 0 26 20" width="26" height="20" aria-hidden="true"><defs><linearGradient id="mark-grad" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5434e8"/><stop offset="1" stop-color="#b8a6ff"/></linearGradient></defs><rect x="0" y="14" width="5" height="6" rx="1"/><rect x="7" y="9" width="5" height="11" rx="1"/><rect x="14" y="5" width="5" height="15" rx="1"/><rect x="21" y="0" width="5" height="20" rx="1"/></svg><span>Madison <i>AI Labs</i></span></a>
+  <nav aria-label="Main"><a href="../research.html">Research</a><a href="../experiments.html" aria-current="page">Experiments</a><a href="../benchmarks.html">Benchmarks</a><a href="../hardware.html">Hardware</a><a href="../posts/method.html">Method</a><a href="../support.html">Support</a><a href="../about.html">About</a></nav>
+</header></div>
+<main id="main">
+<article class="post">
+<header class="post-head">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../research.html">Research</a><a href="../research.html#efficient-inference">Efficient inference</a><span>INF-005</span></nav>
+<h1>gpu-unlock: +90 % on GEMM, +1 % on tokens</h1>
+<p class="lede">A boot-time firmware exploit lifts the RTX 3070&#x27;s halved tensor-core rate for FP16 with FP32 accumulation. Matrix multiplies got almost twice as fast. Our quantized LLM barely noticed, and image generation got 14 to 32 % faster.</p>
+</header>
+<div class="post-body">
+<aside class="post-aside"><dl class="facts"><div><dt>Date</dt><dd><time datetime="2026-11-06">6 November 2026</time></dd></div><div><dt>Evidence</dt><dd><span class="ev ev-measured" title="We ran it and kept the raw data."><svg viewBox="0 0 26 17" width="26" height="17" aria-hidden="true"><rect class="on" x="0" y="12" width="5" height="5" rx="1"/><rect class="on" x="7" y="8" width="5" height="9" rx="1"/><rect class="off" x="14" y="4" width="5" height="13" rx="1"/><rect class="off" x="21" y="0" width="5" height="17" rx="1"/></svg>Measured</span><small>We ran it and kept the raw data.</small></dd></div><div><dt>Decision</dt><dd><span class="verdict v-rejected"><span aria-hidden="true">✕</span> Rejected</span></dd></div><div><dt>Result</dt><dd><span class="result">GEMM +90 %, pp +1–5 %</span></dd></div><div><dt>System</dt><dd><a href="../hardware.html">Bench system 1</a></dd></div><div><dt>Topics</dt><dd><span class="tag">tensor cores</span><span class="tag">GEMM</span><span class="tag">image generation</span></dd></div></dl><nav class="toc" aria-label="On this page"><p>On this page</p><ol><li><a href="#what-it-is">What it is</a></li><li><a href="#setup">Setup</a></li><li><a href="#results">Results</a></li><li><a href="#where-it-does-matter-image-generation">Where it does matter: image generation</a></li><li><a href="#stability-thin-evidence">Stability: thin evidence</a></li></ol></nav></aside>
+<div class="prose">
+<h2 id="what-it-is">What it is</h2>
+<p>GeForce cards run FP16/BF16/TF32 tensor-core math with FP32 accumulation at half the rate the silicon can do. <a href="https://github.com/Zagitta/gpu-unlock">Zagitta/gpu-unlock</a> (version 2.0.0, commit <code>7eb51bc</code>) removes that limit. A kernel module in the initramfs runs before the NVIDIA driver, uses a buffer overflow in the signed booter to write the speed selectors, and then resets the function (FLR). Without the boot parameter <code>gpu_unlock.targets=</code> the module does nothing.</p>
+<p>That’s a firmware exploit in the boot path of a remote machine with no hardware watchdog. We wanted a number that would justify it.</p>
+<h2 id="setup">Setup</h2>
+<p>Four fresh boots, A1 B1 A2 B2, same initramfs. The kernel command lines differ only in <code>gpu_unlock.targets=0000:01:00.0</code>. Same build, same driver, same 270 W power limit, same server profile. Values are medians per boot, and Δ compares the mean of A1/A2 with B1/B2.</p>
+<h2 id="results">Results</h2>
+<figure class="chart" id="chart-1">
+<figcaption class="chart-title">Synthetic GEMM</figcaption>
+<svg viewBox="0 0 720 203" role="img" aria-label="Synthetic GEMM" preserveAspectRatio="xMinYMin meet">
+<defs><linearGradient id="c1-s1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4a2fd6"/><stop offset="1" stop-color="#8b6cff"/></linearGradient><linearGradient id="c1-s2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a77bff"/><stop offset="1" stop-color="#eaa8ff"/></linearGradient><linearGradient id="c1-s3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3b6fe0"/><stop offset="1" stop-color="#7fb0ff"/></linearGradient><linearGradient id="c1-hl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9a6dff"/><stop offset="1" stop-color="#eaa8ff"/></linearGradient><linearGradient id="c1-dim" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2c2766"/><stop offset="1" stop-color="#463d9c"/></linearGradient></defs>
+<rect class="s1" fill="url(#c1-s1)" x="200" y="4" width="12" height="12" rx="3"/>
+<text class="legend" x="218" y="14">Stock</text>
+<rect class="s2" fill="url(#c1-s2)" x="270" y="4" width="12" height="12" rx="3"/>
+<text class="legend" x="288" y="14">Unlock</text>
+<line class="grid base" x1="200.0" y1="26" x2="200.0" y2="181"/>
+<text class="tick" x="200.0" y="197" text-anchor="middle">0</text>
+<line class="grid" x1="312.5" y1="26" x2="312.5" y2="181"/>
+<text class="tick" x="312.5" y="197" text-anchor="middle">20</text>
+<line class="grid" x1="425.0" y1="26" x2="425.0" y2="181"/>
+<text class="tick" x="425.0" y="197" text-anchor="middle">40</text>
+<line class="grid" x1="537.5" y1="26" x2="537.5" y2="181"/>
+<text class="tick" x="537.5" y="197" text-anchor="middle">60</text>
+<line class="grid" x1="650.0" y1="26" x2="650.0" y2="181"/>
+<text class="tick" x="650.0" y="197" text-anchor="middle">80</text>
+<text class="tick unit" x="680" y="197">TFLOPS</text>
+<text class="rowlabel" x="188" y="51.5" text-anchor="end">FP16 → FP32</text>
+<path class="s1" fill="url(#c1-s1)" d="M200,30 h222.0 q5,0 5,5 v6 q0,5 -5,5 h-222.0 z"><title>FP16 → FP32 · Stock: 40.4 TFLOPS</title></path>
+<text class="value" x="434.0" y="42.5">40.4</text>
+<path class="s2" fill="url(#c1-s2)" d="M200,49 h427.0 q5,0 5,5 v6 q0,5 -5,5 h-427.0 z"><title>FP16 → FP32 · Unlock: 76.8 TFLOPS</title></path>
+<text class="value" x="639.0" y="61.5">76.8</text>
+<text class="rowlabel" x="188" y="100.5" text-anchor="end">TF32</text>
+<path class="s1" fill="url(#c1-s1)" d="M200,79 h110.0 q5,0 5,5 v6 q0,5 -5,5 h-110.0 z"><title>TF32 · Stock: 20.4 TFLOPS</title></path>
+<text class="value" x="322.0" y="91.5">20.4</text>
+<path class="s2" fill="url(#c1-s2)" d="M200,98 h208.5 q5,0 5,5 v6 q0,5 -5,5 h-208.5 z"><title>TF32 · Unlock: 38.0 TFLOPS</title></path>
+<text class="value" x="420.5" y="110.5">38.0</text>
+<text class="rowlabel" x="188" y="149.5" text-anchor="end">FP32 (control)</text>
+<path class="s1" fill="url(#c1-s1)" d="M200,128 h66.8 q5,0 5,5 v6 q0,5 -5,5 h-66.8 z"><title>FP32 (control) · Stock: 12.8 TFLOPS</title></path>
+<text class="value" x="278.8" y="140.5">12.8</text>
+<path class="s2" fill="url(#c1-s2)" d="M200,147 h66.5 q5,0 5,5 v6 q0,5 -5,5 h-66.5 z"><title>FP32 (control) · Unlock: 12.7 TFLOPS</title></path>
+<text class="value" x="278.6" y="159.5">12.7</text>
+</svg>
+<p class="chart-note">Mean of two boots per arm. 40 TFLOPS stock matches the upstream figure for the 3070.</p>
+<details class="chart-table"><summary>Show the numbers</summary><table><thead><tr><th></th>
+<th>Stock</th>
+<th>Unlock</th>
+</tr></thead><tbody>
+<tr><th>FP16 → FP32</th>
+<td>40.4</td>
+<td>76.8</td>
+</tr>
+<tr><th>TF32</th>
+<td>20.4</td>
+<td>38.0</td>
+</tr>
+<tr><th>FP32 (control)</th>
+<td>12.8</td>
+<td>12.7</td>
+</tr>
+</tbody></table></details></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Measurement</th>
+<th>Stock</th>
+<th>Unlock</th>
+<th>Δ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>35B pp512</td>
+<td>344 / 343</td>
+<td>344 / 341</td>
+<td>0</td>
+</tr>
+<tr>
+<td>35B pp16384</td>
+<td>1,515 / 1,508</td>
+<td>1,537 / 1,527</td>
+<td>+1.3 %</td>
+</tr>
+<tr>
+<td>35B pp4096 at depth 32k</td>
+<td>1,322 / 1,316</td>
+<td>1,362 / 1,364</td>
+<td>+3.3 %</td>
+</tr>
+<tr>
+<td>35B tg128</td>
+<td>36.8 / 36.9</td>
+<td>36.6 / 34.5</td>
+<td>noise</td>
+</tr>
+<tr>
+<td>Server, 115k document cold</td>
+<td>1,113 / 1,125 t/s</td>
+<td>1,172 / 1,177 t/s</td>
+<td><strong>+5.0 %, −4.8 s</strong></td>
+</tr>
+<tr>
+<td>9B (all in VRAM) pp16384</td>
+<td>2,775 / 2,767</td>
+<td>2,787 / 2,786</td>
+<td>+0.6 %</td>
+</tr>
+<tr>
+<td>9B tg128</td>
+<td>70.1 / 70.1</td>
+<td>70.1 / 70.0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The unlock works:</strong> +85 to +90 % on GEMM, FP32 unchanged, and A2 falls back to stock after the reboot. <strong>For our profile it does almost nothing:</strong> 0 to 1.3 % without depth, 5 % at 115k. The spread between A1 and A2 was at most 1.1 %, so these are real but small. Even the 9B model, which never touches system RAM, gained only 0.6 %, so RAM isn’t the only reason.</p>
+<p>Upstream’s explanation, which our curve matches but which we haven’t verified in the ggml source: quantized GGUF weights run in INT8 kernels, and only FlashAttention over the f16 KV cache benefits. That’s why the gain grows with context depth.</p>
+<p>Outputs were identical: fixed-nonce requests produced the same text hash in all four boots.</p>
+<h2 id="where-it-does-matter-image-generation">Where it does matter: image generation</h2>
+<p>We had a second workload on the same card: Z-Image-Turbo in ComfyUI generating coloring-book line art. Same 72 images and seeds, one fresh warm boot per arm:</p>
+<figure class="chart" id="chart-2">
+<figcaption class="chart-title">Seconds per image, Z-Image-Turbo</figcaption>
+<svg viewBox="0 0 720 301" role="img" aria-label="Seconds per image, Z-Image-Turbo" preserveAspectRatio="xMinYMin meet">
+<defs><linearGradient id="c2-s1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4a2fd6"/><stop offset="1" stop-color="#8b6cff"/></linearGradient><linearGradient id="c2-s2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a77bff"/><stop offset="1" stop-color="#eaa8ff"/></linearGradient><linearGradient id="c2-s3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3b6fe0"/><stop offset="1" stop-color="#7fb0ff"/></linearGradient><linearGradient id="c2-hl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9a6dff"/><stop offset="1" stop-color="#eaa8ff"/></linearGradient><linearGradient id="c2-dim" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2c2766"/><stop offset="1" stop-color="#463d9c"/></linearGradient></defs>
+<rect class="s1" fill="url(#c2-s1)" x="200" y="4" width="12" height="12" rx="3"/>
+<text class="legend" x="218" y="14">Stock</text>
+<rect class="s2" fill="url(#c2-s2)" x="270" y="4" width="12" height="12" rx="3"/>
+<text class="legend" x="288" y="14">Unlock</text>
+<line class="grid base" x1="200.0" y1="26" x2="200.0" y2="279"/>
+<text class="tick" x="200.0" y="295" text-anchor="middle">0</text>
+<line class="grid" x1="312.5" y1="26" x2="312.5" y2="279"/>
+<text class="tick" x="312.5" y="295" text-anchor="middle">3.75</text>
+<line class="grid" x1="425.0" y1="26" x2="425.0" y2="279"/>
+<text class="tick" x="425.0" y="295" text-anchor="middle">7.5</text>
+<line class="grid" x1="537.5" y1="26" x2="537.5" y2="279"/>
+<text class="tick" x="537.5" y="295" text-anchor="middle">11.2</text>
+<line class="grid" x1="650.0" y1="26" x2="650.0" y2="279"/>
+<text class="tick" x="650.0" y="295" text-anchor="middle">15</text>
+<text class="tick unit" x="680" y="295">s</text>
+<text class="rowlabel" x="188" y="51.5" text-anchor="end">bf16 + LoRA, 1024²</text>
+<path class="s1" fill="url(#c2-s1)" d="M200,30 h418.0 q5,0 5,5 v6 q0,5 -5,5 h-418.0 z"><title>bf16 + LoRA, 1024² · Stock: 14.1 s</title></path>
+<text class="value" x="630.0" y="42.5">14.1</text>
+<path class="s2" fill="url(#c2-s2)" d="M200,49 h283.0 q5,0 5,5 v6 q0,5 -5,5 h-283.0 z"><title>bf16 + LoRA, 1024² · Unlock: 9.6 s</title></path>
+<text class="value" x="495.0" y="61.5">9.6</text>
+<text class="rowlabel" x="188" y="100.5" text-anchor="end">int8 + LoRA, 1024²</text>
+<path class="s1" fill="url(#c2-s1)" d="M200,79 h205.0 q5,0 5,5 v6 q0,5 -5,5 h-205.0 z"><title>int8 + LoRA, 1024² · Stock: 7 s</title></path>
+<text class="value" x="417.0" y="91.5">7</text>
+<path class="s2" fill="url(#c2-s2)" d="M200,98 h175.0 q5,0 5,5 v6 q0,5 -5,5 h-175.0 z"><title>int8 + LoRA, 1024² · Unlock: 6 s</title></path>
+<text class="value" x="387.0" y="110.5">6</text>
+<text class="rowlabel" x="188" y="149.5" text-anchor="end">w4a8 + LoRA, 1024²</text>
+<path class="s1" fill="url(#c2-s1)" d="M200,128 h205.0 q5,0 5,5 v6 q0,5 -5,5 h-205.0 z"><title>w4a8 + LoRA, 1024² · Stock: 7 s</title></path>
+<text class="value" x="417.0" y="140.5">7</text>
+<path class="s2" fill="url(#c2-s2)" d="M200,147 h175.0 q5,0 5,5 v6 q0,5 -5,5 h-175.0 z"><title>w4a8 + LoRA, 1024² · Unlock: 6 s</title></path>
+<text class="value" x="387.0" y="159.5">6</text>
+<text class="rowlabel" x="188" y="198.5" text-anchor="end">int8 + LoRA, 1536×1024</text>
+<path class="s1" fill="url(#c2-s1)" d="M200,177 h340.0 q5,0 5,5 v6 q0,5 -5,5 h-340.0 z"><title>int8 + LoRA, 1536×1024 · Stock: 11.5 s</title></path>
+<text class="value" x="552.0" y="189.5">11.5</text>
+<path class="s2" fill="url(#c2-s2)" d="M200,196 h295.0 q5,0 5,5 v6 q0,5 -5,5 h-295.0 z"><title>int8 + LoRA, 1536×1024 · Unlock: 10 s</title></path>
+<text class="value" x="507.0" y="208.5">10</text>
+<text class="rowlabel" x="188" y="247.5" text-anchor="end">w4a8 + LoRA, 1536×1024</text>
+<path class="s1" fill="url(#c2-s1)" d="M200,226 h343.0 q5,0 5,5 v6 q0,5 -5,5 h-343.0 z"><title>w4a8 + LoRA, 1536×1024 · Stock: 11.6 s</title></path>
+<text class="value" x="555.0" y="238.5">11.6</text>
+<path class="s2" fill="url(#c2-s2)" d="M200,245 h283.0 q5,0 5,5 v6 q0,5 -5,5 h-283.0 z"><title>w4a8 + LoRA, 1536×1024 · Unlock: 9.6 s</title></path>
+<text class="value" x="495.0" y="257.5">9.6</text>
+</svg>
+<p class="chart-note">Median per image, wall time including text encoder and VAE, sampled every 0.5 s, so the 1024² percentages are coarse. Lower is better.</p>
+<details class="chart-table"><summary>Show the numbers</summary><table><thead><tr><th></th>
+<th>Stock</th>
+<th>Unlock</th>
+</tr></thead><tbody>
+<tr><th>bf16 + LoRA, 1024²</th>
+<td>14.1</td>
+<td>9.6</td>
+</tr>
+<tr><th>int8 + LoRA, 1024²</th>
+<td>7</td>
+<td>6</td>
+</tr>
+<tr><th>w4a8 + LoRA, 1024²</th>
+<td>7</td>
+<td>6</td>
+</tr>
+<tr><th>int8 + LoRA, 1536×1024</th>
+<td>11.5</td>
+<td>10</td>
+</tr>
+<tr><th>w4a8 + LoRA, 1536×1024</th>
+<td>11.6</td>
+<td>9.6</td>
+</tr>
+</tbody></table></details></figure>
+<p>All 72 images came out pixel-identical to the first run in both arms. The full batch went from 12:53 to 10:36 min (−18 %). bf16 gains the most (−32 %), but even with the unlock it stays slower than int8 and didn’t look better. The card sits at its 270 W limit in both arms and throttles thermally in 15 % of the samples with the unlock versus 8 % without.</p>
+<h2 id="stability-thin-evidence">Stability: thin evidence</h2>
+<p>Three unlock boots, about 35 minutes of load in total, no Xid errors, no lockups. All three were warm boots. Upstream issue #137 reports a hard lock in 1 of 5 boots on a Gigabyte 3070 LHR, on a cold start, which we haven’t tested.</p>
+<p>Testing the safety net was also instructive. <code>hardlockup_panic=1</code> isn’t a boot parameter this kernel knows, so the test entries wouldn’t have rebooted a hard-locked machine by themselves. Only <code>softlockup_panic</code> and <code>panic=10</code> took effect. The test entries now use <code>nmi_watchdog=panic,1</code>, which sets <code>kernel.hardlockup_panic</code> to 1. A real hard lock hasn’t triggered it yet. What is reliable is the way back: the one-shot boot entry falls back to the default (no unlock) after any reset.</p>
+<div class="decision">
+<p><strong>Decision:</strong> the unlock stays off. 5 % on very long documents isn’t worth a firmware exploit in the boot path of a machine nobody is sitting next to. The package stays installed but inert: it costs a 153 MB instead of 65 MB initramfs and a tainted kernel, and DKMS rebuilds it for new kernels. We’ll look again if unquantized FP16/BF16 workloads or LoRA training show up.</p>
+</div>
+
+</div>
+</div>
+<nav class="pager" aria-label="More experiments"><a class="prev" href="two-knobs-that-made-it-slower.html"><span>INF-004, earlier</span>Two knobs that made it slower, and why</a><a class="next" href="heretic-tool-calling.html"><span>INF-006, later</span>Is the uncensored model better with tools?</a></nav>
+</article>
+</main>
+<footer class="site">
+  <div class="foot-brand"><svg class="mark" viewBox="0 0 26 20" width="26" height="20" aria-hidden="true"><defs><linearGradient id="mark-grad" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5434e8"/><stop offset="1" stop-color="#b8a6ff"/></linearGradient></defs><rect x="0" y="14" width="5" height="6" rx="1"/><rect x="7" y="9" width="5" height="11" rx="1"/><rect x="14" y="5" width="5" height="15" rx="1"/><rect x="21" y="0" width="5" height="20" rx="1"/></svg><span>Madison AI Labs</span></div>
+  <p>Independent research, Vienna. Every number on this site was measured on our own hardware unless it says
+  otherwise, and each one carries its evidence level. Corrections stay visible.</p>
+  <nav aria-label="Footer"><a href="../research.html">Research</a><a href="../experiments.html" aria-current="page">Experiments</a><a href="../benchmarks.html">Benchmarks</a><a href="../hardware.html">Hardware</a><a href="../posts/method.html">Method</a><a href="../support.html">Support</a><a href="../about.html">About</a></nav>
+</footer>
+<script src="../static/site.js" defer></script>
+</body>
+</html>
