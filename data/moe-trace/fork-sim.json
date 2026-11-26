@@ -1,0 +1,752 @@
+{
+ "800": {
+  "S": 10,
+  "fest": {
+   "treffer": 0.18117395741615303,
+   "tausche_je_token": 0.0,
+   "tg": 42.777965392923896,
+   "je_prompt": {
+    "agent-quelltext": {
+     "treffer": 0.17958333333333334,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 900,
+     "tausche_je_token": 0.0
+    },
+    "agent-tools": {
+     "treffer": 0.11912393162393162,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 144,
+     "tausche_je_token": 0.0
+    },
+    "chat-en": {
+     "treffer": 0.14589209401709402,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 600,
+     "tausche_je_token": 0.0
+    },
+    "code-neu": {
+     "treffer": 0.19670584045584047,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 900,
+     "tausche_je_token": 0.0
+    },
+    "doku-deutsch": {
+     "treffer": 0.12067307692307692,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 600,
+     "tausche_je_token": 0.0
+    },
+    "review": {
+     "treffer": 0.2581135531135531,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 700,
+     "tausche_je_token": 0.0
+    }
+   }
+  },
+  "seed": {
+   "treffer": 0.19572043677792897,
+   "tausche_je_token": 0.022372528616024973,
+   "tg": 43.31056003585389,
+   "je_prompt": {
+    "agent-quelltext": {
+     "treffer": 0.1957656695156695,
+     "tausche": 29,
+     "tausche_decode": 29.0,
+     "decode_token": 900,
+     "tausche_je_token": 0.03222222222222222
+    },
+    "agent-tools": {
+     "treffer": 0.11912393162393162,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 144,
+     "tausche_je_token": 0.0
+    },
+    "chat-en": {
+     "treffer": 0.14589209401709402,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 600,
+     "tausche_je_token": 0.0
+    },
+    "code-neu": {
+     "treffer": 0.19670584045584047,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 900,
+     "tausche_je_token": 0.0
+    },
+    "doku-deutsch": {
+     "treffer": 0.18778846153846154,
+     "tausche": 48,
+     "tausche_decode": 48.0,
+     "decode_token": 600,
+     "tausche_je_token": 0.08
+    },
+    "review": {
+     "treffer": 0.2596611721611722,
+     "tausche": 9,
+     "tausche_decode": 9.0,
+     "decode_token": 700,
+     "tausche_je_token": 0.012857142857142857
+    }
+   }
+  },
+  "leer": {
+   "treffer": 0.2569563955815256,
+   "tausche_je_token": 0.6592091571279917,
+   "tg": 45.531125451529725,
+   "je_prompt": {
+    "agent-quelltext": {
+     "treffer": 0.20396367521367523,
+     "tausche": 390,
+     "tausche_decode": 234.0,
+     "decode_token": 900,
+     "tausche_je_token": 0.26
+    },
+    "agent-tools": {
+     "treffer": 0.1935318732193732,
+     "tausche": 390,
+     "tausche_decode": 351.0,
+     "decode_token": 144,
+     "tausche_je_token": 2.4375
+    },
+    "chat-en": {
+     "treffer": 0.34152777777777776,
+     "tausche": 758,
+     "tausche_decode": 719.0,
+     "decode_token": 600,
+     "tausche_je_token": 1.1983333333333333
+    },
+    "code-neu": {
+     "treffer": 0.309732905982906,
+     "tausche": 723,
+     "tausche_decode": 684.0,
+     "decode_token": 900,
+     "tausche_je_token": 0.76
+    },
+    "doku-deutsch": {
+     "treffer": 0.3151869658119658,
+     "tausche": 390,
+     "tausche_decode": 234.0,
+     "decode_token": 600,
+     "tausche_je_token": 0.39
+    },
+    "review": {
+     "treffer": 0.14788003663003663,
+     "tausche": 390,
+     "tausche_decode": 312.0,
+     "decode_token": 700,
+     "tausche_je_token": 0.44571428571428573
+    }
+   }
+  }
+ },
+ "1024": {
+  "S": 13,
+  "fest": {
+   "treffer": 0.21801125296832893,
+   "tausche_je_token": 0.0,
+   "tg": 44.17005039238352,
+   "je_prompt": {
+    "agent-quelltext": {
+     "treffer": 0.22050213675213676,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 900,
+     "tausche_je_token": 0.0
+    },
+    "agent-tools": {
+     "treffer": 0.14438657407407407,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 144,
+     "tausche_je_token": 0.0
+    },
+    "chat-en": {
+     "treffer": 0.17761752136752137,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 600,
+     "tausche_je_token": 0.0
+    },
+    "code-neu": {
+     "treffer": 0.2305982905982906,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 900,
+     "tausche_je_token": 0.0
+    },
+    "doku-deutsch": {
+     "treffer": 0.15902777777777777,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 600,
+     "tausche_je_token": 0.0
+    },
+    "review": {
+     "treffer": 0.2989514652014652,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 700,
+     "tausche_je_token": 0.0
+    }
+   }
+  },
+  "seed": {
+   "treffer": 0.23208997038341472,
+   "tausche_je_token": 0.02861602497398543,
+   "tg": 44.717451793792335,
+   "je_prompt": {
+    "agent-quelltext": {
+     "treffer": 0.2349002849002849,
+     "tausche": 41,
+     "tausche_decode": 41.0,
+     "decode_token": 900,
+     "tausche_je_token": 0.04555555555555556
+    },
+    "agent-tools": {
+     "treffer": 0.14438657407407407,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 144,
+     "tausche_je_token": 0.0
+    },
+    "chat-en": {
+     "treffer": 0.17761752136752137,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 600,
+     "tausche_je_token": 0.0
+    },
+    "code-neu": {
+     "treffer": 0.2305982905982906,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 900,
+     "tausche_je_token": 0.0
+    },
+    "doku-deutsch": {
+     "treffer": 0.2254594017094017,
+     "tausche": 60,
+     "tausche_decode": 60.0,
+     "decode_token": 600,
+     "tausche_je_token": 0.1
+    },
+    "review": {
+     "treffer": 0.30081043956043957,
+     "tausche": 9,
+     "tausche_decode": 9.0,
+     "decode_token": 700,
+     "tausche_je_token": 0.012857142857142857
+    }
+   }
+  },
+  "leer": {
+   "treffer": 0.2995669241441874,
+   "tausche_je_token": 0.882414151925078,
+   "tg": 47.29168499079728,
+   "je_prompt": {
+    "agent-quelltext": {
+     "treffer": 0.24053062678062678,
+     "tausche": 507,
+     "tausche_decode": 351.0,
+     "decode_token": 900,
+     "tausche_je_token": 0.39
+    },
+    "agent-tools": {
+     "treffer": 0.2186832264957265,
+     "tausche": 507,
+     "tausche_decode": 468.0,
+     "decode_token": 144,
+     "tausche_je_token": 3.25
+    },
+    "chat-en": {
+     "treffer": 0.3917307692307692,
+     "tausche": 961,
+     "tausche_decode": 922.0,
+     "decode_token": 600,
+     "tausche_je_token": 1.5366666666666666
+    },
+    "code-neu": {
+     "treffer": 0.36293447293447295,
+     "tausche": 903,
+     "tausche_decode": 864.0,
+     "decode_token": 900,
+     "tausche_je_token": 0.96
+    },
+    "doku-deutsch": {
+     "treffer": 0.35249465811965813,
+     "tausche": 507,
+     "tausche_decode": 351.0,
+     "decode_token": 600,
+     "tausche_je_token": 0.585
+    },
+    "review": {
+     "treffer": 0.18627289377289377,
+     "tausche": 514,
+     "tausche_decode": 436.0,
+     "decode_token": 700,
+     "tausche_je_token": 0.6228571428571429
+    }
+   }
+  }
+ },
+ "1172": {
+  "S": 15,
+  "fest": {
+   "treffer": 0.23774480375677046,
+   "tausche_je_token": 0.0,
+   "tg": 44.9537122136006,
+   "je_prompt": {
+    "agent-quelltext": {
+     "treffer": 0.24117877492877493,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 900,
+     "tausche_je_token": 0.0
+    },
+    "agent-tools": {
+     "treffer": 0.16766826923076922,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 144,
+     "tausche_je_token": 0.0
+    },
+    "chat-en": {
+     "treffer": 0.1920940170940171,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 600,
+     "tausche_je_token": 0.0
+    },
+    "code-neu": {
+     "treffer": 0.25830840455840454,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 900,
+     "tausche_je_token": 0.0
+    },
+    "doku-deutsch": {
+     "treffer": 0.1695619658119658,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 600,
+     "tausche_je_token": 0.0
+    },
+    "review": {
+     "treffer": 0.31887820512820514,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 700,
+     "tausche_je_token": 0.0
+    }
+   }
+  },
+  "seed": {
+   "treffer": 0.2535111329010913,
+   "tausche_je_token": 0.03355879292403746,
+   "tg": 45.58929016875542,
+   "je_prompt": {
+    "agent-quelltext": {
+     "treffer": 0.2569764957264957,
+     "tausche": 43,
+     "tausche_decode": 43.0,
+     "decode_token": 900,
+     "tausche_je_token": 0.04777777777777778
+    },
+    "agent-tools": {
+     "treffer": 0.16766826923076922,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 144,
+     "tausche_je_token": 0.0
+    },
+    "chat-en": {
+     "treffer": 0.1920940170940171,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 600,
+     "tausche_je_token": 0.0
+    },
+    "code-neu": {
+     "treffer": 0.25830840455840454,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 900,
+     "tausche_je_token": 0.0
+    },
+    "doku-deutsch": {
+     "treffer": 0.24186431623931623,
+     "tausche": 75,
+     "tausche_decode": 75.0,
+     "decode_token": 600,
+     "tausche_je_token": 0.125
+    },
+    "review": {
+     "treffer": 0.3231730769230769,
+     "tausche": 11,
+     "tausche_decode": 11.0,
+     "decode_token": 700,
+     "tausche_je_token": 0.015714285714285715
+    }
+   }
+  },
+  "leer": {
+   "treffer": 0.3265420302035807,
+   "tausche_je_token": 1.0267950052029136,
+   "tg": 48.47725241545209,
+   "je_prompt": {
+    "agent-quelltext": {
+     "treffer": 0.26362891737891736,
+     "tausche": 585,
+     "tausche_decode": 429.0,
+     "decode_token": 900,
+     "tausche_je_token": 0.4766666666666667
+    },
+    "agent-tools": {
+     "treffer": 0.23234953703703703,
+     "tausche": 585,
+     "tausche_decode": 546.0,
+     "decode_token": 144,
+     "tausche_je_token": 3.7916666666666665
+    },
+    "chat-en": {
+     "treffer": 0.4204113247863248,
+     "tausche": 1095,
+     "tausche_decode": 1056.0,
+     "decode_token": 600,
+     "tausche_je_token": 1.76
+    },
+    "code-neu": {
+     "treffer": 0.39481481481481484,
+     "tausche": 1012,
+     "tausche_decode": 973.0,
+     "decode_token": 900,
+     "tausche_je_token": 1.0811111111111111
+    },
+    "doku-deutsch": {
+     "treffer": 0.37224893162393163,
+     "tausche": 585,
+     "tausche_decode": 429.0,
+     "decode_token": 600,
+     "tausche_je_token": 0.715
+    },
+    "review": {
+     "treffer": 0.21939102564102564,
+     "tausche": 592,
+     "tausche_decode": 514.0,
+     "decode_token": 700,
+     "tausche_je_token": 0.7342857142857143
+    }
+   }
+  }
+ },
+ "2048": {
+  "S": 27,
+  "fest": {
+   "treffer": 0.33234111102217245,
+   "tausche_je_token": 0.0,
+   "tg": 49.132376812648644,
+   "je_prompt": {
+    "agent-quelltext": {
+     "treffer": 0.3359294871794872,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 900,
+     "tausche_je_token": 0.0
+    },
+    "agent-tools": {
+     "treffer": 0.2539618945868946,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 144,
+     "tausche_je_token": 0.0
+    },
+    "chat-en": {
+     "treffer": 0.2641292735042735,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 600,
+     "tausche_je_token": 0.0
+    },
+    "code-neu": {
+     "treffer": 0.37903846153846155,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 900,
+     "tausche_je_token": 0.0
+    },
+    "doku-deutsch": {
+     "treffer": 0.24424679487179488,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 600,
+     "tausche_je_token": 0.0
+    },
+    "review": {
+     "treffer": 0.41778846153846155,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 700,
+     "tausche_je_token": 0.0
+    }
+   }
+  },
+  "seed": {
+   "treffer": 0.3520721604098295,
+   "tausche_je_token": 0.053069719042663895,
+   "tg": 50.08319213581858,
+   "je_prompt": {
+    "agent-quelltext": {
+     "treffer": 0.3575854700854701,
+     "tausche": 71,
+     "tausche_decode": 71.0,
+     "decode_token": 900,
+     "tausche_je_token": 0.07888888888888888
+    },
+    "agent-tools": {
+     "treffer": 0.2539618945868946,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 144,
+     "tausche_je_token": 0.0
+    },
+    "chat-en": {
+     "treffer": 0.2641292735042735,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 600,
+     "tausche_je_token": 0.0
+    },
+    "code-neu": {
+     "treffer": 0.37903846153846155,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 900,
+     "tausche_je_token": 0.0
+    },
+    "doku-deutsch": {
+     "treffer": 0.3343002136752137,
+     "tausche": 119,
+     "tausche_decode": 119.0,
+     "decode_token": 600,
+     "tausche_je_token": 0.19833333333333333
+    },
+    "review": {
+     "treffer": 0.4211080586080586,
+     "tausche": 14,
+     "tausche_decode": 14.0,
+     "decode_token": 700,
+     "tausche_je_token": 0.02
+    }
+   }
+  },
+  "leer": {
+   "treffer": 0.443287407614931,
+   "tausche_je_token": 1.8909989594172736,
+   "tg": 54.267581303171696,
+   "je_prompt": {
+    "agent-quelltext": {
+     "treffer": 0.3662571225071225,
+     "tausche": 1055,
+     "tausche_decode": 899.0,
+     "decode_token": 900,
+     "tausche_je_token": 0.9988888888888889
+    },
+    "agent-tools": {
+     "treffer": 0.31203258547008544,
+     "tausche": 1053,
+     "tausche_decode": 1014.0,
+     "decode_token": 144,
+     "tausche_je_token": 7.041666666666667
+    },
+    "chat-en": {
+     "treffer": 0.5601014957264957,
+     "tausche": 1805,
+     "tausche_decode": 1766.0,
+     "decode_token": 600,
+     "tausche_je_token": 2.9433333333333334
+    },
+    "code-neu": {
+     "treffer": 0.5226673789173789,
+     "tausche": 1737,
+     "tausche_decode": 1698.0,
+     "decode_token": 900,
+     "tausche_je_token": 1.8866666666666667
+    },
+    "doku-deutsch": {
+     "treffer": 0.4712980769230769,
+     "tausche": 1053,
+     "tausche_decode": 897.0,
+     "decode_token": 600,
+     "tausche_je_token": 1.495
+    },
+    "review": {
+     "treffer": 0.34313186813186813,
+     "tausche": 1073,
+     "tausche_decode": 995.0,
+     "decode_token": 700,
+     "tausche_je_token": 1.4214285714285715
+    }
+   }
+  }
+ },
+ "2600": {
+  "S": 35,
+  "fest": {
+   "treffer": 0.39107900424237574,
+   "tausche_je_token": 0.0,
+   "tg": 52.141938930533065,
+   "je_prompt": {
+    "agent-quelltext": {
+     "treffer": 0.3957371794871795,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 900,
+     "tausche_je_token": 0.0
+    },
+    "agent-tools": {
+     "treffer": 0.301994301994302,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 144,
+     "tausche_je_token": 0.0
+    },
+    "chat-en": {
+     "treffer": 0.3255235042735043,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 600,
+     "tausche_je_token": 0.0
+    },
+    "code-neu": {
+     "treffer": 0.4406980056980057,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 900,
+     "tausche_je_token": 0.0
+    },
+    "doku-deutsch": {
+     "treffer": 0.30446581196581196,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 600,
+     "tausche_je_token": 0.0
+    },
+    "review": {
+     "treffer": 0.4700503663003663,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 700,
+     "tausche_je_token": 0.0
+    }
+   }
+  },
+  "seed": {
+   "treffer": 0.4118147829451159,
+   "tausche_je_token": 0.06321540062434963,
+   "tg": 53.26657893919635,
+   "je_prompt": {
+    "agent-quelltext": {
+     "treffer": 0.420715811965812,
+     "tausche": 83,
+     "tausche_decode": 83.0,
+     "decode_token": 900,
+     "tausche_je_token": 0.09222222222222222
+    },
+    "agent-tools": {
+     "treffer": 0.301994301994302,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 144,
+     "tausche_je_token": 0.0
+    },
+    "chat-en": {
+     "treffer": 0.3255235042735043,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 600,
+     "tausche_je_token": 0.0
+    },
+    "code-neu": {
+     "treffer": 0.4406980056980057,
+     "tausche": 0,
+     "tausche_decode": 0,
+     "decode_token": 900,
+     "tausche_je_token": 0.0
+    },
+    "doku-deutsch": {
+     "treffer": 0.3957318376068376,
+     "tausche": 148,
+     "tausche_decode": 148.0,
+     "decode_token": 600,
+     "tausche_je_token": 0.24666666666666667
+    },
+    "review": {
+     "treffer": 0.47357600732600735,
+     "tausche": 12,
+     "tausche_decode": 12.0,
+     "decode_token": 700,
+     "tausche_je_token": 0.017142857142857144
+    }
+   }
+  },
+  "leer": {
+   "treffer": 0.5007746004429148,
+   "tausche_je_token": 2.458636836628512,
+   "tg": 57.585763457474755,
+   "je_prompt": {
+    "agent-quelltext": {
+     "treffer": 0.41534188034188035,
+     "tausche": 1365,
+     "tausche_decode": 1209.0,
+     "decode_token": 900,
+     "tausche_je_token": 1.3433333333333333
+    },
+    "agent-tools": {
+     "treffer": 0.35445601851851855,
+     "tausche": 1366,
+     "tausche_decode": 1327.0,
+     "decode_token": 144,
+     "tausche_je_token": 9.215277777777779
+    },
+    "chat-en": {
+     "treffer": 0.6298824786324786,
+     "tausche": 2257,
+     "tausche_decode": 2218.0,
+     "decode_token": 600,
+     "tausche_je_token": 3.6966666666666668
+    },
+    "code-neu": {
+     "treffer": 0.5789636752136752,
+     "tausche": 2224,
+     "tausche_decode": 2185.0,
+     "decode_token": 900,
+     "tausche_je_token": 2.4277777777777776
+    },
+    "doku-deutsch": {
+     "treffer": 0.527094017094017,
+     "tausche": 1365,
+     "tausche_decode": 1209.0,
+     "decode_token": 600,
+     "tausche_je_token": 2.015
+    },
+    "review": {
+     "treffer": 0.4069642857142857,
+     "tausche": 1381,
+     "tausche_decode": 1303.0,
+     "decode_token": 700,
+     "tausche_je_token": 1.8614285714285714
+    }
+   }
+  }
+ }
+}

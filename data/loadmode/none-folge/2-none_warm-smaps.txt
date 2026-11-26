@@ -1,0 +1,27 @@
+## bereit
+andere    size     871 rss      94 swap       0 locked       0 MiB
+anon      size   49567 rss     361 swap       0 locked       0 MiB
+dev-zero  size   20439 rss   20439 swap       0 locked       0 MiB
+nvidia    size      65 rss      63 swap       0 locked       0 MiB
+gguf-page-cache 8780 MiB, MemFree: 359904 kB Active(file): 101916 kB Inactive(file): 9158008 kB 
+workingset_refault_anon 457085 workingset_refault_file 364299462 pswpout 1281735 allocstall_normal 56923 allocstall_movable 1049 pgsteal_kswapd 440460069 pgsteal_direct 3526200 pgscan_anon 266359185 pgscan_file 458824794 pgsteal_anon 1573136 pgsteal_file 442413133 compact_stall 2918 swpout_zero 280920 
+Node 0, zone    DMA32     52     77     67    180    144     94     45     29     23     20      0 
+Node 0, zone   Normal     32    153     17     12   1677     17      5     22     17     14     14 
+## nach-agent-warm
+andere    size     871 rss     123 swap       0 locked       0 MiB
+anon      size   53458 rss    4284 swap       0 locked       0 MiB
+dev-zero  size   20439 rss   20439 swap       0 locked       0 MiB
+nvidia    size      65 rss      63 swap       0 locked       0 MiB
+gguf-page-cache 2080 MiB, MemFree: 3094304 kB Active(file): 102184 kB Inactive(file): 2303736 kB 
+workingset_refault_anon 457092 workingset_refault_file 364299484 pswpout 1281735 allocstall_normal 58130 allocstall_movable 1049 pgsteal_kswapd 442100856 pgsteal_direct 3603553 pgscan_anon 266359185 pgscan_file 460542937 pgsteal_anon 1573136 pgsteal_file 444131273 compact_stall 2918 swpout_zero 280920 
+Node 0, zone    DMA32     52     77     67    180    144     94     45     29     23     20      0 
+Node 0, zone   Normal   1588    846    526    376    351   2065   1303    565    235    422    223 
+## ende
+andere    size     871 rss     123 swap       0 locked       0 MiB
+anon      size   52983 rss    3809 swap       0 locked       0 MiB
+dev-zero  size   20439 rss   20439 swap       0 locked       0 MiB
+nvidia    size      65 rss      63 swap       0 locked       0 MiB
+gguf-page-cache 148 MiB, MemFree: 5605700 kB Active(file): 144308 kB Inactive(file): 281256 kB 
+workingset_refault_anon 457093 workingset_refault_file 364299531 pswpout 1281735 allocstall_normal 58130 allocstall_movable 1049 pgsteal_kswapd 442597734 pgsteal_direct 3603553 pgscan_anon 266359185 pgscan_file 461039842 pgsteal_anon 1573136 pgsteal_file 444628151 compact_stall 2918 swpout_zero 280920 
+Node 0, zone    DMA32     90    101     75     83     65     46     64     47     37     29    321 
+Node 0, zone   Normal   1792    990   1075    389    792   1850   1156    476    226    860    308 

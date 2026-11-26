@@ -1,0 +1,48 @@
+2026-11-06T03:25:09+01:00 1-dio_kalt start cache=kalt cat=0 gguf_cache=0 avail=30301 swap=88 pswpout=1282767 extra= governor=powersave
+2026-11-06T03:25:23+01:00 1-dio_kalt bereit nach 14.1 s, avail=9021 swap=88 pswpout=1282767 gguf_cache=10 rssshmem=20439 free=9033
+2026-11-06T03:25:31+01:00 1-dio_kalt 1-repetitiv-json zeile=234
+2026-11-06T03:27:40+01:00 1-dio_kalt 2-repetitiv-code zeile=354
+2026-11-06T03:28:14+01:00 1-dio_kalt 3-neuartig zeile=448
+2026-11-06T03:28:50+01:00 1-dio_kalt 4-agent-kalt zeile=578
+2026-11-06T03:29:22+01:00 1-dio_kalt 5-agent-warm zeile=759
+2026-11-06T03:29:48+01:00 1-dio_kalt fertig zeile=930 avail=6791 swap=88 pswpout=1282767 anon=2641 shm=20439 hwm=23262
+2026-11-06T03:29:55+01:00 2-dio_kalt_spec start cache=kalt cat=0 gguf_cache=0 avail=30306 swap=88 pswpout=1282767 extra=--spec-type ngram-mod governor=powersave
+2026-11-06T03:30:09+01:00 2-dio_kalt_spec bereit nach 14.0 s, avail=9028 swap=88 pswpout=1282767 gguf_cache=10 rssshmem=20439 free=9038
+2026-11-06T03:30:16+01:00 2-dio_kalt_spec 1-repetitiv-json zeile=237
+2026-11-06T03:33:23+01:00 2-dio_kalt_spec 2-repetitiv-code zeile=392
+2026-11-06T03:33:54+01:00 2-dio_kalt_spec 3-neuartig zeile=501
+2026-11-06T03:34:28+01:00 2-dio_kalt_spec 4-agent-kalt zeile=637
+2026-11-06T03:35:01+01:00 2-dio_kalt_spec 5-agent-warm zeile=832
+2026-11-06T03:35:33+01:00 2-dio_kalt_spec fertig zeile=1026 avail=6659 swap=88 pswpout=1282767 anon=2705 shm=20499 hwm=23436
+2026-11-06T03:35:40+01:00 3-dio_kalt_spec start cache=kalt cat=0 gguf_cache=0 avail=30320 swap=88 pswpout=1282767 extra=--spec-type ngram-mod governor=powersave
+2026-11-06T03:35:54+01:00 3-dio_kalt_spec bereit nach 14.0 s, avail=9005 swap=88 pswpout=1282767 gguf_cache=10 rssshmem=20439 free=9009
+2026-11-06T03:36:01+01:00 3-dio_kalt_spec 1-repetitiv-json zeile=237
+2026-11-06T03:39:09+01:00 3-dio_kalt_spec 2-repetitiv-code zeile=392
+2026-11-06T03:39:39+01:00 3-dio_kalt_spec 3-neuartig zeile=501
+2026-11-06T03:40:14+01:00 3-dio_kalt_spec 4-agent-kalt zeile=637
+2026-11-06T03:40:46+01:00 3-dio_kalt_spec 5-agent-warm zeile=832
+2026-11-06T03:41:17+01:00 3-dio_kalt_spec fertig zeile=1026 avail=6644 swap=88 pswpout=1282767 anon=2705 shm=20499 hwm=23435
+2026-11-06T03:41:24+01:00 4-dio_kalt start cache=kalt cat=0 gguf_cache=0 avail=30252 swap=88 pswpout=1282767 extra= governor=powersave
+2026-11-06T03:41:38+01:00 4-dio_kalt bereit nach 14.1 s, avail=8935 swap=88 pswpout=1282767 gguf_cache=10 rssshmem=20439 free=8938
+2026-11-06T03:41:46+01:00 4-dio_kalt 1-repetitiv-json zeile=234
+2026-11-06T03:43:56+01:00 4-dio_kalt 2-repetitiv-code zeile=356
+2026-11-06T03:44:30+01:00 4-dio_kalt 3-neuartig zeile=450
+2026-11-06T03:45:04+01:00 4-dio_kalt 4-agent-kalt zeile=580
+2026-11-06T03:45:36+01:00 4-dio_kalt 5-agent-warm zeile=761
+2026-11-06T03:46:01+01:00 4-dio_kalt fertig zeile=932 avail=6760 swap=88 pswpout=1282767 anon=2641 shm=20439 hwm=23262
+2026-11-06T03:46:08+01:00 5-dio_kalt start cache=kalt cat=0 gguf_cache=0 avail=30282 swap=88 pswpout=1282767 extra= governor=powersave
+2026-11-06T03:46:22+01:00 5-dio_kalt bereit nach 14.1 s, avail=9065 swap=88 pswpout=1282767 gguf_cache=10 rssshmem=20439 free=9067
+2026-11-06T03:46:29+01:00 5-dio_kalt 1-repetitiv-json zeile=234
+2026-11-06T03:48:39+01:00 5-dio_kalt 2-repetitiv-code zeile=354
+2026-11-06T03:49:13+01:00 5-dio_kalt 3-neuartig zeile=448
+2026-11-06T03:49:49+01:00 5-dio_kalt 4-agent-kalt zeile=578
+2026-11-06T03:50:20+01:00 5-dio_kalt 5-agent-warm zeile=759
+2026-11-06T03:50:46+01:00 5-dio_kalt fertig zeile=930 avail=6760 swap=88 pswpout=1282767 anon=2641 shm=20439 hwm=23262
+2026-11-06T03:50:53+01:00 6-dio_kalt_spec start cache=kalt cat=0 gguf_cache=0 avail=30279 swap=88 pswpout=1282767 extra=--spec-type ngram-mod governor=powersave
+2026-11-06T03:51:07+01:00 6-dio_kalt_spec bereit nach 14.0 s, avail=8923 swap=88 pswpout=1282767 gguf_cache=10 rssshmem=20439 free=8925
+2026-11-06T03:51:14+01:00 6-dio_kalt_spec 1-repetitiv-json zeile=237
+2026-11-06T03:54:20+01:00 6-dio_kalt_spec 2-repetitiv-code zeile=391
+2026-11-06T03:54:51+01:00 6-dio_kalt_spec 3-neuartig zeile=500
+2026-11-06T03:55:25+01:00 6-dio_kalt_spec 4-agent-kalt zeile=636
+2026-11-06T03:55:57+01:00 6-dio_kalt_spec 5-agent-warm zeile=831
+2026-11-06T03:56:29+01:00 6-dio_kalt_spec fertig zeile=1025 avail=6656 swap=88 pswpout=1282767 anon=2705 shm=20499 hwm=23435

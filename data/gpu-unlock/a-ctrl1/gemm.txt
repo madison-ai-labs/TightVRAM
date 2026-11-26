@@ -1,0 +1,4 @@
+n=4096
+{"n":4096,"fp16_acc32_tflops":38.33,"tf32_tflops":20.53,"fp32_tflops":12.77}
+n=4096
+{"n":4096,"fp16_acc32_tflops":40.49,"tf32_tflops":20.53,"fp32_tflops":12.77}

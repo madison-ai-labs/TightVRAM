@@ -1,0 +1,19 @@
+BOOT_IMAGE=/vmlinuz-7.0.0-42-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro crashkernel=2G-4G:320M,4G-32G:512M,32G-64G:1024M,64G-128G:2048M,128G-:4096M nmi_watchdog=1 hardlockup_panic=1 softlockup_panic=1 panic=10 gpu_unlock.targets=0000:01:00.0
+7.0.0-42-generic
+ 09:23:16 up 0 min,  1 user,  load average: 2.51, 0.72, 0.25
+595.91.07, 94.04.3A.40.DB, 270.00 W, 0x0000000000000001, 43
+[    0.902698] gpu_unlock: loading out-of-tree module taints kernel.
+[    0.902704] gpu_unlock: module verification failed: signature and/or required key missing - tainting kernel
+[    1.090524] pci 0000:01:00.0: gpu_unlock: stage=claim device=0x2484 family=GA102/GA103/GA104/GA106 cmd=0x3 original=0x3 bar_len=0x1000000 region=1 enabled=0 master=0
+[    1.090532] pci 0000:01:00.0: gpu_unlock: stage=layout fb=0x200000000 vga=0x1fff00000 frts=0x100000 wpr=0x1f5400000..0x1fff00000 boot=0x1ffdfa000 gsp=0x1fada0000 heap=0x1f5500000
+[    1.119340] pci 0000:01:00.0: gpu_unlock: stage=dma booter=60416 payload=0xfa00 pages=20606 meta=0xfffdf000 sig=0xfffe0000 stock=0xfffde000 boot=0xfffd0000
+[    1.119353] pci 0000:01:00.0: gpu_unlock: stage=gfw plm=0xffffff8f ss0=0x36553130 ss1=0x7 wpr2_hi=0x0
+[    1.486506] pci 0000:01:00.0: gpu_unlock: stage=fwsec version=3 fuse=0x3 ver=2 scratch=0x0 wpr2_raw=0x1ffe000:0x1ffee00 frts=0x1ffe000:0x1ffee00
+[    1.486512] pci 0000:01:00.0: gpu_unlock: stage=publish meta=0xfffdf000 sig=0xfffe0000 size=0xfa00 radix=0xfffcf000
+[    1.652107] pci 0000:01:00.0: gpu_unlock: pass=1/2 attempt=1 target=0x1fa7cc value=0xfffff0ff before=0x4cb8f after=0xfffff0ff wpr2=0x1f54000:0x1ffee00 reset_plm=0xffffffff mbox=0x0:0xfffdf000 ret=0
+[    1.652111] pci 0000:01:00.0: gpu_unlock: pass=2/2 attempt=1 target=0x823804 value=0xffffffff before=0x4cb8f after=0xffffffff wpr2=0x1f54000:0x1ffee00 reset_plm=0xffffffff mbox=0x0:0xfffdf000 ret=0
+[    1.652125] pci 0000:01:00.0: gpu_unlock: stage=host ss0=0x88888888 ss1=0x8 plm_feat=0xffffffff plm_wpr_cfg=0xfffff0ff
+[    2.038093] pci 0000:01:00.0: gpu_unlock: stage=flr post_wpr2=0x1ffffe00:0x0 ss0=0x88888888 ss1=0x8 plm=0xffffffff cmd=0x3 devsta=0x0 chip=0xb74000a1
+[    2.054824] pci 0000:01:00.0: gpu_unlock: stage=handoff ret=0 state=4 retained=0 pages=0/20606 cleanup=0
+[    2.054827] pci 0000:01:00.0: gpu_unlock: unlocked
+[    5.268979] NVRM: loading NVIDIA UNIX Open Kernel Module for x86_64  595.91.07  Release Build  (dvs-builder@U22-I3-B08-02-2)  Wed Jul 29 03:01:16 UTC 2026

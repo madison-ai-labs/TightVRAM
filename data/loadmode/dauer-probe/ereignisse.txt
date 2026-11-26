@@ -1,0 +1,4 @@
+2026-11-06T03:23:11+01:00 1-dio_kalt start cache=kalt cat=0 gguf_cache=0 avail=30300 swap=88 pswpout=1282767 extra= governor=powersave
+2026-11-06T03:23:25+01:00 1-dio_kalt bereit nach 14.1 s, avail=8935 swap=88 pswpout=1282767 gguf_cache=10 rssshmem=20439 free=8947
+2026-11-06T03:23:32+01:00 1-dio_kalt 1-dauer zeile=234
+2026-11-06T03:24:54+01:00 1-dio_kalt fertig zeile=693 avail=6284 swap=88 pswpout=1282767 anon=3136 shm=20439 hwm=23756

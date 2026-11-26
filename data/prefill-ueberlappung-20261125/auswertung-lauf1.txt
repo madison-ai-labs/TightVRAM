@@ -1,0 +1,29 @@
+## A: echter Prefill, Dienst-Binary (llama-bench, -r 3)
+
+| Prompt | auto (mmap) t/s | dio t/s | dio/auto |
+|---|---|---|---|
+| 4096 | 1563 ± 5 | 1838 ± 9 | 1.176 |
+| 16384 | 1510 ± 6 | 1770 ± 4 | 1.172 |
+
+## B: Zeitanteile je ubatch (Messbuild, LLAMA_PREFILL_PROF=1, nur Messlauf, Warmup verworfen)
+
+ms je ubatch (Mittel über die ubatches des Laufs). up = ids holen + Experten-H2D, cmp_w = Rechnen der Split(s) mit Host-Gewichten (Experten-FFN), cmp_gpu = übrige GPU-Splits (Attention/Mamba/Norm/Shared-Expert), in = Aktivierungs-Kopien, rest_graph = Summe minus Teile, außerhalb = Bench-Zeit minus Graph-Zeit (Graph bauen, Inputs, Sampling)
+
+| Modus | Prompt | t/s prof | t/s Dienst | ubatch ms | up | cmp_w | cmp_gpu | cmp_cpu | in | rest_graph | außerhalb | up-Anteil | GB/ubatch | GB/s H2D |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| auto | 4096 | 1563 | 1563 | 2620 | 1724 | 827 | 13 | 4 | 11 | 2 | 38 | 66% | 15.91 | 9.3 |
+| auto | 16384 | 1503 | 1510 | 2725 | 1749 | 898 | 13 | 4 | 15 | 2 | 44 | 64% | 16.24 | 9.4 |
+| auto | 65536 | – (kein Lauf, siehe .err) |
+| dio | 4096 | 1853 | 1838 | 2210 | 1319 | 822 | 14 | 4 | 11 | 2 | 38 | 60% | 15.91 | 12.3 |
+| dio | 16384 | 1761 | 1770 | 2326 | 1345 | 903 | 13 | 4 | 15 | 2 | 43 | 58% | 16.24 | 12.3 |
+| dio | 65536 | – (kein Lauf, siehe .err) |
+
+### Verlauf über die ubatches (64k): total / up / cmp_w / cmp_gpu ms
+
+
+## Expertennutzung je Layer und ubatch
+
+- **llama-bench Zufallstoken, auto 16k**: 4 ubatches, tok/ubatch [4096], Experten je Layer 256, Tensoren ['blk.N.ffn_down_exps.weight', 'blk.N.ffn_gate_exps.weight', 'blk.N.ffn_up_exps.weight']
+  benutzt: Mittel 84.8%, min 58.6%, max 100.0%; Anteil Aufrufe mit allen Experten 1.9%; schwächste Layer (Mittel) 37: 65.0%, 32: 69.2%, 16: 69.5%, 28: 72.4%, 31: 72.9%
+- **llama-bench Zufallstoken, dio 16k**: 4 ubatches, tok/ubatch [4096], Experten je Layer 256, Tensoren ['blk.N.ffn_down_exps.weight', 'blk.N.ffn_gate_exps.weight', 'blk.N.ffn_up_exps.weight']
+  benutzt: Mittel 84.8%, min 58.6%, max 100.0%; Anteil Aufrufe mit allen Experten 1.9%; schwächste Layer (Mittel) 37: 65.0%, 32: 69.2%, 16: 69.5%, 28: 72.4%, 31: 72.9%

@@ -1,0 +1,123 @@
+Name:	llama-server
+Umask:	0002
+State:	S (sleeping)
+Tgid:	175945
+Ngid:	0
+Pid:	175945
+PPid:	165257
+TracerPid:	0
+Uid:	1000	1000	1000	1000
+Gid:	1000	1000	1000	1000
+FDSize:	256
+Groups:	4 24 27 30 46 100 101 1000 
+NStgid:	175945
+NSpid:	175945
+NSpgid:	165249
+NSsid:	165249
+Kthread:	0
+VmPeak:	79485460 kB
+VmSize:	77649876 kB
+VmLck:	       0 kB
+VmPin:	       0 kB
+VmHWM:	28413688 kB
+VmRSS:	26580988 kB
+RssAnon:	 3907136 kB
+RssFile:	21481720 kB
+RssShmem:	 1192132 kB
+VmData:	 7733780 kB
+VmStk:	     136 kB
+VmExe:	       4 kB
+VmLib:	  535612 kB
+VmPTE:	   52888 kB
+VmSwap:	       0 kB
+HugetlbPages:	       0 kB
+CoreDumping:	0
+THP_enabled:	1
+untag_mask:	0xffffffffffffffff
+Threads:	37
+SigQ:	0/110148
+SigPnd:	0000000000000000
+ShdPnd:	0000000000000000
+SigBlk:	0000000000000000
+SigIgn:	0000000000001005
+SigCgt:	0000000100004002
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	000001ffffffffff
+CapAmb:	0000000000000000
+NoNewPrivs:	0
+Seccomp:	0
+Seccomp_filters:	0
+Speculation_Store_Bypass:	thread vulnerable
+SpeculationIndirectBranch:	conditional enabled
+Cpus_allowed:	fffff
+Cpus_allowed_list:	0-19
+Mems_allowed:	00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000001
+Mems_allowed_list:	0
+voluntary_ctxt_switches:	3132
+nonvoluntary_ctxt_switches:	1269
+x86_Thread_features:	
+x86_Thread_features_locked:	
+MemTotal:       32168440 kB
+MemFree:         3943064 kB
+MemAvailable:   25696812 kB
+Buffers:           11488 kB
+Cached:         23299856 kB
+SwapCached:        18872 kB
+Active:          5247136 kB
+Inactive:       22002264 kB
+Active(anon):    5118144 kB
+Inactive(anon):    18760 kB
+Active(file):     128992 kB
+Inactive(file): 21983504 kB
+Unevictable:        8596 kB
+Mlocked:            8596 kB
+SwapTotal:       8388604 kB
+SwapFree:        8298104 kB
+Zswap:                 0 kB
+Zswapped:              0 kB
+Dirty:               616 kB
+Writeback:             0 kB
+AnonPages:       3945804 kB
+Mapped:         22727956 kB
+Shmem:           1192376 kB
+KReclaimable:      42276 kB
+Slab:             209432 kB
+SReclaimable:      42276 kB
+SUnreclaim:       167156 kB
+KernelStack:        7024 kB
+PageTables:        59396 kB
+SecPageTables:      6000 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:    24472824 kB
+Committed_AS:    9609488 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:      139620 kB
+VmallocChunk:          0 kB
+Percpu:            16320 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:         0 kB
+ShmemHugePages:        0 kB
+ShmemPmdMapped:        0 kB
+FileHugePages:         0 kB
+FilePmdMapped:         0 kB
+CmaTotal:              0 kB
+CmaFree:            3132 kB
+Unaccepted:            0 kB
+Balloon:               0 kB
+GPUActive:             0 kB
+GPUReclaim:            0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+Hugetlb:               0 kB
+DirectMap4k:      589664 kB
+DirectMap2M:    14979072 kB
+DirectMap1G:    18874368 kB
+some avg10=0.00 avg60=0.00 avg300=0.00 total=74350145
+full avg10=0.00 avg60=0.00 avg300=0.00 total=74334675

@@ -1,0 +1,9 @@
+--------------------------------------------------------------------------------
+CPU name:	Intel(R) Core(TM) i9-10850K CPU @ 3.60GHz
+CPU type:	Intel Cometlake processor
+CPU clock:	3.60 GHz
+--------------------------------------------------------------------------------
+# HWThreads: 0
+# GID|MetricsCount|CpuCount|Total runtime [s]|Runtime (RDTSC) [s]|Runtime unhalted [s]|Clock [MHz]|CPI|Memory load bandwidth [MBytes/s]|Memory load data volume [GBytes]|Memory evict bandwidth [MBytes/s]|Memory evict data volume [GBytes]|Memory bandwidth [MBytes/s]|Memory data volume [GBytes]
+{"build_commit": "45b6604b2", "build_number": 12156, "cpu_info": "Intel(R) Core(TM) i9-10850K CPU @ 3.60GHz", "gpu_info": "NVIDIA GeForce RTX 3070", "backends": "CUDA", "model_filename": "~/models/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf", "model_type": "qwen35moe 35B.A3B Q4_K - Medium", "model_size": 22349466112, "model_n_params": 34660610688, "n_batch": 4096, "n_ubatch": 4096, "n_threads": 10, "cpu_mask": "0x0", "cpu_strict": false, "poll": 50, "type_k": "f16", "type_v": "f16", "n_gpu_layers": 99, "n_cpu_moe": 40, "split_mode": "layer", "main_gpu": 0, "no_kv_offload": false, "flash_attn": 1, "devices": "auto", "tensor_split": "0.00", "tensor_buft_overrides": "none", "load_mode": "auto", "lazy_mode": "auto", "embeddings": false, "no_op_offload": 0, "no_host": false, "repack": true, "fit_target": 0, "fit_min_ctx": 0, "n_prompt": 0, "n_gen": 256, "n_depth": 0, "test_time": "2026-11-05T19:47:20Z", "avg_ns": 6873212435, "stddev_ns": 7927116, "avg_ts": 37.246088, "stddev_ts": 0.042961, "samples_ns": [ 6862573999, 6871004560, 6870458621, 6882431378, 6879593618 ],"samples_ts": [ 37.3038, 37.258, 37.261, 37.1962, 37.2115 ]}
+--------------------------------------------------------------------------------

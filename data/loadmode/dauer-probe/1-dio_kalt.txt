@@ -1,0 +1,12 @@
+# 1-dio_kalt-1-dauer  n_ctx=131072  → ~/bench/loadmode/dauer-probe/1-dio_kalt.jsonl
+interaktiv  n=5  TTFT median 0.59 s  gesamt median 3.41 s  tg median 35.9 t/s  fehler 0
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    13.2   10.46     15242        0    1464   96    34.3
+               2     3.8    2.01      1323    15337     670   63    34.5
+               3     4.1    2.00      1369    16722     698   74    34.0
+               4     3.8    1.97      1245    18164     644   63    33.6
+               5     3.4    2.07      1406    19471     692   47    34.6
+               6     4.0    2.10      1488    20923     724   62    32.8
+            gesamt (kalt): 32.4 s
+dokument    ctx  32000  prompt_n 31291  prefill 20.9 s (1500 t/s)  wall 26.8 s  VRAM-Spitze 7141 MiB  ok
+# 12 Requests in 1 Durchläufen, 0 Fehler

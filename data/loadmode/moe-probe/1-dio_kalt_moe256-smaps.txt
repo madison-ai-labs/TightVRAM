@@ -1,0 +1,18 @@
+## bereit
+andere    size     871 rss      94 swap       0 locked       0 MiB
+anon      size   49826 rss     363 swap       0 locked       0 MiB
+dev-zero  size   20439 rss   20439 swap       0 locked       0 MiB
+nvidia    size      65 rss      63 swap       0 locked       0 MiB
+gguf-page-cache 10 MiB, MemFree: 9167288 kB Active(file): 180932 kB Inactive(file): 113288 kB 
+workingset_refault_anon 457495 workingset_refault_file 374659839 pswpout 1282767 allocstall_normal 58328 allocstall_movable 1049 pgsteal_kswapd 452997919 pgsteal_direct 3617114 pgscan_anon 266361635 pgscan_file 471460381 pgsteal_anon 1574251 pgsteal_file 455040782 compact_stall 2919 swpout_zero 280987 
+Node 0, zone    DMA32    205    243    241    225    153    114     73     47     41     38    416 
+Node 0, zone   Normal   6168   6105   4821   2523   1266   1629   1513    674    316    221   1275 
+## ende
+andere    size     871 rss     123 swap       0 locked       0 MiB
+anon      size   51933 rss    2420 swap       0 locked       0 MiB
+dev-zero  size   20439 rss   20439 swap       0 locked       0 MiB
+nvidia    size      65 rss      63 swap       0 locked       0 MiB
+gguf-page-cache 10 MiB, MemFree: 7204228 kB Active(file): 181108 kB Inactive(file): 113504 kB 
+workingset_refault_anon 457496 workingset_refault_file 374659883 pswpout 1282767 allocstall_normal 58328 allocstall_movable 1049 pgsteal_kswapd 452997919 pgsteal_direct 3617114 pgscan_anon 266361635 pgscan_file 471460381 pgsteal_anon 1574251 pgsteal_file 455040782 compact_stall 2919 swpout_zero 280987 
+Node 0, zone    DMA32    205    243    241    225    153    114     73     47     41     38    416 
+Node 0, zone   Normal   6783   6206   4858   2527   1359   1625   1090    469    255    216    863 

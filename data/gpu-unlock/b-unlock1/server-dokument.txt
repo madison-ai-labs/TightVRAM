@@ -1,0 +1,5 @@
+# b-unlock1  n_ctx=131072  → ~/bench/gpu-unlock/b-unlock1/server-dokument.jsonl
+dokument    ctx  16000  prompt_n 15274  prefill 12.1 s (1266 t/s)  wall 18.2 s  VRAM-Spitze 7105 MiB  ok
+dokument    ctx  64000  prompt_n 63988  prefill 51.0 s (1255 t/s)  wall 58.1 s  VRAM-Spitze 7105 MiB  ok
+dokument    ctx 115000  prompt_n 114687  prefill 97.8 s (1172 t/s)  wall 105.8 s  VRAM-Spitze 7107 MiB  ok
+# 3 Requests in 1 Durchläufen, 0 Fehler

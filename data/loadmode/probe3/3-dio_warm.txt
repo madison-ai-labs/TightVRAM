@@ -1,0 +1,13 @@
+# 3-dio_warm-1-interaktiv  n_ctx=131072  → ~/bench/loadmode/probe3/3-dio_warm.jsonl
+interaktiv  n=5  TTFT median 0.59 s  gesamt median 2.99 s  tg median 34.9 t/s  fehler 0
+# 5 Requests in 1 Durchläufen, 0 Fehler
+# 3-dio_warm-2-agent-kalt  n_ctx=131072  → ~/bench/loadmode/probe3/3-dio_warm.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    12.8   10.43     15216        0    1465   80    33.6
+               2     3.7    2.01      1323    15295     670   55    32.2
+               3     4.1    2.00      1369    16672     697   68    31.9
+               4     3.8    1.99      1245    18108     644   62    33.2
+               5     3.7    2.07      1406    19414     692   54    32.5
+               6     3.3    2.33      1488    20873     724   40    32.0
+            gesamt (kalt): 31.4 s
+# 6 Requests in 1 Durchläufen, 0 Fehler

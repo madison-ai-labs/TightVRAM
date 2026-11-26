@@ -1,0 +1,150 @@
+diff --git a/ggml/src/ggml-backend.cpp b/ggml/src/ggml-backend.cpp
+index 3520b4349..dba1233af 100644
+--- a/ggml/src/ggml-backend.cpp
++++ b/ggml/src/ggml-backend.cpp
+@@ -2122,8 +2122,23 @@ static void ggml_backend_sched_copy_input(ggml_backend_sched_t sched, struct ggm
+     }
+ }
+ 
++
++// LLAMA_PREFILL_PROF=1: time breakdown per graph compute (measurement build, not for production)
++static int prefill_prof_level(void) {
++    static int v = -1;
++    if (v < 0) { const char * e = getenv("LLAMA_PREFILL_PROF"); v = e ? atoi(e) : 0; }
++    return v;
++}
++static bool prefill_prof_is_cpu(ggml_backend_t b) {
++    return ggml_backend_dev_type(ggml_backend_get_device(b)) == GGML_BACKEND_DEVICE_TYPE_CPU;
++}
++
+ static enum ggml_status ggml_backend_sched_compute_splits(ggml_backend_sched_t sched) {
+     GGML_ASSERT(sched);
++    const int prof = prefill_prof_level();
++    double p_in = 0, p_w = 0, p_cw = 0, p_cg = 0, p_cc = 0, p_cx = 0, p_cr = 0; int p_nw = 0;
++    int64_t p_t0 = 0;
++    if (prof) { for (int b = 0; b < sched->n_backends; b++) ggml_backend_synchronize(sched->backends[b]); p_t0 = ggml_time_us(); }
+     struct ggml_backend_sched_split * splits = sched->splits;
+ 
+     int prev_backend_id = -1;
+@@ -2145,18 +2160,40 @@ static enum ggml_status ggml_backend_sched_compute_splits(ggml_backend_sched_t s
+ 
+         // copy the input tensors to the split backend
+         // the weights in host memory are copied last, so that the copy callback can read the other inputs of the split
++        int64_t p_a = prof ? ggml_time_us() : 0;
+         for (int input_id = 0; input_id < split->n_inputs; input_id++) {
+             if (!ggml_backend_sched_is_host_weight(split->inputs[input_id])) {
+                 ggml_backend_sched_copy_input(sched, split, split->inputs[input_id]);
+             }
+         }
++        int64_t p_b = 0;
++        if (prof) { ggml_backend_synchronize(split_backend); p_b = ggml_time_us(); p_in += (p_b - p_a)/1000.0; }
++        bool p_has_w = false;
+         for (int input_id = 0; input_id < split->n_inputs; input_id++) {
+             if (ggml_backend_sched_is_host_weight(split->inputs[input_id])) {
++                p_has_w = true;
+                 ggml_backend_sched_copy_input(sched, split, split->inputs[input_id]);
+             }
+         }
++        int64_t p_c = 0;
++        if (prof) { ggml_backend_synchronize(split_backend); p_c = ggml_time_us(); p_w += (p_c - p_b)/1000.0; p_nw += p_has_w; }
+ 
+-        if (!sched->callback_eval) {
++        double p_first = -1;
++        if (prof && p_has_w && split->graph.n_nodes > 1 && !sched->callback_eval) {
++            // measurement build: MUL_MAT_ID (first node) timed separately from the rest of the split
++            struct ggml_cgraph g0 = ggml_graph_view(&split->graph, 0, 1);
++            enum ggml_status ec = ggml_backend_graph_compute_async(split_backend, &g0);
++            if (ec != GGML_STATUS_SUCCESS) {
++                return ec;
++            }
++            ggml_backend_synchronize(split_backend);
++            p_first = (ggml_time_us() - p_c)/1000.0;
++            struct ggml_cgraph g1 = ggml_graph_view(&split->graph, 1, split->graph.n_nodes);
++            ec = ggml_backend_graph_compute_async(split_backend, &g1);
++            if (ec != GGML_STATUS_SUCCESS) {
++                return ec;
++            }
++        } else if (!sched->callback_eval) {
+             enum ggml_status ec = ggml_backend_graph_compute_async(split_backend, &split->graph);
+             if (ec != GGML_STATUS_SUCCESS) {
+                 return ec;
+@@ -2195,6 +2232,24 @@ static enum ggml_status ggml_backend_sched_compute_splits(ggml_backend_sched_t s
+             }
+         }
+ 
++        if (prof) {
++            ggml_backend_synchronize(split_backend);
++            const double d = (ggml_time_us() - p_c)/1000.0;
++            if (p_has_w) {
++                p_cw += d;
++                const double f = p_first >= 0 ? p_first : d;
++                p_cx += f;
++                if (split->graph.n_nodes > 2) p_cr += d - f; else p_cx += d - f;
++            } else if (prefill_prof_is_cpu(split_backend)) p_cc += d; else p_cg += d;
++            if (prof >= 2) {
++                fprintf(stderr, "PFX S %d be=%s nodes=%d inputs=%d w=%d first=%s(%s) last=%s(%s) in=%.3f up=%.3f cmp=%.3f first=%.3f\n",
++                    split_id, ggml_backend_name(split_backend), split->graph.n_nodes, split->n_inputs, (int) p_has_w,
++                    split->graph.n_nodes ? ggml_op_desc(split->graph.nodes[0]) : "-", split->graph.n_nodes ? split->graph.nodes[0]->name : "-",
++                    split->graph.n_nodes ? ggml_op_desc(split->graph.nodes[split->graph.n_nodes-1]) : "-", split->graph.n_nodes ? split->graph.nodes[split->graph.n_nodes-1]->name : "-",
++                    (p_b - p_a)/1000.0, (p_c - p_b)/1000.0, d, p_first);
++            }
++        }
++
+         // record the event of this split
+         if (sched->events[split_backend_id][sched->cur_copy] != NULL) {
+             ggml_backend_event_record(sched->events[split_backend_id][sched->cur_copy], split_backend);
+@@ -2203,6 +2258,12 @@ static enum ggml_status ggml_backend_sched_compute_splits(ggml_backend_sched_t s
+         prev_backend_id = split_backend_id;
+     }
+ 
++    if (prof) {
++        for (int b = 0; b < sched->n_backends; b++) ggml_backend_synchronize(sched->backends[b]);
++        fprintf(stderr, "PFX U splits=%d wsplits=%d total=%.3f in=%.3f up=%.3f cmp_w=%.3f cmp_gpu=%.3f cmp_cpu=%.3f cmp_exp=%.3f cmp_wrest=%.3f\n",
++            sched->n_splits, p_nw, (ggml_time_us() - p_t0)/1000.0, p_in, p_w, p_cw, p_cg, p_cc, p_cx, p_cr);
++    }
++
+     return GGML_STATUS_SUCCESS;
+ }
+ 
+diff --git a/src/llama-context.cpp b/src/llama-context.cpp
+index a1068aae3..a4f9c2384 100644
+--- a/src/llama-context.cpp
++++ b/src/llama-context.cpp
+@@ -3011,10 +3011,15 @@ bool llama_context::sched_copy_experts(ggml_backend_t backend, const ggml_tensor
+     const int64_t n_expert    = src->ne[2];
+     const size_t  expert_size = src->nb[2];
+ 
++    static const int pfx = getenv("LLAMA_PREFILL_PROF") ? atoi(getenv("LLAMA_PREFILL_PROF")) : 0;
++    const int64_t pfx_t0 = pfx ? ggml_time_us() : 0;
++    double pfx_ids = 0;
++    size_t pfx_bytes = 0;
+     if (ids != st.ids || (int64_t) st.used.size() != n_expert) {
+         st.ids_data.resize(ggml_nbytes(ids)/sizeof(int32_t));
+         ggml_backend_tensor_get_async(backend, ids, st.ids_data.data(), 0, ggml_nbytes(ids));
+         ggml_backend_synchronize(backend);
++        if (pfx) pfx_ids = (ggml_time_us() - pfx_t0)/1000.0;
+ 
+         st.used.assign(n_expert, false);
+         for (int64_t i1 = 0; i1 < ids->ne[1]; i1++) {
+@@ -3060,11 +3065,21 @@ bool llama_context::sched_copy_experts(ggml_backend_t backend, const ggml_tensor
+         const size_t size    = (last + 1 - next)*expert_size + padding;
+         if (size > 0) {
+             ggml_backend_tensor_set_async(backend, dst, (const uint8_t *) src->data + offset, offset, size);
++            pfx_bytes += size;
+         }
+ 
+         first = last + 1;
+     }
+ 
++    if (pfx) {
++        ggml_backend_synchronize(backend);
++        int64_t n_used = 0;
++        for (bool u : st.used) n_used += u;
++        fprintf(stderr, "PFX E %s tok=%lld used=%lld/%lld bytes=%zu ids_ms=%.3f up_ms=%.3f\n",
++            src->name, (long long) ids->ne[1], (long long) n_used, (long long) n_expert, pfx_bytes, pfx_ids,
++            (ggml_time_us() - pfx_t0)/1000.0 - pfx_ids);
++    }
++
+     return true;
+ }
+ 

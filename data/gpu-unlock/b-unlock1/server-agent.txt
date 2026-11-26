@@ -1,0 +1,10 @@
+# b-unlock1  n_ctx=131072  → ~/bench/gpu-unlock/b-unlock1/server-agent.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    15.6   12.92     15242        0    1258   84    31.3
+               2     4.6    2.39      1323    15325     561   66    29.9
+               3     4.2    2.38      1369    16713     585   59    31.2
+               4     3.8    2.43      1245    18140     523   44    32.2
+               5     5.6    3.30      1406    19428     431   71    29.8
+               6     4.3    2.50      1488    20904     610   56    29.8
+            gesamt (kalt): 38.1 s
+# 6 Requests in 1 Durchläufen, 0 Fehler

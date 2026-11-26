@@ -1,0 +1,13 @@
+# 2-dio_warm-1-interaktiv  n_ctx=131072  → ~/bench/loadmode/reclaim/2-dio_warm.jsonl
+interaktiv  n=5  TTFT median 0.59 s  gesamt median 2.99 s  tg median 35.3 t/s  fehler 0
+# 5 Requests in 1 Durchläufen, 0 Fehler
+# 2-dio_warm-2-agent-kalt  n_ctx=131072  → ~/bench/loadmode/reclaim/2-dio_warm.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    12.7   10.43     15216        0    1466   80    34.8
+               2     3.6    2.01      1323    15295     670   55    33.6
+               3     4.0    2.00      1369    16672     697   68    33.5
+               4     3.8    1.97      1245    18108     644   62    32.8
+               5     3.7    2.08      1406    19414     691   54    32.3
+               6     3.3    2.32      1488    20873     724   40    32.6
+            gesamt (kalt): 31.2 s
+# 6 Requests in 1 Durchläufen, 0 Fehler

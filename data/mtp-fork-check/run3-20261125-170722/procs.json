@@ -1,0 +1,1500 @@
+[
+ {
+  "proc": 0,
+  "arm": "K8",
+  "binary": "/opt/llama.cpp/current/llama-server",
+  "args": [
+   "-m",
+   "~/models/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+   "-ncmoe",
+   "40",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4",
+   "--override-kv",
+   "qwen35moe.expert_used_count=int:8"
+  ],
+  "env": {},
+  "sampling": {
+   "temperature": 0,
+   "top_k": 1,
+   "seed": 1
+  },
+  "t_start": "17:07:22",
+  "preload_s": 8.6,
+  "vram_idle_before": 33,
+  "load_s": 2.2,
+  "vram_after_start": 7009,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 19275.3,
+    "CUDA0": 2038.8
+   },
+   "kv": {
+    "CUDA0": 2560.0
+   },
+   "compute": {
+    "CUDA0": 2114.0,
+    "CUDA_Host": 1152.2
+   },
+   "n_rs_seq": [
+    "0"
+   ],
+   "checkpoints": true,
+   "n_expert_used": [
+    "8"
+   ],
+   "kv_override": [
+    "0.00.269.414 I llama_model_loader: - kv  26:                qwen35moe.expert_used_count u32              = 8",
+    "0.00.274.257 I validate_override: Using metadata override (  int) 'qwen35moe.expert_used_count' = 0.00.274.257 I 8"
+   ],
+   "tier": [],
+   "mtp": [],
+   "n_batch": [
+    "4096"
+   ],
+   "n_ubatch": [
+    "4096"
+   ],
+   "n_ctx": [
+    "131072",
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [],
+  "log_fehler": [],
+  "dauer_s": 29.4
+ },
+ {
+  "proc": 1,
+  "arm": "K6",
+  "binary": "/opt/llama.cpp/current/llama-server",
+  "args": [
+   "-m",
+   "~/models/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+   "-ncmoe",
+   "40",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4",
+   "--override-kv",
+   "qwen35moe.expert_used_count=int:6"
+  ],
+  "env": {},
+  "sampling": {
+   "temperature": 0,
+   "top_k": 1,
+   "seed": 1
+  },
+  "t_start": "17:07:51",
+  "preload_s": 9.4,
+  "vram_idle_before": 33,
+  "load_s": 2.3,
+  "vram_after_start": 6673,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 19275.3,
+    "CUDA0": 2038.8
+   },
+   "kv": {
+    "CUDA0": 2560.0
+   },
+   "compute": {
+    "CUDA0": 1778.0,
+    "CUDA_Host": 1152.2
+   },
+   "n_rs_seq": [
+    "0"
+   ],
+   "checkpoints": true,
+   "n_expert_used": [
+    "6"
+   ],
+   "kv_override": [
+    "0.00.261.502 I llama_model_loader: - kv  26:                qwen35moe.expert_used_count u32              = 8",
+    "0.00.265.760 I validate_override: Using metadata override (  int) 'qwen35moe.expert_used_count' = 0.00.265.760 I 6"
+   ],
+   "tier": [],
+   "mtp": [],
+   "n_batch": [
+    "4096"
+   ],
+   "n_ubatch": [
+    "4096"
+   ],
+   "n_ctx": [
+    "131072",
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [],
+  "log_fehler": [],
+  "dauer_s": 28.1
+ },
+ {
+  "proc": 2,
+  "arm": "K4",
+  "binary": "/opt/llama.cpp/current/llama-server",
+  "args": [
+   "-m",
+   "~/models/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+   "-ncmoe",
+   "40",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4",
+   "--override-kv",
+   "qwen35moe.expert_used_count=int:4"
+  ],
+  "env": {},
+  "sampling": {
+   "temperature": 0,
+   "top_k": 1,
+   "seed": 1
+  },
+  "t_start": "17:08:19",
+  "preload_s": 9.9,
+  "vram_idle_before": 33,
+  "load_s": 2.3,
+  "vram_after_start": 6465,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 19275.3,
+    "CUDA0": 2038.8
+   },
+   "kv": {
+    "CUDA0": 2560.0
+   },
+   "compute": {
+    "CUDA0": 1570.0,
+    "CUDA_Host": 1152.2
+   },
+   "n_rs_seq": [
+    "0"
+   ],
+   "checkpoints": true,
+   "n_expert_used": [
+    "4"
+   ],
+   "kv_override": [
+    "0.00.294.819 I llama_model_loader: - kv  26:                qwen35moe.expert_used_count u32              = 8",
+    "0.00.300.990 I validate_override: Using metadata override (  int) 'qwen35moe.expert_used_count' = 0.00.300.992 I 4"
+   ],
+   "tier": [],
+   "mtp": [],
+   "n_batch": [
+    "4096"
+   ],
+   "n_ubatch": [
+    "4096"
+   ],
+   "n_ctx": [
+    "131072",
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [],
+  "log_fehler": [],
+  "dauer_s": 25.6
+ },
+ {
+  "proc": 3,
+  "arm": "K8",
+  "binary": "/opt/llama.cpp/current/llama-server",
+  "args": [
+   "-m",
+   "~/models/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+   "-ncmoe",
+   "40",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4",
+   "--override-kv",
+   "qwen35moe.expert_used_count=int:8"
+  ],
+  "env": {},
+  "sampling": {
+   "temperature": 0,
+   "top_k": 1,
+   "seed": 1
+  },
+  "t_start": "17:08:45",
+  "preload_s": 8.4,
+  "vram_idle_before": 33,
+  "load_s": 2.0,
+  "vram_after_start": 7009,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 19275.3,
+    "CUDA0": 2038.8
+   },
+   "kv": {
+    "CUDA0": 2560.0
+   },
+   "compute": {
+    "CUDA0": 2114.0,
+    "CUDA_Host": 1152.2
+   },
+   "n_rs_seq": [
+    "0"
+   ],
+   "checkpoints": true,
+   "n_expert_used": [
+    "8"
+   ],
+   "kv_override": [
+    "0.00.259.019 I llama_model_loader: - kv  26:                qwen35moe.expert_used_count u32              = 8",
+    "0.00.263.106 I validate_override: Using metadata override (  int) 'qwen35moe.expert_used_count' = 0.00.263.107 I 8"
+   ],
+   "tier": [],
+   "mtp": [],
+   "n_batch": [
+    "4096"
+   ],
+   "n_ubatch": [
+    "4096"
+   ],
+   "n_ctx": [
+    "131072",
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [],
+  "log_fehler": [],
+  "dauer_s": 27.9
+ },
+ {
+  "proc": 4,
+  "arm": "A",
+  "binary": "/opt/llama.cpp/current/llama-server",
+  "args": [
+   "-m",
+   "~/models/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+   "-ncmoe",
+   "40",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4"
+  ],
+  "env": {},
+  "sampling": {
+   "temperature": 0,
+   "top_k": 1,
+   "seed": 1
+  },
+  "t_start": "17:09:13",
+  "preload_s": 8.6,
+  "vram_idle_before": 33,
+  "load_s": 2.1,
+  "vram_after_start": 7009,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 19275.3,
+    "CUDA0": 2038.8
+   },
+   "kv": {
+    "CUDA0": 2560.0
+   },
+   "compute": {
+    "CUDA0": 2114.0,
+    "CUDA_Host": 1152.2
+   },
+   "n_rs_seq": [
+    "0"
+   ],
+   "checkpoints": true,
+   "n_expert_used": [
+    "8"
+   ],
+   "kv_override": [
+    "0.00.259.280 I llama_model_loader: - kv  26:                qwen35moe.expert_used_count u32              = 8"
+   ],
+   "tier": [],
+   "mtp": [],
+   "n_batch": [
+    "4096"
+   ],
+   "n_ubatch": [
+    "4096"
+   ],
+   "n_ctx": [
+    "131072",
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [],
+  "log_fehler": [],
+  "dauer_s": 102.4
+ },
+ {
+  "proc": 5,
+  "arm": "P",
+  "binary": "/opt/llama.cpp/current/llama-server",
+  "args": [
+   "-m",
+   "~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf",
+   "-ncmoe",
+   "41",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4",
+   "--spec-type",
+   "draft-mtp",
+   "--spec-draft-n-max",
+   "1",
+   "--spec-draft-n-ubatch",
+   "256"
+  ],
+  "env": {},
+  "sampling": {
+   "temperature": 0,
+   "top_k": 1,
+   "seed": 1
+  },
+  "t_start": "17:10:55",
+  "preload_s": 11.0,
+  "vram_idle_before": 33,
+  "load_s": 9.0,
+  "vram_after_start": 7559,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 19705.3,
+    "CUDA0": 2079.2
+   },
+   "kv": {
+    "CUDA0": 2816.0
+   },
+   "compute": {
+    "CUDA0": 2515.6,
+    "CUDA_Host": 1288.2
+   },
+   "n_rs_seq": [
+    "1",
+    "0"
+   ],
+   "checkpoints": false,
+   "n_expert_used": [
+    "8"
+   ],
+   "kv_override": [
+    "0.00.275.730 I llama_model_loader: - kv  26:                qwen35moe.expert_used_count u32              = 8"
+   ],
+   "tier": [],
+   "mtp": [
+    "0.00.216.052 I srv    load_model: loading model '~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf'",
+    "0.00.216.054 I srv    load_model: local path '~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf'",
+    "0.00.275.664 I llama_model_loader: loaded meta data with 55 key-value pairs and 753 tensors from ~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf (version GGUF V3 (latest))",
+    "0.08.663.166 I common_speculative_init_result: creating MTP draft context against the target model '~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf'",
+    "0.08.690.339 I spec common_specu: adding speculative implementation 'draft-mtp'"
+   ],
+   "n_batch": [
+    "4096",
+    "4096"
+   ],
+   "n_ubatch": [
+    "4096",
+    "256"
+   ],
+   "n_ctx": [
+    "131072",
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [
+   [
+    "0.96988",
+    "161",
+    "166",
+    "1.97"
+   ],
+   [
+    "0.88177",
+    "179",
+    "203",
+    "1.88"
+   ],
+   [
+    "0.76852",
+    "166",
+    "216",
+    "1.77"
+   ],
+   [
+    "0.81043",
+    "171",
+    "211",
+    "1.81"
+   ]
+  ],
+  "log_fehler": [],
+  "dauer_s": 103.5
+ },
+ {
+  "proc": 6,
+  "arm": "S",
+  "binary": "/opt/llama.cpp/current/llama-server",
+  "args": [
+   "-m",
+   "~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf",
+   "-ncmoe",
+   "41",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4",
+   "--spec-type",
+   "draft-mtp",
+   "--spec-draft-n-max",
+   "1",
+   "--spec-draft-n-ubatch",
+   "256"
+  ],
+  "env": {},
+  "sampling": {
+   "temperature": 0.6,
+   "top_k": 20,
+   "top_p": 0.95,
+   "min_p": 0.0,
+   "presence_penalty": 0.0,
+   "repeat_penalty": 1.0,
+   "seed": 1
+  },
+  "t_start": "17:12:38",
+  "preload_s": 8.3,
+  "vram_idle_before": 33,
+  "load_s": 2.0,
+  "vram_after_start": 7559,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 19705.3,
+    "CUDA0": 2079.2
+   },
+   "kv": {
+    "CUDA0": 2816.0
+   },
+   "compute": {
+    "CUDA0": 2515.6,
+    "CUDA_Host": 1288.2
+   },
+   "n_rs_seq": [
+    "1",
+    "0"
+   ],
+   "checkpoints": false,
+   "n_expert_used": [
+    "8"
+   ],
+   "kv_override": [
+    "0.00.267.582 I llama_model_loader: - kv  26:                qwen35moe.expert_used_count u32              = 8"
+   ],
+   "tier": [],
+   "mtp": [
+    "0.00.208.703 I srv    load_model: loading model '~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf'",
+    "0.00.208.705 I srv    load_model: local path '~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf'",
+    "0.00.267.521 I llama_model_loader: loaded meta data with 55 key-value pairs and 753 tensors from ~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf (version GGUF V3 (latest))",
+    "0.01.697.006 I common_speculative_init_result: creating MTP draft context against the target model '~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf'",
+    "0.01.729.747 I spec common_specu: adding speculative implementation 'draft-mtp'"
+   ],
+   "n_batch": [
+    "4096",
+    "4096"
+   ],
+   "n_ubatch": [
+    "4096",
+    "256"
+   ],
+   "n_ctx": [
+    "131072",
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [
+   [
+    "0.93860",
+    "107",
+    "114",
+    "1.94"
+   ],
+   [
+    "0.86341",
+    "177",
+    "205",
+    "1.86"
+   ],
+   [
+    "0.77674",
+    "167",
+    "215",
+    "1.78"
+   ],
+   [
+    "0.79343",
+    "169",
+    "213",
+    "1.79"
+   ]
+  ],
+  "log_fehler": [],
+  "dauer_s": 102.0
+ },
+ {
+  "proc": 7,
+  "arm": "S",
+  "binary": "/opt/llama.cpp/current/llama-server",
+  "args": [
+   "-m",
+   "~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf",
+   "-ncmoe",
+   "41",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4",
+   "--spec-type",
+   "draft-mtp",
+   "--spec-draft-n-max",
+   "1",
+   "--spec-draft-n-ubatch",
+   "256"
+  ],
+  "env": {},
+  "sampling": {
+   "temperature": 0.6,
+   "top_k": 20,
+   "top_p": 0.95,
+   "min_p": 0.0,
+   "presence_penalty": 0.0,
+   "repeat_penalty": 1.0,
+   "seed": 1
+  },
+  "t_start": "17:14:20",
+  "preload_s": 8.9,
+  "vram_idle_before": 33,
+  "load_s": 2.0,
+  "vram_after_start": 7559,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 19705.3,
+    "CUDA0": 2079.2
+   },
+   "kv": {
+    "CUDA0": 2816.0
+   },
+   "compute": {
+    "CUDA0": 2515.6,
+    "CUDA_Host": 1288.2
+   },
+   "n_rs_seq": [
+    "1",
+    "0"
+   ],
+   "checkpoints": false,
+   "n_expert_used": [
+    "8"
+   ],
+   "kv_override": [
+    "0.00.259.068 I llama_model_loader: - kv  26:                qwen35moe.expert_used_count u32              = 8"
+   ],
+   "tier": [],
+   "mtp": [
+    "0.00.199.505 I srv    load_model: loading model '~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf'",
+    "0.00.199.506 I srv    load_model: local path '~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf'",
+    "0.00.259.007 I llama_model_loader: loaded meta data with 55 key-value pairs and 753 tensors from ~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf (version GGUF V3 (latest))",
+    "0.01.722.621 I common_speculative_init_result: creating MTP draft context against the target model '~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf'",
+    "0.01.750.152 I spec common_specu: adding speculative implementation 'draft-mtp'"
+   ],
+   "n_batch": [
+    "4096",
+    "4096"
+   ],
+   "n_ubatch": [
+    "4096",
+    "256"
+   ],
+   "n_ctx": [
+    "131072",
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [
+   [
+    "0.93860",
+    "107",
+    "114",
+    "1.94"
+   ],
+   [
+    "0.86341",
+    "177",
+    "205",
+    "1.86"
+   ],
+   [
+    "0.77674",
+    "167",
+    "215",
+    "1.78"
+   ],
+   [
+    "0.79343",
+    "169",
+    "213",
+    "1.79"
+   ]
+  ],
+  "log_fehler": [],
+  "dauer_s": 103.5
+ },
+ {
+  "proc": 8,
+  "arm": "P",
+  "binary": "/opt/llama.cpp/current/llama-server",
+  "args": [
+   "-m",
+   "~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf",
+   "-ncmoe",
+   "41",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4",
+   "--spec-type",
+   "draft-mtp",
+   "--spec-draft-n-max",
+   "1",
+   "--spec-draft-n-ubatch",
+   "256"
+  ],
+  "env": {},
+  "sampling": {
+   "temperature": 0,
+   "top_k": 1,
+   "seed": 1
+  },
+  "t_start": "17:16:04",
+  "preload_s": 9.1,
+  "vram_idle_before": 33,
+  "load_s": 2.0,
+  "vram_after_start": 7559,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 19705.3,
+    "CUDA0": 2079.2
+   },
+   "kv": {
+    "CUDA0": 2816.0
+   },
+   "compute": {
+    "CUDA0": 2515.6,
+    "CUDA_Host": 1288.2
+   },
+   "n_rs_seq": [
+    "1",
+    "0"
+   ],
+   "checkpoints": false,
+   "n_expert_used": [
+    "8"
+   ],
+   "kv_override": [
+    "0.00.261.335 I llama_model_loader: - kv  26:                qwen35moe.expert_used_count u32              = 8"
+   ],
+   "tier": [],
+   "mtp": [
+    "0.00.202.797 I srv    load_model: loading model '~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf'",
+    "0.00.202.798 I srv    load_model: local path '~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf'",
+    "0.00.261.275 I llama_model_loader: loaded meta data with 55 key-value pairs and 753 tensors from ~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf (version GGUF V3 (latest))",
+    "0.01.696.597 I common_speculative_init_result: creating MTP draft context against the target model '~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf'",
+    "0.01.726.302 I spec common_specu: adding speculative implementation 'draft-mtp'"
+   ],
+   "n_batch": [
+    "4096",
+    "4096"
+   ],
+   "n_ubatch": [
+    "4096",
+    "256"
+   ],
+   "n_ctx": [
+    "131072",
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [
+   [
+    "0.96988",
+    "161",
+    "166",
+    "1.97"
+   ],
+   [
+    "0.88177",
+    "179",
+    "203",
+    "1.88"
+   ],
+   [
+    "0.76852",
+    "166",
+    "216",
+    "1.77"
+   ],
+   [
+    "0.81043",
+    "171",
+    "211",
+    "1.81"
+   ]
+  ],
+  "log_fehler": [],
+  "dauer_s": 93.1
+ },
+ {
+  "proc": 9,
+  "arm": "A",
+  "binary": "/opt/llama.cpp/current/llama-server",
+  "args": [
+   "-m",
+   "~/models/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+   "-ncmoe",
+   "40",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4"
+  ],
+  "env": {},
+  "sampling": {
+   "temperature": 0,
+   "top_k": 1,
+   "seed": 1
+  },
+  "t_start": "17:17:37",
+  "preload_s": 10.5,
+  "vram_idle_before": 33,
+  "load_s": 9.0,
+  "vram_after_start": 7009,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 19275.3,
+    "CUDA0": 2038.8
+   },
+   "kv": {
+    "CUDA0": 2560.0
+   },
+   "compute": {
+    "CUDA0": 2114.0,
+    "CUDA_Host": 1152.2
+   },
+   "n_rs_seq": [
+    "0"
+   ],
+   "checkpoints": true,
+   "n_expert_used": [
+    "8"
+   ],
+   "kv_override": [
+    "0.00.273.726 I llama_model_loader: - kv  26:                qwen35moe.expert_used_count u32              = 8"
+   ],
+   "tier": [],
+   "mtp": [],
+   "n_batch": [
+    "4096"
+   ],
+   "n_ubatch": [
+    "4096"
+   ],
+   "n_ctx": [
+    "131072",
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [],
+  "log_fehler": [],
+  "dauer_s": 98.4
+ },
+ {
+  "proc": 10,
+  "arm": "A",
+  "binary": "/opt/llama.cpp/current/llama-server",
+  "args": [
+   "-m",
+   "~/models/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+   "-ncmoe",
+   "40",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4"
+  ],
+  "env": {},
+  "sampling": {
+   "temperature": 0,
+   "top_k": 1,
+   "seed": 1
+  },
+  "t_start": "17:19:15",
+  "preload_s": 8.2,
+  "vram_idle_before": 33,
+  "load_s": 2.0,
+  "vram_after_start": 7009,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 19275.3,
+    "CUDA0": 2038.8
+   },
+   "kv": {
+    "CUDA0": 2560.0
+   },
+   "compute": {
+    "CUDA0": 2114.0,
+    "CUDA_Host": 1152.2
+   },
+   "n_rs_seq": [
+    "0"
+   ],
+   "checkpoints": true,
+   "n_expert_used": [
+    "8"
+   ],
+   "kv_override": [
+    "0.00.255.976 I llama_model_loader: - kv  26:                qwen35moe.expert_used_count u32              = 8"
+   ],
+   "tier": [],
+   "mtp": [],
+   "n_batch": [
+    "4096"
+   ],
+   "n_ubatch": [
+    "4096"
+   ],
+   "n_ctx": [
+    "131072",
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [],
+  "log_fehler": [],
+  "dauer_s": 93.8
+ },
+ {
+  "proc": 11,
+  "arm": "P",
+  "binary": "/opt/llama.cpp/current/llama-server",
+  "args": [
+   "-m",
+   "~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf",
+   "-ncmoe",
+   "41",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4",
+   "--spec-type",
+   "draft-mtp",
+   "--spec-draft-n-max",
+   "1",
+   "--spec-draft-n-ubatch",
+   "256"
+  ],
+  "env": {},
+  "sampling": {
+   "temperature": 0,
+   "top_k": 1,
+   "seed": 1
+  },
+  "t_start": "17:20:49",
+  "preload_s": 10.7,
+  "vram_idle_before": 33,
+  "load_s": 9.4,
+  "vram_after_start": 7559,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 19705.3,
+    "CUDA0": 2079.2
+   },
+   "kv": {
+    "CUDA0": 2816.0
+   },
+   "compute": {
+    "CUDA0": 2515.6,
+    "CUDA_Host": 1288.2
+   },
+   "n_rs_seq": [
+    "1",
+    "0"
+   ],
+   "checkpoints": false,
+   "n_expert_used": [
+    "8"
+   ],
+   "kv_override": [
+    "0.00.255.559 I llama_model_loader: - kv  26:                qwen35moe.expert_used_count u32              = 8"
+   ],
+   "tier": [],
+   "mtp": [
+    "0.00.194.954 I srv    load_model: loading model '~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf'",
+    "0.00.194.955 I srv    load_model: local path '~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf'",
+    "0.00.255.498 I llama_model_loader: loaded meta data with 55 key-value pairs and 753 tensors from ~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf (version GGUF V3 (latest))",
+    "0.08.544.192 I common_speculative_init_result: creating MTP draft context against the target model '~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf'",
+    "0.08.576.708 I spec common_specu: adding speculative implementation 'draft-mtp'"
+   ],
+   "n_batch": [
+    "4096",
+    "4096"
+   ],
+   "n_ubatch": [
+    "4096",
+    "256"
+   ],
+   "n_ctx": [
+    "131072",
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [
+   [
+    "0.96988",
+    "161",
+    "166",
+    "1.97"
+   ],
+   [
+    "0.88177",
+    "179",
+    "203",
+    "1.88"
+   ],
+   [
+    "0.76852",
+    "166",
+    "216",
+    "1.77"
+   ],
+   [
+    "0.81043",
+    "171",
+    "211",
+    "1.81"
+   ]
+  ],
+  "log_fehler": [],
+  "dauer_s": 104.6
+ },
+ {
+  "proc": 12,
+  "arm": "S",
+  "binary": "/opt/llama.cpp/current/llama-server",
+  "args": [
+   "-m",
+   "~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf",
+   "-ncmoe",
+   "41",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4",
+   "--spec-type",
+   "draft-mtp",
+   "--spec-draft-n-max",
+   "1",
+   "--spec-draft-n-ubatch",
+   "256"
+  ],
+  "env": {},
+  "sampling": {
+   "temperature": 0.6,
+   "top_k": 20,
+   "top_p": 0.95,
+   "min_p": 0.0,
+   "presence_penalty": 0.0,
+   "repeat_penalty": 1.0,
+   "seed": 1
+  },
+  "t_start": "17:22:34",
+  "preload_s": 8.0,
+  "vram_idle_before": 33,
+  "load_s": 2.3,
+  "vram_after_start": 7559,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 19705.3,
+    "CUDA0": 2079.2
+   },
+   "kv": {
+    "CUDA0": 2816.0
+   },
+   "compute": {
+    "CUDA0": 2515.6,
+    "CUDA_Host": 1288.2
+   },
+   "n_rs_seq": [
+    "1",
+    "0"
+   ],
+   "checkpoints": false,
+   "n_expert_used": [
+    "8"
+   ],
+   "kv_override": [
+    "0.00.270.208 I llama_model_loader: - kv  26:                qwen35moe.expert_used_count u32              = 8"
+   ],
+   "tier": [],
+   "mtp": [
+    "0.00.212.191 I srv    load_model: loading model '~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf'",
+    "0.00.212.193 I srv    load_model: local path '~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf'",
+    "0.00.270.146 I llama_model_loader: loaded meta data with 55 key-value pairs and 753 tensors from ~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf (version GGUF V3 (latest))",
+    "0.01.719.104 I common_speculative_init_result: creating MTP draft context against the target model '~/models/Qwen3.6-35B-A3B-MTP-UD-Q4_K_XL.gguf'",
+    "0.01.747.141 I spec common_specu: adding speculative implementation 'draft-mtp'"
+   ],
+   "n_batch": [
+    "4096",
+    "4096"
+   ],
+   "n_ubatch": [
+    "4096",
+    "256"
+   ],
+   "n_ctx": [
+    "131072",
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [
+   [
+    "0.93860",
+    "107",
+    "114",
+    "1.94"
+   ],
+   [
+    "0.86341",
+    "177",
+    "205",
+    "1.86"
+   ],
+   [
+    "0.77674",
+    "167",
+    "215",
+    "1.78"
+   ],
+   [
+    "0.79343",
+    "169",
+    "213",
+    "1.79"
+   ]
+  ],
+  "log_fehler": [],
+  "dauer_s": 91.0
+ },
+ {
+  "proc": 13,
+  "arm": "F",
+  "binary": "~/src/llama-wackMall/build-mtpcheck/bin/llama-server",
+  "args": [
+   "-m",
+   "~/bench/mtp-fork-check/run3-20261125-170722/modelle/old.gguf",
+   "-ncmoe",
+   "40",
+   "-no-cmoe",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4"
+  ],
+  "env": {},
+  "sampling": {
+   "temperature": 0,
+   "top_k": 1,
+   "seed": 1
+  },
+  "t_start": "17:24:05",
+  "preload_s": 10.3,
+  "vram_idle_before": 33,
+  "load_s": 10.1,
+  "vram_after_start": 6731,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 20797.7,
+    "CUDA0": 2038.8
+   },
+   "kv": {
+    "CUDA0": 2560.0
+   },
+   "compute": {
+    "CUDA0": 1834.0,
+    "CUDA_Host": 1088.1
+   },
+   "n_rs_seq": [
+    "0"
+   ],
+   "checkpoints": true,
+   "n_expert_used": [
+    "8"
+   ],
+   "kv_override": [
+    "0.00.266.131 I llama_model_loader: - kv  26:                qwen35moe.expert_used_count u32              = 8"
+   ],
+   "tier": [
+    "init: expert tiering disabled (S=0)"
+   ],
+   "mtp": [
+    "0.00.205.041 I srv    load_model: loading model '~/bench/mtp-fork-check/run3-20261125-170722/modelle/old.gguf'",
+    "0.00.205.043 I srv    load_model: local path '~/bench/mtp-fork-check/run3-20261125-170722/modelle/old.gguf'",
+    "0.00.266.059 I llama_model_loader: loaded meta data with 54 key-value pairs and 733 tensors from ~/bench/mtp-fork-check/run3-20261125-170722/modelle/old.gguf (version GGUF V3 (latest))",
+    "load_sidecar: no sidecar at ~/bench/mtp-fork-check/run3-20261125-170722/modelle/old.gguf.tier"
+   ],
+   "n_batch": [
+    "4096"
+   ],
+   "n_ubatch": [
+    "4096"
+   ],
+   "n_ctx": [
+    "131072",
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [],
+  "log_fehler": [],
+  "dauer_s": 116.9
+ },
+ {
+  "proc": 14,
+  "arm": "H",
+  "binary": "~/src/llama-wackMall/build-mtpcheck/bin/llama-server",
+  "args": [
+   "-m",
+   "~/bench/mtp-fork-check/run3-20261125-170722/modelle/old.gguf",
+   "-ncmoe",
+   "40",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4"
+  ],
+  "env": {
+   "LLAMA_EXPERT_ADAPT": "1",
+   "LLAMA_EXPERT_S": "10"
+  },
+  "sampling": {
+   "temperature": 0,
+   "top_k": 1,
+   "seed": 1
+  },
+  "t_start": "17:26:02",
+  "preload_s": 7.9,
+  "vram_idle_before": 33,
+  "load_s": 3.0,
+  "vram_after_start": 6165,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 20797.7,
+    "CUDA0": 2038.8
+   },
+   "kv": {
+    "CUDA0": 2560.0
+   },
+   "compute": {
+    "CUDA0": 458.5,
+    "CUDA_Host": 68.0
+   },
+   "n_rs_seq": [
+    "0"
+   ],
+   "checkpoints": true,
+   "n_expert_used": [
+    "8"
+   ],
+   "kv_override": [
+    "0.00.789.429 I llama_model_loader: - kv  26:                qwen35moe.expert_used_count u32              = 8"
+   ],
+   "tier": [
+    "init: expert tiering on: 10 slots/layer, 120 tensors, 0.79 GiB pinned, seed coverage 0.0%"
+   ],
+   "mtp": [
+    "0.00.203.676 I srv    load_model: loading model '~/bench/mtp-fork-check/run3-20261125-170722/modelle/old.gguf'",
+    "0.00.203.679 I srv    load_model: local path '~/bench/mtp-fork-check/run3-20261125-170722/modelle/old.gguf'",
+    "0.00.789.378 I llama_model_loader: loaded meta data with 54 key-value pairs and 733 tensors from ~/bench/mtp-fork-check/run3-20261125-170722/modelle/old.gguf (version GGUF V3 (latest))",
+    "load_sidecar: no sidecar at ~/bench/mtp-fork-check/run3-20261125-170722/modelle/old.gguf.tier"
+   ],
+   "n_batch": [
+    "256"
+   ],
+   "n_ubatch": [
+    "256"
+   ],
+   "n_ctx": [
+    "131072",
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [],
+  "log_fehler": [],
+  "stats": "expert_tier: repins 656\nexpert_timers: steps 1027 fetch 0 us (0.00 ms/step) cold_compute 0 us (0.00 ms/step)\nlayer  0: cold 7738 / 8776 (88.2%) graphs 1027\nlayer  1: cold 7592 / 8776 (86.5%) graphs 1027\nlayer  2: cold 7936 / 8776 (90.4%) graphs 1027\nlayer  3: cold 7397 / 8776 (84.3%) graphs 1027\nlayer  4: cold 7093 / 8776 (80.8%) graphs 1027\nlayer  5: cold 7297 / 8776 (83.1%) graphs 1027\nlayer  6: cold 7124 / 8776 (81.2%) graphs 1027\nlayer  7: cold 6407 / 8776 (73.0%) graphs 1027\nlayer  8: cold 6070 / 8776 (69.2%) graphs 1027\nlayer  9: cold 6271 / 8776 (71.5%) graphs 1027\nlayer 10: cold 7155 / 8776 (81.5%) graphs 1027\nlayer 11: cold 7281 / 8776 (83.0%) graphs 1027\nlayer 12: cold 6399 / 8776 (72.9%) graphs 1027\nlayer 13: cold 6520 / 8776 (74.3%) graphs 1027\nlayer 14: cold 5991 / 8776 (68.3%) graphs 1027\nlayer 15: cold 5816 / 8776 (66.3%) graphs 1027\nlayer 16: cold 6103 / 8776 (69.5%) graphs 1027\nlayer 17: cold 5673 / 8776 (64.6%) graphs 1027\nlayer 18: cold 6292 / 8776 (71.7%) graphs 1027\nlayer 19: cold 6179 / 8776 (70.4%) graphs 1027\nlayer 20: cold 5293 / 8776 (60.3%) graphs 1027\nlayer 21: cold 5754 / 8776 (65.6%) graphs 1027\nlayer 22: cold 6812 / 8776 (77.6%) graphs 1027\nlayer 23: cold 7006 / 8776 (79.8%) graphs 1027\nlayer 24: cold 5986 / 8776 (68.2%) graphs 1027\nlayer 25: cold 6130 / 8776 (69.8%) graphs 1027\nlayer 26: cold 6279 / 8776 (71.5%) graphs 1027\nlayer 27: cold 6030 / 8776 (68.7%) graphs 1027\nlayer 28: cold 6340 / 8776 (72.2%) graphs 1027\nlayer 29: cold 6214 / 8776 (70.8%) graphs 1027\nlayer 30: cold 6277 / 8776 (71.5%) graphs 1027\nlayer 31: cold 6239 / 8776 (71.1%) graphs 1027\nlayer 32: cold 6038 / 8776 (68.8%) graphs 1027\nlayer 33: cold 6443 / 8776 (73.4%) graphs 1027\nlayer 34: cold 6473 / 8776 (73.8%) graphs 1027\nlayer 35: cold 6291 / 8776 (71.7%) graphs 1027\nlayer 36: cold 6161 / 8776 (70.2%) graphs 1027\nlayer 37: cold 6376 / 8776 (72.7%) graphs 1027\nlayer 38: cold 6204 / 8776 (70.7%) graphs 1027\nlayer 39: cold 6359 / 8776 (72.5%) graphs 1027\n",
+  "dauer_s": 40.0
+ }
+]

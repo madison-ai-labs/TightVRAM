@@ -1,0 +1,14 @@
+{"art": "laden", "ub": 4096, "ctx": 131072, "geladen": true, "lade_s": 14.3, "vram_idle": 7047, "ram": {"used": 22366, "avail": 9048}, "buffer": {}}
+{"art": "prefill", "ub": 4096, "ctx": 131072, "n": 16384, "rep": 0, "off": 4096, "wall_s": 10.06, "vram_peak": 7143, "fehler": null, "prompt_n": 16384, "prompt_ms": 10009.897, "pp_ts": 1636.780078756055}
+{"art": "prefill", "ub": 4096, "ctx": 131072, "n": 16384, "rep": 1, "off": 20480, "wall_s": 10.23, "vram_peak": 7143, "fehler": null, "prompt_n": 16384, "prompt_ms": 10089.575, "pp_ts": 1623.854324884844}
+{"art": "prefill", "ub": 4096, "ctx": 131072, "n": 65536, "rep": 0, "off": 36864, "wall_s": 46.24, "vram_peak": 7143, "fehler": null, "prompt_n": 65536, "prompt_ms": 46043.784, "pp_ts": 1423.3408791944642}
+{"art": "prefill", "ub": 4096, "ctx": 131072, "n": 65536, "rep": 1, "off": 102400, "wall_s": 46.6, "vram_peak": 7143, "fehler": null, "prompt_n": 65536, "prompt_ms": 46125.633, "pp_ts": 1420.8151896798902}
+{"art": "prefill", "ub": 4096, "ctx": 131072, "n": 122880, "rep": 0, "off": 167936, "wall_s": 99.66, "vram_peak": 7143, "fehler": null, "prompt_n": 122880, "prompt_ms": 99147.027, "pp_ts": 1239.3715043013847}
+{"art": "decode", "ub": 4096, "ctx": 131072, "n_ctx_prompt": 16384, "predicted_n": 128, "tg_ts": 34.357837144393, "pp_ts": 1620.8128835630343, "vram_peak": 7147, "text_sha": "f5ff318a7d61", "text_anfang": " LLM_TENSOR_ATTN_NORM_LFM2,                         \"blk.%d.attn_norm\" }, // fix for wrong tensor name\n    { LLM_TENSOR_"}
+{"art": "laden", "ub": 8192, "ctx": 131072, "geladen": false, "lade_s": 16.2, "vram_idle": 33, "ram": {"used": 1394, "avail": 30020}, "buffer": {}}
+{"art": "laden", "ub": 8192, "ctx": 65536, "geladen": true, "lade_s": 14.2, "vram_idle": 6471, "ram": {"used": 22848, "avail": 8565}, "buffer": {}}
+{"art": "prefill", "ub": 8192, "ctx": 65536, "n": 16384, "rep": 0, "off": 4096, "wall_s": 7.19, "vram_peak": 6631, "fehler": null, "prompt_n": 16384, "prompt_ms": 7140.561, "pp_ts": 2294.4975891950226}
+{"art": "prefill", "ub": 8192, "ctx": 65536, "n": 16384, "rep": 1, "off": 20480, "wall_s": 7.35, "vram_peak": 6631, "fehler": null, "prompt_n": 16384, "prompt_ms": 7179.415, "pp_ts": 2282.0800859122924}
+{"art": "decode", "ub": 8192, "ctx": 65536, "n_ctx_prompt": 16384, "predicted_n": 128, "tg_ts": 34.88235719039367, "pp_ts": 2289.399106793398, "vram_peak": 6631, "text_sha": "e7780159bfb2", "text_anfang": " LLM_TENSOR_ATTN_NORM_LFM2,                         \"blk.%d.attn_norm\" }, // fix for wrong tensor name\n    { LLM_TENSOR_"}
+{"art": "laden", "ub": 12288, "ctx": 131072, "geladen": false, "lade_s": 16.2, "vram_idle": 33, "ram": {"used": 1429, "avail": 29984}, "buffer": {}}
+{"art": "laden", "ub": 12288, "ctx": 65536, "geladen": true, "lade_s": 14.2, "vram_idle": 7829, "ram": {"used": 23595, "avail": 7818}, "buffer": {}}

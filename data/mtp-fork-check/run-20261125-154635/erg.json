@@ -1,0 +1,709 @@
+{
+ "arme": {
+  "A": {
+   "tg": [
+    34.66,
+    35.15,
+    35.55
+   ],
+   "median": 35.15,
+   "min": 34.66,
+   "max": 35.55,
+   "gegen_A": 0.0,
+   "gewinn": false
+  },
+  "C": {
+   "tg": [
+    34.82,
+    32.31,
+    33.64
+   ],
+   "median": 33.64,
+   "min": 32.31,
+   "max": 34.82,
+   "gegen_A": -0.043,
+   "gewinn": false
+  },
+  "D": {
+   "tg": [
+    39.59,
+    39.78,
+    39.68
+   ],
+   "median": 39.68,
+   "min": 39.59,
+   "max": 39.78,
+   "gegen_A": 0.129,
+   "gewinn": false,
+   "akzeptanz": 0.874
+  }
+ },
+ "identitaet": {
+  "A~A": [
+   {
+    "proc": 7,
+    "prompt": "agent-tools",
+    "ab_token": null
+   },
+   {
+    "proc": 7,
+    "prompt": "code-neu",
+    "ab_token": null
+   },
+   {
+    "proc": 7,
+    "prompt": "review",
+    "ab_token": null
+   },
+   {
+    "proc": 8,
+    "prompt": "agent-tools",
+    "ab_token": null
+   },
+   {
+    "proc": 8,
+    "prompt": "code-neu",
+    "ab_token": null
+   },
+   {
+    "proc": 8,
+    "prompt": "review",
+    "ab_token": null
+   }
+  ],
+  "C~A": [
+   {
+    "proc": 2,
+    "prompt": "agent-tools",
+    "ab_token": 44
+   },
+   {
+    "proc": 2,
+    "prompt": "code-neu",
+    "ab_token": 86
+   },
+   {
+    "proc": 2,
+    "prompt": "review",
+    "ab_token": 8
+   },
+   {
+    "proc": 5,
+    "prompt": "agent-tools",
+    "ab_token": 44
+   },
+   {
+    "proc": 5,
+    "prompt": "code-neu",
+    "ab_token": 86
+   },
+   {
+    "proc": 5,
+    "prompt": "review",
+    "ab_token": 8
+   },
+   {
+    "proc": 10,
+    "prompt": "agent-tools",
+    "ab_token": 44
+   },
+   {
+    "proc": 10,
+    "prompt": "code-neu",
+    "ab_token": 86
+   },
+   {
+    "proc": 10,
+    "prompt": "review",
+    "ab_token": 8
+   }
+  ],
+  "D~C": [
+   {
+    "proc": 3,
+    "prompt": "agent-tools",
+    "ab_token": 44
+   },
+   {
+    "proc": 3,
+    "prompt": "code-neu",
+    "ab_token": 79
+   },
+   {
+    "proc": 3,
+    "prompt": "review",
+    "ab_token": 31
+   },
+   {
+    "proc": 4,
+    "prompt": "agent-tools",
+    "ab_token": 44
+   },
+   {
+    "proc": 4,
+    "prompt": "code-neu",
+    "ab_token": 79
+   },
+   {
+    "proc": 4,
+    "prompt": "review",
+    "ab_token": 31
+   },
+   {
+    "proc": 11,
+    "prompt": "agent-tools",
+    "ab_token": 44
+   },
+   {
+    "proc": 11,
+    "prompt": "code-neu",
+    "ab_token": 79
+   },
+   {
+    "proc": 11,
+    "prompt": "review",
+    "ab_token": 31
+   }
+  ]
+ },
+ "tools": {
+  "A": [
+   {
+    "calls": 1,
+    "gueltig": true,
+    "namen": [
+     "update_plan"
+    ],
+    "proc": 0
+   },
+   {
+    "calls": 1,
+    "gueltig": true,
+    "namen": [
+     "update_plan"
+    ],
+    "proc": 7
+   },
+   {
+    "calls": 1,
+    "gueltig": true,
+    "namen": [
+     "update_plan"
+    ],
+    "proc": 8
+   }
+  ],
+  "C": [
+   {
+    "calls": 1,
+    "gueltig": true,
+    "namen": [
+     "update_plan"
+    ],
+    "proc": 2
+   },
+   {
+    "calls": 1,
+    "gueltig": true,
+    "namen": [
+     "update_plan"
+    ],
+    "proc": 5
+   },
+   {
+    "calls": 1,
+    "gueltig": true,
+    "namen": [
+     "update_plan"
+    ],
+    "proc": 10
+   }
+  ],
+  "D": [
+   {
+    "calls": 3,
+    "gueltig": true,
+    "namen": [
+     "update_plan",
+     "read",
+     "read"
+    ],
+    "proc": 3
+   },
+   {
+    "calls": 3,
+    "gueltig": true,
+    "namen": [
+     "update_plan",
+     "read",
+     "read"
+    ],
+    "proc": 4
+   },
+   {
+    "calls": 3,
+    "gueltig": true,
+    "namen": [
+     "update_plan",
+     "read",
+     "read"
+    ],
+    "proc": 11
+   }
+  ]
+ },
+ "regel": "Median >= 1.15 x A und min > max(A)",
+ "procs": [
+  {
+   "proc": 0,
+   "arm": "A",
+   "vram_after_start": 7009,
+   "load_s": 9.5,
+   "preload_s": 10.0,
+   "start": {
+    "buffers": {
+     "CPU_Mapped": 19275.3,
+     "CUDA0": 2038.8
+    },
+    "kv": {
+     "CUDA0": 2560.0
+    },
+    "compute": {
+     "CUDA0": 2114.0,
+     "CUDA_Host": 1152.2
+    },
+    "n_rs_seq": [
+     "0"
+    ],
+    "checkpoints": true,
+    "tier": [],
+    "n_batch": [
+     "4096"
+    ],
+    "n_ubatch": [
+     "4096"
+    ],
+    "n_ctx": [
+     "131072"
+    ]
+   },
+   "acceptance_log": [],
+   "fork_treffer": null,
+   "error": null,
+   "exit": 0
+  },
+  {
+   "proc": 1,
+   "arm": "B",
+   "vram_after_start": null,
+   "load_s": null,
+   "preload_s": null,
+   "start": null,
+   "acceptance_log": null,
+   "fork_treffer": null,
+   "error": "RuntimeError: Server beendet beim Start, exit 1",
+   "exit": null
+  },
+  {
+   "proc": 2,
+   "arm": "C",
+   "vram_after_start": 6165,
+   "load_s": 8.0,
+   "preload_s": 10.0,
+   "start": {
+    "buffers": {
+     "CPU_Mapped": 20797.7,
+     "CUDA0": 2038.8
+    },
+    "kv": {
+     "CUDA0": 2560.0
+    },
+    "compute": {
+     "CUDA0": 458.5,
+     "CUDA_Host": 68.0
+    },
+    "n_rs_seq": [
+     "0"
+    ],
+    "checkpoints": true,
+    "tier": [
+     "init: expert tiering on: 10 slots/layer, 120 tensors, 0.79 GiB pinned, seed coverage 0.0%"
+    ],
+    "n_batch": [
+     "256"
+    ],
+    "n_ubatch": [
+     "256"
+    ],
+    "n_ctx": [
+     "131072"
+    ]
+   },
+   "acceptance_log": [],
+   "fork_treffer": 0.231,
+   "error": null,
+   "exit": 0
+  },
+  {
+   "proc": 3,
+   "arm": "D",
+   "vram_after_start": 6741,
+   "load_s": 9.0,
+   "preload_s": 10.5,
+   "start": {
+    "buffers": {
+     "CPU_Mapped": 21259.6,
+     "CUDA0": 2079.2
+    },
+    "kv": {
+     "CUDA0": 2816.0
+    },
+    "compute": {
+     "CUDA0": 859.5,
+     "CUDA_Host": 204.0
+    },
+    "n_rs_seq": [
+     "1",
+     "0"
+    ],
+    "checkpoints": false,
+    "tier": [
+     "init: expert tiering on: 10 slots/layer, 120 tensors, 0.79 GiB pinned, seed coverage 0.0%"
+    ],
+    "n_batch": [
+     "256"
+    ],
+    "n_ubatch": [
+     "256"
+    ],
+    "n_ctx": [
+     "131072"
+    ]
+   },
+   "acceptance_log": [
+    [
+     "0.91623",
+     "175",
+     "191",
+     "1.92"
+    ],
+    [
+     "0.89109",
+     "180",
+     "202",
+     "1.89"
+    ],
+    [
+     "0.81905",
+     "172",
+     "210",
+     "1.82"
+    ]
+   ],
+   "fork_treffer": 0.2211,
+   "error": null,
+   "exit": 0
+  },
+  {
+   "proc": 4,
+   "arm": "D",
+   "vram_after_start": 6741,
+   "load_s": 3.3,
+   "preload_s": 8.0,
+   "start": {
+    "buffers": {
+     "CPU_Mapped": 21259.6,
+     "CUDA0": 2079.2
+    },
+    "kv": {
+     "CUDA0": 2816.0
+    },
+    "compute": {
+     "CUDA0": 859.5,
+     "CUDA_Host": 204.0
+    },
+    "n_rs_seq": [
+     "1",
+     "0"
+    ],
+    "checkpoints": false,
+    "tier": [
+     "init: expert tiering on: 10 slots/layer, 120 tensors, 0.79 GiB pinned, seed coverage 0.0%"
+    ],
+    "n_batch": [
+     "256"
+    ],
+    "n_ubatch": [
+     "256"
+    ],
+    "n_ctx": [
+     "131072"
+    ]
+   },
+   "acceptance_log": [
+    [
+     "0.91623",
+     "175",
+     "191",
+     "1.92"
+    ],
+    [
+     "0.89109",
+     "180",
+     "202",
+     "1.89"
+    ],
+    [
+     "0.81905",
+     "172",
+     "210",
+     "1.82"
+    ]
+   ],
+   "fork_treffer": 0.2211,
+   "error": null,
+   "exit": 0
+  },
+  {
+   "proc": 5,
+   "arm": "C",
+   "vram_after_start": 6165,
+   "load_s": 7.2,
+   "preload_s": 10.1,
+   "start": {
+    "buffers": {
+     "CPU_Mapped": 20797.7,
+     "CUDA0": 2038.8
+    },
+    "kv": {
+     "CUDA0": 2560.0
+    },
+    "compute": {
+     "CUDA0": 458.5,
+     "CUDA_Host": 68.0
+    },
+    "n_rs_seq": [
+     "0"
+    ],
+    "checkpoints": true,
+    "tier": [
+     "init: expert tiering on: 10 slots/layer, 120 tensors, 0.79 GiB pinned, seed coverage 0.0%"
+    ],
+    "n_batch": [
+     "256"
+    ],
+    "n_ubatch": [
+     "256"
+    ],
+    "n_ctx": [
+     "131072"
+    ]
+   },
+   "acceptance_log": [],
+   "fork_treffer": 0.231,
+   "error": null,
+   "exit": 0
+  },
+  {
+   "proc": 6,
+   "arm": "B",
+   "vram_after_start": null,
+   "load_s": null,
+   "preload_s": null,
+   "start": null,
+   "acceptance_log": null,
+   "fork_treffer": null,
+   "error": "RuntimeError: Server beendet beim Start, exit 1",
+   "exit": null
+  },
+  {
+   "proc": 7,
+   "arm": "A",
+   "vram_after_start": 7009,
+   "load_s": 9.0,
+   "preload_s": 10.1,
+   "start": {
+    "buffers": {
+     "CPU_Mapped": 19275.3,
+     "CUDA0": 2038.8
+    },
+    "kv": {
+     "CUDA0": 2560.0
+    },
+    "compute": {
+     "CUDA0": 2114.0,
+     "CUDA_Host": 1152.2
+    },
+    "n_rs_seq": [
+     "0"
+    ],
+    "checkpoints": true,
+    "tier": [],
+    "n_batch": [
+     "4096"
+    ],
+    "n_ubatch": [
+     "4096"
+    ],
+    "n_ctx": [
+     "131072"
+    ]
+   },
+   "acceptance_log": [],
+   "fork_treffer": null,
+   "error": null,
+   "exit": 0
+  },
+  {
+   "proc": 8,
+   "arm": "A",
+   "vram_after_start": 7009,
+   "load_s": 2.1,
+   "preload_s": 7.8,
+   "start": {
+    "buffers": {
+     "CPU_Mapped": 19275.3,
+     "CUDA0": 2038.8
+    },
+    "kv": {
+     "CUDA0": 2560.0
+    },
+    "compute": {
+     "CUDA0": 2114.0,
+     "CUDA_Host": 1152.2
+    },
+    "n_rs_seq": [
+     "0"
+    ],
+    "checkpoints": true,
+    "tier": [],
+    "n_batch": [
+     "4096"
+    ],
+    "n_ubatch": [
+     "4096"
+    ],
+    "n_ctx": [
+     "131072"
+    ]
+   },
+   "acceptance_log": [],
+   "fork_treffer": null,
+   "error": null,
+   "exit": 0
+  },
+  {
+   "proc": 9,
+   "arm": "B",
+   "vram_after_start": null,
+   "load_s": null,
+   "preload_s": null,
+   "start": null,
+   "acceptance_log": null,
+   "fork_treffer": null,
+   "error": "RuntimeError: Server beendet beim Start, exit 1",
+   "exit": null
+  },
+  {
+   "proc": 10,
+   "arm": "C",
+   "vram_after_start": 6165,
+   "load_s": 8.1,
+   "preload_s": 9.6,
+   "start": {
+    "buffers": {
+     "CPU_Mapped": 20797.7,
+     "CUDA0": 2038.8
+    },
+    "kv": {
+     "CUDA0": 2560.0
+    },
+    "compute": {
+     "CUDA0": 458.5,
+     "CUDA_Host": 68.0
+    },
+    "n_rs_seq": [
+     "0"
+    ],
+    "checkpoints": true,
+    "tier": [
+     "init: expert tiering on: 10 slots/layer, 120 tensors, 0.79 GiB pinned, seed coverage 0.0%"
+    ],
+    "n_batch": [
+     "256"
+    ],
+    "n_ubatch": [
+     "256"
+    ],
+    "n_ctx": [
+     "131072"
+    ]
+   },
+   "acceptance_log": [],
+   "fork_treffer": 0.231,
+   "error": null,
+   "exit": 0
+  },
+  {
+   "proc": 11,
+   "arm": "D",
+   "vram_after_start": 6741,
+   "load_s": 10.0,
+   "preload_s": 10.5,
+   "start": {
+    "buffers": {
+     "CPU_Mapped": 21259.6,
+     "CUDA0": 2079.2
+    },
+    "kv": {
+     "CUDA0": 2816.0
+    },
+    "compute": {
+     "CUDA0": 859.5,
+     "CUDA_Host": 204.0
+    },
+    "n_rs_seq": [
+     "1",
+     "0"
+    ],
+    "checkpoints": false,
+    "tier": [
+     "init: expert tiering on: 10 slots/layer, 120 tensors, 0.79 GiB pinned, seed coverage 0.0%"
+    ],
+    "n_batch": [
+     "256"
+    ],
+    "n_ubatch": [
+     "256"
+    ],
+    "n_ctx": [
+     "131072"
+    ]
+   },
+   "acceptance_log": [
+    [
+     "0.91623",
+     "175",
+     "191",
+     "1.92"
+    ],
+    [
+     "0.89109",
+     "180",
+     "202",
+     "1.89"
+    ],
+    [
+     "0.81905",
+     "172",
+     "210",
+     "1.82"
+    ]
+   ],
+   "fork_treffer": 0.2211,
+   "error": null,
+   "exit": 0
+  }
+ ],
+ "urteil": "Kein Arm erfüllt die Regel: langer Lauf gestrichen."
+}

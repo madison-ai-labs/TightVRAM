@@ -1,0 +1,45 @@
+Running without Marker API. Activate Marker API with -m on commandline.
+Warning: Sanitizing vector length to a multiple of the loop stride 16 and thread count 6 from 93750000 elements (750000000 bytes) to 93749952 elements (749999616 bytes)
+Allocate: Process running on hwthread 0 (Domain S0) - Vector length 93749952/749999616 Offset 0 Alignment 512
+Allocate: Process running on hwthread 0 (Domain S0) - Vector length 93749952/749999616 Offset 0 Alignment 512
+Allocate: Process running on hwthread 0 (Domain S0) - Vector length 93749952/749999616 Offset 0 Alignment 512
+Allocate: Process running on hwthread 0 (Domain S0) - Vector length 93749952/749999616 Offset 0 Alignment 512
+Initialization: First thread in domain initializes the whole stream
+--------------------------------------------------------------------------------
+LIKWID MICRO BENCHMARK
+Test: triad_avx
+--------------------------------------------------------------------------------
+Using 1 work groups
+Using 6 threads
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Group: 0 Thread 0 Global Thread 0 running on hwthread 0 - Vector length 15624992 Offset 0
+Group: 0 Thread 1 Global Thread 1 running on hwthread 10 - Vector length 15624992 Offset 15624992
+Group: 0 Thread 3 Global Thread 3 running on hwthread 11 - Vector length 15624992 Offset 46874976
+Group: 0 Thread 2 Global Thread 2 running on hwthread 1 - Vector length 15624992 Offset 31249984
+Group: 0 Thread 4 Global Thread 4 running on hwthread 2 - Vector length 15624992 Offset 62499968
+Group: 0 Thread 5 Global Thread 5 running on hwthread 12 - Vector length 15624992 Offset 78124960
+--------------------------------------------------------------------------------
+Cycles:			45538566364
+CPU Clock:		3599896331
+Cycle Clock:		3599896331
+Time:			1.264997e+01 sec
+Iterations:		384
+Iterations per thread:	64
+Inner loop executions:	976562
+Size (Byte):		2999998464
+Size per thread:	499999744
+Number of Flops:	11999993856
+MFlops/s:		948.62
+Data volume (Byte):	191999901696
+MByte/s:		15177.90
+Cycles per update:	7.589765
+Cycles per cacheline:	60.718120
+Loads per update:	3
+Stores per update:	1
+Load bytes per element:	24
+Store bytes per elem.:	8
+Load/store ratio:	3.00
+Instructions:		7124996368
+UOPs:			11249994240
+--------------------------------------------------------------------------------

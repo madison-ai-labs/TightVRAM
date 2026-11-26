@@ -1,0 +1,60 @@
+
+alloc-ub2048-c131072.log: Peak 994 MiB (ausgeloest von CUDA0#blk.34.ffn_down_exps.weight#0(NONE))
+   node_2                                   DUP        f32   2048x2048x1x1          16.0  @48.0
+   ffn_moe_swiglu-34                        SWIGLU     f32   512x8x2048x1           32.0  @64.0
+   linear_attn_out-34                       MUL_MAT    f32   2048x2048x1x1          16.0  @240.0
+   norm-34                                  RMS_NORM   f32   2048x2048x1x1          16.0  @256.0
+   CUDA0#attn_inp_kq_mask#0                 NONE       f16   131072x2048x1x1       512.0  @272.0
+   CUDA0#blk.34.ffn_down_exps.weight#0      NONE       q6_K  512x2048x256x1        210.0  @784.0
+   klein (<8 MiB), 6 Tensoren                                      2.1
+   Summe live                                                    804.1   (Rest bis Peak = Fragmentierung/Luecken: 190)
+
+alloc-ub4096-c65536.log: Peak 1602 MiB (ausgeloest von ffn_moe_weighted-34(MUL))
+   linear_attn_out-34                       MUL_MAT    f32   2048x4096x1x1          32.0  @0.0
+   norm-34                                  RMS_NORM   f32   2048x4096x1x1          32.0  @32.0
+   node_2                                   DUP        f32   2048x4096x1x1          32.0  @96.0
+   CUDA0#attn_inp_kq_mask#0                 NONE       f16   65536x4096x1x1        512.0  @368.0
+   ffn_moe_down-34                          MUL_MAT_ID f32   2048x8x4096x1         256.0  @1090.0
+   ffn_moe_weighted-34                      MUL        f32   2048x8x4096x1         256.0  @1346.0
+   klein (<8 MiB), 5 Tensoren                                      0.2
+   Summe live                                                   1120.2   (Rest bis Peak = Fragmentierung/Luecken: 482)
+
+alloc-ub4096-c131072.log: Peak 2114 MiB (ausgeloest von ffn_moe_weighted-34(MUL))
+   linear_attn_out-34                       MUL_MAT    f32   2048x4096x1x1          32.0  @0.0
+   norm-34                                  RMS_NORM   f32   2048x4096x1x1          32.0  @32.0
+   node_2                                   DUP        f32   2048x4096x1x1          32.0  @96.0
+   CUDA0#attn_inp_kq_mask#0                 NONE       f16   131072x4096x1x1      1024.0  @368.0
+   ffn_moe_down-34                          MUL_MAT_ID f32   2048x8x4096x1         256.0  @1602.0
+   ffn_moe_weighted-34                      MUL        f32   2048x8x4096x1         256.0  @1858.0
+   klein (<8 MiB), 5 Tensoren                                      0.2
+   Summe live                                                   1632.2   (Rest bis Peak = Fragmentierung/Luecken: 482)
+
+alloc-ub6144-c131072.log: Peak 2978 MiB (ausgeloest von ffn_moe_weighted-34(MUL))  cudaMalloc scheiterte: 2978.05 MiB
+   linear_attn_out-34                       MUL_MAT    f32   2048x6144x1x1          48.0  @0.0
+   norm-34                                  RMS_NORM   f32   2048x6144x1x1          48.0  @48.0
+   node_2                                   DUP        f32   2048x6144x1x1          48.0  @144.0
+   CUDA0#attn_inp_kq_mask#0                 NONE       f16   131072x6144x1x1      1536.0  @464.0
+   ffn_moe_down-34                          MUL_MAT_ID f32   2048x8x6144x1         384.0  @2210.0
+   ffn_moe_weighted-34                      MUL        f32   2048x8x6144x1         384.0  @2594.0
+   klein (<8 MiB), 5 Tensoren                                      0.4
+   Summe live                                                   2448.4   (Rest bis Peak = Fragmentierung/Luecken: 530)
+
+alloc-ub8192-c65536.log: Peak 2818 MiB (ausgeloest von ffn_moe_weighted-34(MUL))
+   linear_attn_out-34                       MUL_MAT    f32   2048x8192x1x1          64.0  @0.0
+   norm-34                                  RMS_NORM   f32   2048x8192x1x1          64.0  @64.0
+   node_2                                   DUP        f32   2048x8192x1x1          64.0  @192.1
+   CUDA0#attn_inp_kq_mask#0                 NONE       f16   65536x8192x1x1       1024.0  @560.1
+   ffn_moe_down-34                          MUL_MAT_ID f32   2048x8x8192x1         512.0  @1794.1
+   ffn_moe_weighted-34                      MUL        f32   2048x8x8192x1         512.0  @2306.1
+   klein (<8 MiB), 5 Tensoren                                      0.5
+   Summe live                                                   2240.5   (Rest bis Peak = Fragmentierung/Luecken: 578)
+
+alloc-ub8192-c131072.log: Peak 3842 MiB (ausgeloest von ffn_moe_weighted-34(MUL))  cudaMalloc scheiterte: 3842.06 MiB
+   linear_attn_out-34                       MUL_MAT    f32   2048x8192x1x1          64.0  @0.0
+   norm-34                                  RMS_NORM   f32   2048x8192x1x1          64.0  @64.0
+   node_2                                   DUP        f32   2048x8192x1x1          64.0  @192.1
+   CUDA0#attn_inp_kq_mask#0                 NONE       f16   131072x8192x1x1      2048.0  @560.1
+   ffn_moe_down-34                          MUL_MAT_ID f32   2048x8x8192x1         512.0  @2818.1
+   ffn_moe_weighted-34                      MUL        f32   2048x8x8192x1         512.0  @3330.1
+   klein (<8 MiB), 5 Tensoren                                      0.5
+   Summe live                                                   3264.5   (Rest bis Peak = Fragmentierung/Luecken: 578)

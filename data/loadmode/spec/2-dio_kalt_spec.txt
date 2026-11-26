@@ -1,0 +1,26 @@
+# 2-dio_kalt_spec-1-repetitiv-json  n_ctx=131072  → ~/bench/loadmode/spec/2-dio_kalt_spec.jsonl
+# 3 Requests in 1 Durchläufen, 0 Fehler
+# 2-dio_kalt_spec-2-repetitiv-code  n_ctx=131072  → ~/bench/loadmode/spec/2-dio_kalt_spec.jsonl
+# 3 Requests in 1 Durchläufen, 0 Fehler
+# 2-dio_kalt_spec-3-neuartig  n_ctx=131072  → ~/bench/loadmode/spec/2-dio_kalt_spec.jsonl
+# 3 Requests in 1 Durchläufen, 0 Fehler
+# 2-dio_kalt_spec-4-agent-kalt  n_ctx=131072  → ~/bench/loadmode/spec/2-dio_kalt_spec.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    12.8   10.43     15216        0    1467   80    33.1
+               2     3.6    2.00      1323    15295     671   55    33.1
+               3     4.1    2.00      1369    16672     698   68    32.2
+               4     3.9    1.97      1245    18108     643   62    32.0
+               5     4.3    2.07      1406    19414     691   54    23.7
+               6     3.3    2.09      1487    20874     725   39    31.9
+            gesamt (kalt): 32.0 s
+# 6 Requests in 1 Durchläufen, 0 Fehler
+# 2-dio_kalt_spec-5-agent-warm  n_ctx=131072  → ~/bench/loadmode/spec/2-dio_kalt_spec.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1     3.4    0.14         4    15212      35   87    26.7
+               2     5.4    2.01      1323    15302     668   86    25.3
+               3     6.0    2.04      1458    16621     726   80    20.0
+               4     4.2    1.97      1244    18159     644   73    31.8
+               5     4.3    2.07      1406    19475     693   50    21.9
+               6     4.2    2.09      1488    20930     727   69    32.5
+            gesamt (kalt): 27.4 s
+# 6 Requests in 1 Durchläufen, 0 Fehler

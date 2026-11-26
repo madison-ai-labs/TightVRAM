@@ -1,0 +1,10 @@
+## bereit
+andere    size     871 rss      93 swap       0 locked       0 MiB
+anon      size   49567 rss     361 swap       0 locked       0 MiB
+dev-zero  size   20439 rss   20439 swap       0 locked       0 MiB
+nvidia    size      65 rss      63 swap       0 locked       0 MiB
+## abbruch
+andere    size     871 rss     108 swap       5 locked       0 MiB
+anon      size   50076 rss     250 swap     537 locked       0 MiB
+dev-zero  size   20439 rss    5996 swap       0 locked       0 MiB
+nvidia    size      65 rss      63 swap       0 locked       0 MiB

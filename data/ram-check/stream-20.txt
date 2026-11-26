@@ -1,0 +1,21 @@
+level 1 thread 0x76504f31b800 affinity 0,10
+level 1 thread 0x764f8effc6c0 affinity 0,10
+level 1 thread 0x764f8e7fb6c0 affinity 1,11
+level 1 thread 0x764f8dffa6c0 affinity 1,11
+level 1 thread 0x764f8d7f96c0 affinity 2,12
+level 1 thread 0x764f8cff86c0 affinity 2,12
+level 1 thread 0x764f8c7f76c0 affinity 3,13
+level 1 thread 0x764f8bff66c0 affinity 3,13
+level 1 thread 0x764f8b7f56c0 affinity 4,14
+level 1 thread 0x764f8aff46c0 affinity 4,14
+level 1 thread 0x764f8a7f36c0 affinity 5,15
+level 1 thread 0x764f89ff26c0 affinity 5,15
+level 1 thread 0x764f897f16c0 affinity 6,16
+level 1 thread 0x764f88ff06c0 affinity 6,16
+level 1 thread 0x764f887ef6c0 affinity 7,17
+level 1 thread 0x764f87fee6c0 affinity 7,17
+level 1 thread 0x764f877ed6c0 affinity 8,18
+level 1 thread 0x764f86fec6c0 affinity 8,18
+level 1 thread 0x764f867eb6c0 affinity 9,19
+level 1 thread 0x764f85fea6c0 affinity 9,19
+threads=20 copy=14.1 GB/s triad=13.6 GB/s (check 118097.0)

@@ -1,0 +1,41 @@
+Running without Marker API. Activate Marker API with -m on commandline.
+Warning: Sanitizing vector length to a multiple of the loop stride 16 and thread count 2 from 93750000 elements (750000000 bytes) to 93749984 elements (749999872 bytes)
+Allocate: Process running on hwthread 0 (Domain S0) - Vector length 93749984/749999872 Offset 0 Alignment 512
+Allocate: Process running on hwthread 0 (Domain S0) - Vector length 93749984/749999872 Offset 0 Alignment 512
+Allocate: Process running on hwthread 0 (Domain S0) - Vector length 93749984/749999872 Offset 0 Alignment 512
+Allocate: Process running on hwthread 0 (Domain S0) - Vector length 93749984/749999872 Offset 0 Alignment 512
+Initialization: First thread in domain initializes the whole stream
+--------------------------------------------------------------------------------
+LIKWID MICRO BENCHMARK
+Test: triad_avx
+--------------------------------------------------------------------------------
+Using 1 work groups
+Using 2 threads
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Group: 0 Thread 0 Global Thread 0 running on hwthread 0 - Vector length 46874992 Offset 0
+Group: 0 Thread 1 Global Thread 1 running on hwthread 10 - Vector length 46874992 Offset 46874992
+--------------------------------------------------------------------------------
+Cycles:			9129510876
+CPU Clock:		3600018503
+Cycle Clock:		3600018503
+Time:			2.535962e+00 sec
+Iterations:		32
+Iterations per thread:	16
+Inner loop executions:	2929687
+Size (Byte):		2999999488
+Size per thread:	1499999744
+Number of Flops:	2999999488
+MFlops/s:		1182.98
+Data volume (Byte):	47999991808
+MByte/s:		18927.72
+Cycles per update:	6.086342
+Cycles per cacheline:	48.690733
+Loads per update:	3
+Stores per update:	1
+Load bytes per element:	24
+Store bytes per elem.:	8
+Load/store ratio:	3.00
+Instructions:		1781249712
+UOPs:			2812499520
+--------------------------------------------------------------------------------

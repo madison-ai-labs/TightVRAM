@@ -1,0 +1,6 @@
+0	Method: MEMCPY	Elapsed: 0.31642	MiB: 4096.00000	Copy: 12944.697 MiB/s
+1	Method: MEMCPY	Elapsed: 0.31596	MiB: 4096.00000	Copy: 12963.502 MiB/s
+2	Method: MEMCPY	Elapsed: 0.31583	MiB: 4096.00000	Copy: 12968.797 MiB/s
+3	Method: MEMCPY	Elapsed: 0.31713	MiB: 4096.00000	Copy: 12915.676 MiB/s
+4	Method: MEMCPY	Elapsed: 0.31617	MiB: 4096.00000	Copy: 12955.220 MiB/s
+AVG	Method: MEMCPY	Elapsed: 0.31630	MiB: 4096.00000	Copy: 12949.551 MiB/s

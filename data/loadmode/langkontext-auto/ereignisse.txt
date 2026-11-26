@@ -1,0 +1,8 @@
+2026-11-06T01:07:37+01:00 1-auto start cache=warm cat=1 gguf_cache=21324 avail=30271 swap=95 pswpout=1220426 extra= governor=powersave
+2026-11-06T01:07:39+01:00 1-auto bereit nach 1.8 s, avail=28615 swap=95 pswpout=1220426 gguf_cache=21324 rssshmem=1164 free=7362
+2026-11-06T01:07:46+01:00 1-auto 1-agent-kalt zeile=355
+2026-11-06T01:08:21+01:00 1-auto 2-dokument-64k zeile=520
+2026-11-06T01:09:19+01:00 1-auto 3-dokument-115k zeile=627
+2026-11-06T01:11:05+01:00 1-auto 4-agent-wieder zeile=750
+2026-11-06T01:11:41+01:00 1-auto 5-interaktiv zeile=928
+2026-11-06T01:12:05+01:00 1-auto fertig zeile=1162 avail=25993 swap=95 pswpout=1220426 anon=3000 shm=1164 hwm=27745

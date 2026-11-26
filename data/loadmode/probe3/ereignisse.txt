@@ -1,0 +1,16 @@
+2026-11-06T01:12:10+01:00 1-none_evict start cache=evict cat=0 gguf_cache=21324 avail=30252 swap=95 pswpout=1220426 extra= governor=powersave
+2026-11-06T01:12:28+01:00 1-none_evict bereit nach 17.7 s, avail=9294 swap=261 pswpout=1265918 gguf_cache=8961 rssshmem=20411 free=515
+2026-11-06T01:12:28+01:00 1-none_evict gguf entfernt, gguf_cache=0 free=9522
+2026-11-06T01:12:35+01:00 1-none_evict 1-interaktiv zeile=234
+2026-11-06T01:12:54+01:00 1-none_evict 2-agent-kalt zeile=424
+2026-11-06T01:13:31+01:00 1-none_evict fertig zeile=605 avail=7147 swap=260 pswpout=1265918 anon=2315 shm=20422 hwm=22872
+2026-11-06T01:13:38+01:00 2-dio_kalt start cache=kalt cat=0 gguf_cache=0 avail=30311 swap=96 pswpout=1265918 extra= governor=powersave
+2026-11-06T01:13:52+01:00 2-dio_kalt bereit nach 14.1 s, avail=8936 swap=96 pswpout=1265918 gguf_cache=10 rssshmem=20439 free=8948
+2026-11-06T01:13:59+01:00 2-dio_kalt 1-interaktiv zeile=234
+2026-11-06T01:14:17+01:00 2-dio_kalt 2-agent-kalt zeile=424
+2026-11-06T01:14:52+01:00 2-dio_kalt fertig zeile=605 avail=7015 swap=96 pswpout=1265918 anon=2413 shm=20439 hwm=23033
+2026-11-06T01:15:06+01:00 3-dio_warm start cache=warm cat=1 gguf_cache=21324 avail=30341 swap=96 pswpout=1265918 extra= governor=powersave
+2026-11-06T01:15:20+01:00 3-dio_warm bereit nach 14.0 s, avail=9103 swap=96 pswpout=1265918 gguf_cache=5343 rssshmem=20439 free=3790
+2026-11-06T01:15:27+01:00 3-dio_warm 1-interaktiv zeile=234
+2026-11-06T01:15:45+01:00 3-dio_warm 2-agent-kalt zeile=424
+2026-11-06T01:16:21+01:00 3-dio_warm fertig zeile=605 avail=7076 swap=96 pswpout=1265918 anon=2413 shm=20439 hwm=23033

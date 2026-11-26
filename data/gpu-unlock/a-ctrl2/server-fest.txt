@@ -1,0 +1,10 @@
+# a-ctrl2  n_ctx=131072  → ~/bench/gpu-unlock/a-ctrl2/server-fest.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    14.9   12.35     15218        0    1254   86    33.6
+               2     4.3    2.40      1323    15303     558   63    32.2
+               3     4.3    2.40      1369    16688     579   64    32.3
+               4     4.3    2.37      1245    18120     534   64    33.1
+               5     3.9    2.47      1406    19428     579   47    33.3
+               6     4.5    2.49      1488    20880     607   64    32.1
+            gesamt (kalt): 36.1 s
+# 6 Requests in 1 Durchläufen, 0 Fehler

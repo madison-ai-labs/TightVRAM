@@ -1,0 +1,45 @@
+Running without Marker API. Activate Marker API with -m on commandline.
+Warning: Sanitizing vector length to a multiple of the loop stride 16 and thread count 8 from 187500000 elements (1500000000 bytes) to 187499904 elements (1499999232 bytes)
+Allocate: Process running on hwthread 0 (Domain S0) - Vector length 187499904/1499999232 Offset 0 Alignment 512
+Allocate: Process running on hwthread 0 (Domain S0) - Vector length 187499904/1499999232 Offset 0 Alignment 512
+Initialization: First thread in domain initializes the whole stream
+--------------------------------------------------------------------------------
+LIKWID MICRO BENCHMARK
+Test: copy_avx
+--------------------------------------------------------------------------------
+Using 1 work groups
+Using 8 threads
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Group: 0 Thread 0 Global Thread 0 running on hwthread 0 - Vector length 23437488 Offset 0
+Group: 0 Thread 1 Global Thread 1 running on hwthread 10 - Vector length 23437488 Offset 23437488
+Group: 0 Thread 2 Global Thread 2 running on hwthread 1 - Vector length 23437488 Offset 46874976
+Group: 0 Thread 3 Global Thread 3 running on hwthread 11 - Vector length 23437488 Offset 70312464
+Group: 0 Thread 5 Global Thread 5 running on hwthread 12 - Vector length 23437488 Offset 117187440
+Group: 0 Thread 4 Global Thread 4 running on hwthread 2 - Vector length 23437488 Offset 93749952
+Group: 0 Thread 6 Global Thread 6 running on hwthread 3 - Vector length 23437488 Offset 140624928
+Group: 0 Thread 7 Global Thread 7 running on hwthread 13 - Vector length 23437488 Offset 164062416
+--------------------------------------------------------------------------------
+Cycles:			50068468564
+CPU Clock:		3600024601
+Cycle Clock:		3600024601
+Time:			1.390781e+01 sec
+Iterations:		512
+Iterations per thread:	64
+Inner loop executions:	1464843
+Size (Byte):		2999998464
+Size per thread:	374999808
+Number of Flops:	0
+MFlops/s:		0.00
+Data volume (Byte):	191999901696
+MByte/s:		13805.18
+Cycles per update:	4.172375
+Cycles per cacheline:	33.378996
+Loads per update:	1
+Stores per update:	1
+Load bytes per element:	8
+Store bytes per elem.:	8
+Load/store ratio:	1.00
+Instructions:		8249995792
+UOPs:			10499994624
+--------------------------------------------------------------------------------

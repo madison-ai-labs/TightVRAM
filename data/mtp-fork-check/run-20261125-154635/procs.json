@@ -1,0 +1,719 @@
+[
+ {
+  "proc": 0,
+  "arm": "A",
+  "binary": "/opt/llama.cpp/current/llama-server",
+  "args": [
+   "-m",
+   "~/models/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+   "-ncmoe",
+   "40",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4"
+  ],
+  "env": {},
+  "preload_s": 10.0,
+  "load_s": 9.5,
+  "vram_idle_before": 33,
+  "vram_after_start": 7009,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 19275.3,
+    "CUDA0": 2038.8
+   },
+   "kv": {
+    "CUDA0": 2560.0
+   },
+   "compute": {
+    "CUDA0": 2114.0,
+    "CUDA_Host": 1152.2
+   },
+   "n_rs_seq": [
+    "0"
+   ],
+   "checkpoints": true,
+   "tier": [],
+   "n_batch": [
+    "4096"
+   ],
+   "n_ubatch": [
+    "4096"
+   ],
+   "n_ctx": [
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [],
+  "dauer_s": 61.9
+ },
+ {
+  "proc": 1,
+  "arm": "B",
+  "error": "RuntimeError: Server beendet beim Start, exit 1"
+ },
+ {
+  "proc": 2,
+  "arm": "C",
+  "binary": "~/src/llama-wackMall/build-mtpcheck/bin/llama-server",
+  "args": [
+   "-m",
+   "~/bench/mtp-fork-check/run-20261125-154635/modelle/old.gguf",
+   "-ncmoe",
+   "40",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4"
+  ],
+  "env": {
+   "LLAMA_EXPERT_ADAPT": "1",
+   "LLAMA_EXPERT_S": "10"
+  },
+  "preload_s": 10.0,
+  "load_s": 8.0,
+  "vram_idle_before": 33,
+  "vram_after_start": 6165,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 20797.7,
+    "CUDA0": 2038.8
+   },
+   "kv": {
+    "CUDA0": 2560.0
+   },
+   "compute": {
+    "CUDA0": 458.5,
+    "CUDA_Host": 68.0
+   },
+   "n_rs_seq": [
+    "0"
+   ],
+   "checkpoints": true,
+   "tier": [
+    "init: expert tiering on: 10 slots/layer, 120 tensors, 0.79 GiB pinned, seed coverage 0.0%"
+   ],
+   "n_batch": [
+    "256"
+   ],
+   "n_ubatch": [
+    "256"
+   ],
+   "n_ctx": [
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [],
+  "stats": "expert_tier: repins 786\nexpert_timers: steps 1136 fetch 0 us (0.00 ms/step) cold_compute 0 us (0.00 ms/step)\nlayer  0: cold 75011 / 83464 (89.9%) graphs 1136\nlayer  1: cold 72869 / 83464 (87.3%) graphs 1136\nlayer  2: cold 75688 / 83464 (90.7%) graphs 1136\nlayer  3: cold 71306 / 83464 (85.4%) graphs 1136\nlayer  4: cold 64992 / 83464 (77.9%) graphs 1136\nlayer  5: cold 66689 / 83464 (79.9%) graphs 1136\nlayer  6: cold 68890 / 83464 (82.5%) graphs 1136\nlayer  7: cold 60151 / 83464 (72.1%) graphs 1136\nlayer  8: cold 55064 / 83464 (66.0%) graphs 1136\nlayer  9: cold 58826 / 83464 (70.5%) graphs 1136\nlayer 10: cold 64139 / 83464 (76.8%) graphs 1136\nlayer 11: cold 62919 / 83464 (75.4%) graphs 1136\nlayer 12: cold 61472 / 83464 (73.7%) graphs 1136\nlayer 13: cold 60357 / 83464 (72.3%) graphs 1136\nlayer 14: cold 60010 / 83464 (71.9%) graphs 1136\nlayer 15: cold 59134 / 83464 (70.8%) graphs 1136\nlayer 16: cold 63029 / 83464 (75.5%) graphs 1136\nlayer 17: cold 61507 / 83464 (73.7%) graphs 1136\nlayer 18: cold 64475 / 83464 (77.2%) graphs 1136\nlayer 19: cold 60992 / 83464 (73.1%) graphs 1136\nlayer 20: cold 60778 / 83464 (72.8%) graphs 1136\nlayer 21: cold 59703 / 83464 (71.5%) graphs 1136\nlayer 22: cold 64335 / 83464 (77.1%) graphs 1136\nlayer 23: cold 64311 / 83464 (77.1%) graphs 1136\nlayer 24: cold 63633 / 83464 (76.2%) graphs 1136\nlayer 25: cold 62918 / 83464 (75.4%) graphs 1136\nlayer 26: cold 64254 / 83464 (77.0%) graphs 1136\nlayer 27: cold 62049 / 83464 (74.3%) graphs 1136\nlayer 28: cold 66177 / 83464 (79.3%) graphs 1136\nlayer 29: cold 64258 / 83464 (77.0%) graphs 1136\nlayer 30: cold 67861 / 83464 (81.3%) graphs 1136\nlayer 31: cold 65179 / 83464 (78.1%) graphs 1136\nlayer 32: cold 63960 / 83464 (76.6%) graphs 1136\nlayer 33: cold 62453 / 83464 (74.8%) graphs 1136\nlayer 34: cold 67232 / 83464 (80.6%) graphs 1136\nlayer 35: cold 65559 / 83464 (78.5%) graphs 1136\nlayer 36: cold 64680 / 83464 (77.5%) graphs 1136\nlayer 37: cold 61861 / 83464 (74.1%) graphs 1136\nlayer 38: cold 61974 / 83464 (74.3%) graphs 1136\nlayer 39: cold 66543 / 83464 (79.7%) graphs 1136\n",
+  "dauer_s": 115.4
+ },
+ {
+  "proc": 3,
+  "arm": "D",
+  "binary": "~/src/llama-wackMall/build-mtpcheck/bin/llama-server",
+  "args": [
+   "-m",
+   "~/bench/mtp-fork-check/run-20261125-154635/modelle/mtp.gguf",
+   "-ncmoe",
+   "41",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4",
+   "--spec-type",
+   "draft-mtp",
+   "--spec-draft-n-max",
+   "1"
+  ],
+  "env": {
+   "LLAMA_EXPERT_ADAPT": "1",
+   "LLAMA_EXPERT_S": "10"
+  },
+  "preload_s": 10.5,
+  "load_s": 9.0,
+  "vram_idle_before": 33,
+  "vram_after_start": 6741,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 21259.6,
+    "CUDA0": 2079.2
+   },
+   "kv": {
+    "CUDA0": 2816.0
+   },
+   "compute": {
+    "CUDA0": 859.5,
+    "CUDA_Host": 204.0
+   },
+   "n_rs_seq": [
+    "1",
+    "0"
+   ],
+   "checkpoints": false,
+   "tier": [
+    "init: expert tiering on: 10 slots/layer, 120 tensors, 0.79 GiB pinned, seed coverage 0.0%"
+   ],
+   "n_batch": [
+    "256"
+   ],
+   "n_ubatch": [
+    "256"
+   ],
+   "n_ctx": [
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [
+   [
+    "0.91623",
+    "175",
+    "191",
+    "1.92"
+   ],
+   [
+    "0.89109",
+    "180",
+    "202",
+    "1.89"
+   ],
+   [
+    "0.81905",
+    "172",
+    "210",
+    "1.82"
+   ]
+  ],
+  "stats": "expert_tier: repins 763\nexpert_timers: steps 1898 fetch 0 us (0.00 ms/step) cold_compute 0 us (0.00 ms/step)\nlayer  0: cold 76006 / 84384 (90.1%) graphs 648\nlayer  1: cold 73892 / 84384 (87.6%) graphs 648\nlayer  2: cold 76752 / 84384 (91.0%) graphs 648\nlayer  3: cold 73109 / 84384 (86.6%) graphs 648\nlayer  4: cold 66125 / 84384 (78.4%) graphs 648\nlayer  5: cold 67564 / 84384 (80.1%) graphs 648\nlayer  6: cold 69762 / 84384 (82.7%) graphs 648\nlayer  7: cold 61493 / 84384 (72.9%) graphs 648\nlayer  8: cold 57170 / 84384 (67.7%) graphs 648\nlayer  9: cold 63332 / 84384 (75.1%) graphs 648\nlayer 10: cold 65256 / 84384 (77.3%) graphs 648\nlayer 11: cold 63915 / 84384 (75.7%) graphs 648\nlayer 12: cold 62932 / 84384 (74.6%) graphs 648\nlayer 13: cold 61951 / 84384 (73.4%) graphs 648\nlayer 14: cold 61620 / 84384 (73.0%) graphs 648\nlayer 15: cold 60229 / 84384 (71.4%) graphs 648\nlayer 16: cold 63648 / 84384 (75.4%) graphs 648\nlayer 17: cold 62432 / 84384 (74.0%) graphs 648\nlayer 18: cold 65978 / 84384 (78.2%) graphs 648\nlayer 19: cold 62505 / 84384 (74.1%) graphs 648\nlayer 20: cold 58353 / 84384 (69.2%) graphs 648\nlayer 21: cold 61468 / 84384 (72.8%) graphs 648\nlayer 22: cold 65688 / 84384 (77.8%) graphs 648\nlayer 23: cold 65332 / 84384 (77.4%) graphs 648\nlayer 24: cold 67152 / 84384 (79.6%) graphs 648\nlayer 25: cold 63804 / 84384 (75.6%) graphs 648\nlayer 26: cold 65549 / 84384 (77.7%) graphs 648\nlayer 27: cold 63162 / 84384 (74.9%) graphs 648\nlayer 28: cold 67564 / 84384 (80.1%) graphs 648\nlayer 29: cold 66279 / 84384 (78.5%) graphs 648\nlayer 30: cold 70368 / 84384 (83.4%) graphs 648\nlayer 31: cold 72115 / 84384 (85.5%) graphs 648\nlayer 32: cold 65272 / 84384 (77.4%) graphs 648\nlayer 33: cold 63566 / 84384 (75.3%) graphs 648\nlayer 34: cold 69020 / 84384 (81.8%) graphs 648\nlayer 35: cold 66325 / 84384 (78.6%) graphs 648\nlayer 36: cold 66142 / 84384 (78.4%) graphs 648\nlayer 37: cold 63682 / 84384 (75.5%) graphs 648\nlayer 38: cold 63937 / 84384 (75.8%) graphs 648\nlayer 39: cold 68732 / 84384 (81.5%) graphs 648\n",
+  "dauer_s": 116.0
+ },
+ {
+  "proc": 4,
+  "arm": "D",
+  "binary": "~/src/llama-wackMall/build-mtpcheck/bin/llama-server",
+  "args": [
+   "-m",
+   "~/bench/mtp-fork-check/run-20261125-154635/modelle/mtp.gguf",
+   "-ncmoe",
+   "41",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4",
+   "--spec-type",
+   "draft-mtp",
+   "--spec-draft-n-max",
+   "1"
+  ],
+  "env": {
+   "LLAMA_EXPERT_ADAPT": "1",
+   "LLAMA_EXPERT_S": "10"
+  },
+  "preload_s": 8.0,
+  "load_s": 3.3,
+  "vram_idle_before": 33,
+  "vram_after_start": 6741,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 21259.6,
+    "CUDA0": 2079.2
+   },
+   "kv": {
+    "CUDA0": 2816.0
+   },
+   "compute": {
+    "CUDA0": 859.5,
+    "CUDA_Host": 204.0
+   },
+   "n_rs_seq": [
+    "1",
+    "0"
+   ],
+   "checkpoints": false,
+   "tier": [
+    "init: expert tiering on: 10 slots/layer, 120 tensors, 0.79 GiB pinned, seed coverage 0.0%"
+   ],
+   "n_batch": [
+    "256"
+   ],
+   "n_ubatch": [
+    "256"
+   ],
+   "n_ctx": [
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [
+   [
+    "0.91623",
+    "175",
+    "191",
+    "1.92"
+   ],
+   [
+    "0.89109",
+    "180",
+    "202",
+    "1.89"
+   ],
+   [
+    "0.81905",
+    "172",
+    "210",
+    "1.82"
+   ]
+  ],
+  "stats": "expert_tier: repins 763\nexpert_timers: steps 1898 fetch 0 us (0.00 ms/step) cold_compute 0 us (0.00 ms/step)\nlayer  0: cold 76006 / 84384 (90.1%) graphs 648\nlayer  1: cold 73892 / 84384 (87.6%) graphs 648\nlayer  2: cold 76752 / 84384 (91.0%) graphs 648\nlayer  3: cold 73109 / 84384 (86.6%) graphs 648\nlayer  4: cold 66125 / 84384 (78.4%) graphs 648\nlayer  5: cold 67564 / 84384 (80.1%) graphs 648\nlayer  6: cold 69762 / 84384 (82.7%) graphs 648\nlayer  7: cold 61493 / 84384 (72.9%) graphs 648\nlayer  8: cold 57170 / 84384 (67.7%) graphs 648\nlayer  9: cold 63332 / 84384 (75.1%) graphs 648\nlayer 10: cold 65256 / 84384 (77.3%) graphs 648\nlayer 11: cold 63915 / 84384 (75.7%) graphs 648\nlayer 12: cold 62932 / 84384 (74.6%) graphs 648\nlayer 13: cold 61951 / 84384 (73.4%) graphs 648\nlayer 14: cold 61620 / 84384 (73.0%) graphs 648\nlayer 15: cold 60229 / 84384 (71.4%) graphs 648\nlayer 16: cold 63648 / 84384 (75.4%) graphs 648\nlayer 17: cold 62432 / 84384 (74.0%) graphs 648\nlayer 18: cold 65978 / 84384 (78.2%) graphs 648\nlayer 19: cold 62505 / 84384 (74.1%) graphs 648\nlayer 20: cold 58353 / 84384 (69.2%) graphs 648\nlayer 21: cold 61468 / 84384 (72.8%) graphs 648\nlayer 22: cold 65688 / 84384 (77.8%) graphs 648\nlayer 23: cold 65332 / 84384 (77.4%) graphs 648\nlayer 24: cold 67152 / 84384 (79.6%) graphs 648\nlayer 25: cold 63804 / 84384 (75.6%) graphs 648\nlayer 26: cold 65549 / 84384 (77.7%) graphs 648\nlayer 27: cold 63162 / 84384 (74.9%) graphs 648\nlayer 28: cold 67564 / 84384 (80.1%) graphs 648\nlayer 29: cold 66279 / 84384 (78.5%) graphs 648\nlayer 30: cold 70368 / 84384 (83.4%) graphs 648\nlayer 31: cold 72115 / 84384 (85.5%) graphs 648\nlayer 32: cold 65272 / 84384 (77.4%) graphs 648\nlayer 33: cold 63566 / 84384 (75.3%) graphs 648\nlayer 34: cold 69020 / 84384 (81.8%) graphs 648\nlayer 35: cold 66325 / 84384 (78.6%) graphs 648\nlayer 36: cold 66142 / 84384 (78.4%) graphs 648\nlayer 37: cold 63682 / 84384 (75.5%) graphs 648\nlayer 38: cold 63937 / 84384 (75.8%) graphs 648\nlayer 39: cold 68732 / 84384 (81.5%) graphs 648\n",
+  "dauer_s": 107.1
+ },
+ {
+  "proc": 5,
+  "arm": "C",
+  "binary": "~/src/llama-wackMall/build-mtpcheck/bin/llama-server",
+  "args": [
+   "-m",
+   "~/bench/mtp-fork-check/run-20261125-154635/modelle/old.gguf",
+   "-ncmoe",
+   "40",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4"
+  ],
+  "env": {
+   "LLAMA_EXPERT_ADAPT": "1",
+   "LLAMA_EXPERT_S": "10"
+  },
+  "preload_s": 10.1,
+  "load_s": 7.2,
+  "vram_idle_before": 33,
+  "vram_after_start": 6165,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 20797.7,
+    "CUDA0": 2038.8
+   },
+   "kv": {
+    "CUDA0": 2560.0
+   },
+   "compute": {
+    "CUDA0": 458.5,
+    "CUDA_Host": 68.0
+   },
+   "n_rs_seq": [
+    "0"
+   ],
+   "checkpoints": true,
+   "tier": [
+    "init: expert tiering on: 10 slots/layer, 120 tensors, 0.79 GiB pinned, seed coverage 0.0%"
+   ],
+   "n_batch": [
+    "256"
+   ],
+   "n_ubatch": [
+    "256"
+   ],
+   "n_ctx": [
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [],
+  "stats": "expert_tier: repins 786\nexpert_timers: steps 1136 fetch 0 us (0.00 ms/step) cold_compute 0 us (0.00 ms/step)\nlayer  0: cold 75011 / 83464 (89.9%) graphs 1136\nlayer  1: cold 72869 / 83464 (87.3%) graphs 1136\nlayer  2: cold 75688 / 83464 (90.7%) graphs 1136\nlayer  3: cold 71306 / 83464 (85.4%) graphs 1136\nlayer  4: cold 64992 / 83464 (77.9%) graphs 1136\nlayer  5: cold 66689 / 83464 (79.9%) graphs 1136\nlayer  6: cold 68890 / 83464 (82.5%) graphs 1136\nlayer  7: cold 60151 / 83464 (72.1%) graphs 1136\nlayer  8: cold 55064 / 83464 (66.0%) graphs 1136\nlayer  9: cold 58826 / 83464 (70.5%) graphs 1136\nlayer 10: cold 64139 / 83464 (76.8%) graphs 1136\nlayer 11: cold 62919 / 83464 (75.4%) graphs 1136\nlayer 12: cold 61472 / 83464 (73.7%) graphs 1136\nlayer 13: cold 60357 / 83464 (72.3%) graphs 1136\nlayer 14: cold 60010 / 83464 (71.9%) graphs 1136\nlayer 15: cold 59134 / 83464 (70.8%) graphs 1136\nlayer 16: cold 63029 / 83464 (75.5%) graphs 1136\nlayer 17: cold 61507 / 83464 (73.7%) graphs 1136\nlayer 18: cold 64475 / 83464 (77.2%) graphs 1136\nlayer 19: cold 60992 / 83464 (73.1%) graphs 1136\nlayer 20: cold 60778 / 83464 (72.8%) graphs 1136\nlayer 21: cold 59703 / 83464 (71.5%) graphs 1136\nlayer 22: cold 64335 / 83464 (77.1%) graphs 1136\nlayer 23: cold 64311 / 83464 (77.1%) graphs 1136\nlayer 24: cold 63633 / 83464 (76.2%) graphs 1136\nlayer 25: cold 62918 / 83464 (75.4%) graphs 1136\nlayer 26: cold 64254 / 83464 (77.0%) graphs 1136\nlayer 27: cold 62049 / 83464 (74.3%) graphs 1136\nlayer 28: cold 66177 / 83464 (79.3%) graphs 1136\nlayer 29: cold 64258 / 83464 (77.0%) graphs 1136\nlayer 30: cold 67861 / 83464 (81.3%) graphs 1136\nlayer 31: cold 65179 / 83464 (78.1%) graphs 1136\nlayer 32: cold 63960 / 83464 (76.6%) graphs 1136\nlayer 33: cold 62453 / 83464 (74.8%) graphs 1136\nlayer 34: cold 67232 / 83464 (80.6%) graphs 1136\nlayer 35: cold 65559 / 83464 (78.5%) graphs 1136\nlayer 36: cold 64680 / 83464 (77.5%) graphs 1136\nlayer 37: cold 61861 / 83464 (74.1%) graphs 1136\nlayer 38: cold 61974 / 83464 (74.3%) graphs 1136\nlayer 39: cold 66543 / 83464 (79.7%) graphs 1136\n",
+  "dauer_s": 118.1
+ },
+ {
+  "proc": 6,
+  "arm": "B",
+  "error": "RuntimeError: Server beendet beim Start, exit 1"
+ },
+ {
+  "proc": 7,
+  "arm": "A",
+  "binary": "/opt/llama.cpp/current/llama-server",
+  "args": [
+   "-m",
+   "~/models/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+   "-ncmoe",
+   "40",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4"
+  ],
+  "env": {},
+  "preload_s": 10.1,
+  "load_s": 9.0,
+  "vram_idle_before": 33,
+  "vram_after_start": 7009,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 19275.3,
+    "CUDA0": 2038.8
+   },
+   "kv": {
+    "CUDA0": 2560.0
+   },
+   "compute": {
+    "CUDA0": 2114.0,
+    "CUDA_Host": 1152.2
+   },
+   "n_rs_seq": [
+    "0"
+   ],
+   "checkpoints": true,
+   "tier": [],
+   "n_batch": [
+    "4096"
+   ],
+   "n_ubatch": [
+    "4096"
+   ],
+   "n_ctx": [
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [],
+  "dauer_s": 61.4
+ },
+ {
+  "proc": 8,
+  "arm": "A",
+  "binary": "/opt/llama.cpp/current/llama-server",
+  "args": [
+   "-m",
+   "~/models/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+   "-ncmoe",
+   "40",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4"
+  ],
+  "env": {},
+  "preload_s": 7.8,
+  "load_s": 2.1,
+  "vram_idle_before": 33,
+  "vram_after_start": 7009,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 19275.3,
+    "CUDA0": 2038.8
+   },
+   "kv": {
+    "CUDA0": 2560.0
+   },
+   "compute": {
+    "CUDA0": 2114.0,
+    "CUDA_Host": 1152.2
+   },
+   "n_rs_seq": [
+    "0"
+   ],
+   "checkpoints": true,
+   "tier": [],
+   "n_batch": [
+    "4096"
+   ],
+   "n_ubatch": [
+    "4096"
+   ],
+   "n_ctx": [
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [],
+  "dauer_s": 50.5
+ },
+ {
+  "proc": 9,
+  "arm": "B",
+  "error": "RuntimeError: Server beendet beim Start, exit 1"
+ },
+ {
+  "proc": 10,
+  "arm": "C",
+  "binary": "~/src/llama-wackMall/build-mtpcheck/bin/llama-server",
+  "args": [
+   "-m",
+   "~/bench/mtp-fork-check/run-20261125-154635/modelle/old.gguf",
+   "-ncmoe",
+   "40",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4"
+  ],
+  "env": {
+   "LLAMA_EXPERT_ADAPT": "1",
+   "LLAMA_EXPERT_S": "10"
+  },
+  "preload_s": 9.6,
+  "load_s": 8.1,
+  "vram_idle_before": 33,
+  "vram_after_start": 6165,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 20797.7,
+    "CUDA0": 2038.8
+   },
+   "kv": {
+    "CUDA0": 2560.0
+   },
+   "compute": {
+    "CUDA0": 458.5,
+    "CUDA_Host": 68.0
+   },
+   "n_rs_seq": [
+    "0"
+   ],
+   "checkpoints": true,
+   "tier": [
+    "init: expert tiering on: 10 slots/layer, 120 tensors, 0.79 GiB pinned, seed coverage 0.0%"
+   ],
+   "n_batch": [
+    "256"
+   ],
+   "n_ubatch": [
+    "256"
+   ],
+   "n_ctx": [
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [],
+  "stats": "expert_tier: repins 786\nexpert_timers: steps 1136 fetch 0 us (0.00 ms/step) cold_compute 0 us (0.00 ms/step)\nlayer  0: cold 75011 / 83464 (89.9%) graphs 1136\nlayer  1: cold 72869 / 83464 (87.3%) graphs 1136\nlayer  2: cold 75688 / 83464 (90.7%) graphs 1136\nlayer  3: cold 71306 / 83464 (85.4%) graphs 1136\nlayer  4: cold 64992 / 83464 (77.9%) graphs 1136\nlayer  5: cold 66689 / 83464 (79.9%) graphs 1136\nlayer  6: cold 68890 / 83464 (82.5%) graphs 1136\nlayer  7: cold 60151 / 83464 (72.1%) graphs 1136\nlayer  8: cold 55064 / 83464 (66.0%) graphs 1136\nlayer  9: cold 58826 / 83464 (70.5%) graphs 1136\nlayer 10: cold 64139 / 83464 (76.8%) graphs 1136\nlayer 11: cold 62919 / 83464 (75.4%) graphs 1136\nlayer 12: cold 61472 / 83464 (73.7%) graphs 1136\nlayer 13: cold 60357 / 83464 (72.3%) graphs 1136\nlayer 14: cold 60010 / 83464 (71.9%) graphs 1136\nlayer 15: cold 59134 / 83464 (70.8%) graphs 1136\nlayer 16: cold 63029 / 83464 (75.5%) graphs 1136\nlayer 17: cold 61507 / 83464 (73.7%) graphs 1136\nlayer 18: cold 64475 / 83464 (77.2%) graphs 1136\nlayer 19: cold 60992 / 83464 (73.1%) graphs 1136\nlayer 20: cold 60778 / 83464 (72.8%) graphs 1136\nlayer 21: cold 59703 / 83464 (71.5%) graphs 1136\nlayer 22: cold 64335 / 83464 (77.1%) graphs 1136\nlayer 23: cold 64311 / 83464 (77.1%) graphs 1136\nlayer 24: cold 63633 / 83464 (76.2%) graphs 1136\nlayer 25: cold 62918 / 83464 (75.4%) graphs 1136\nlayer 26: cold 64254 / 83464 (77.0%) graphs 1136\nlayer 27: cold 62049 / 83464 (74.3%) graphs 1136\nlayer 28: cold 66177 / 83464 (79.3%) graphs 1136\nlayer 29: cold 64258 / 83464 (77.0%) graphs 1136\nlayer 30: cold 67861 / 83464 (81.3%) graphs 1136\nlayer 31: cold 65179 / 83464 (78.1%) graphs 1136\nlayer 32: cold 63960 / 83464 (76.6%) graphs 1136\nlayer 33: cold 62453 / 83464 (74.8%) graphs 1136\nlayer 34: cold 67232 / 83464 (80.6%) graphs 1136\nlayer 35: cold 65559 / 83464 (78.5%) graphs 1136\nlayer 36: cold 64680 / 83464 (77.5%) graphs 1136\nlayer 37: cold 61861 / 83464 (74.1%) graphs 1136\nlayer 38: cold 61974 / 83464 (74.3%) graphs 1136\nlayer 39: cold 66543 / 83464 (79.7%) graphs 1136\n",
+  "dauer_s": 117.0
+ },
+ {
+  "proc": 11,
+  "arm": "D",
+  "binary": "~/src/llama-wackMall/build-mtpcheck/bin/llama-server",
+  "args": [
+   "-m",
+   "~/bench/mtp-fork-check/run-20261125-154635/modelle/mtp.gguf",
+   "-ncmoe",
+   "41",
+   "-ngl",
+   "99",
+   "-fa",
+   "on",
+   "-t",
+   "10",
+   "-b",
+   "4096",
+   "-ub",
+   "4096",
+   "-c",
+   "131072",
+   "-np",
+   "1",
+   "--fit",
+   "off",
+   "--cache-ram",
+   "4096",
+   "-lv",
+   "4",
+   "--spec-type",
+   "draft-mtp",
+   "--spec-draft-n-max",
+   "1"
+  ],
+  "env": {
+   "LLAMA_EXPERT_ADAPT": "1",
+   "LLAMA_EXPERT_S": "10"
+  },
+  "preload_s": 10.5,
+  "load_s": 10.0,
+  "vram_idle_before": 33,
+  "vram_after_start": 6741,
+  "start": {
+   "buffers": {
+    "CPU_Mapped": 21259.6,
+    "CUDA0": 2079.2
+   },
+   "kv": {
+    "CUDA0": 2816.0
+   },
+   "compute": {
+    "CUDA0": 859.5,
+    "CUDA_Host": 204.0
+   },
+   "n_rs_seq": [
+    "1",
+    "0"
+   ],
+   "checkpoints": false,
+   "tier": [
+    "init: expert tiering on: 10 slots/layer, 120 tensors, 0.79 GiB pinned, seed coverage 0.0%"
+   ],
+   "n_batch": [
+    "256"
+   ],
+   "n_ubatch": [
+    "256"
+   ],
+   "n_ctx": [
+    "131072"
+   ]
+  },
+  "exit": 0,
+  "acceptance_log": [
+   [
+    "0.91623",
+    "175",
+    "191",
+    "1.92"
+   ],
+   [
+    "0.89109",
+    "180",
+    "202",
+    "1.89"
+   ],
+   [
+    "0.81905",
+    "172",
+    "210",
+    "1.82"
+   ]
+  ],
+  "stats": "expert_tier: repins 763\nexpert_timers: steps 1898 fetch 0 us (0.00 ms/step) cold_compute 0 us (0.00 ms/step)\nlayer  0: cold 76006 / 84384 (90.1%) graphs 648\nlayer  1: cold 73892 / 84384 (87.6%) graphs 648\nlayer  2: cold 76752 / 84384 (91.0%) graphs 648\nlayer  3: cold 73109 / 84384 (86.6%) graphs 648\nlayer  4: cold 66125 / 84384 (78.4%) graphs 648\nlayer  5: cold 67564 / 84384 (80.1%) graphs 648\nlayer  6: cold 69762 / 84384 (82.7%) graphs 648\nlayer  7: cold 61493 / 84384 (72.9%) graphs 648\nlayer  8: cold 57170 / 84384 (67.7%) graphs 648\nlayer  9: cold 63332 / 84384 (75.1%) graphs 648\nlayer 10: cold 65256 / 84384 (77.3%) graphs 648\nlayer 11: cold 63915 / 84384 (75.7%) graphs 648\nlayer 12: cold 62932 / 84384 (74.6%) graphs 648\nlayer 13: cold 61951 / 84384 (73.4%) graphs 648\nlayer 14: cold 61620 / 84384 (73.0%) graphs 648\nlayer 15: cold 60229 / 84384 (71.4%) graphs 648\nlayer 16: cold 63648 / 84384 (75.4%) graphs 648\nlayer 17: cold 62432 / 84384 (74.0%) graphs 648\nlayer 18: cold 65978 / 84384 (78.2%) graphs 648\nlayer 19: cold 62505 / 84384 (74.1%) graphs 648\nlayer 20: cold 58353 / 84384 (69.2%) graphs 648\nlayer 21: cold 61468 / 84384 (72.8%) graphs 648\nlayer 22: cold 65688 / 84384 (77.8%) graphs 648\nlayer 23: cold 65332 / 84384 (77.4%) graphs 648\nlayer 24: cold 67152 / 84384 (79.6%) graphs 648\nlayer 25: cold 63804 / 84384 (75.6%) graphs 648\nlayer 26: cold 65549 / 84384 (77.7%) graphs 648\nlayer 27: cold 63162 / 84384 (74.9%) graphs 648\nlayer 28: cold 67564 / 84384 (80.1%) graphs 648\nlayer 29: cold 66279 / 84384 (78.5%) graphs 648\nlayer 30: cold 70368 / 84384 (83.4%) graphs 648\nlayer 31: cold 72115 / 84384 (85.5%) graphs 648\nlayer 32: cold 65272 / 84384 (77.4%) graphs 648\nlayer 33: cold 63566 / 84384 (75.3%) graphs 648\nlayer 34: cold 69020 / 84384 (81.8%) graphs 648\nlayer 35: cold 66325 / 84384 (78.6%) graphs 648\nlayer 36: cold 66142 / 84384 (78.4%) graphs 648\nlayer 37: cold 63682 / 84384 (75.5%) graphs 648\nlayer 38: cold 63937 / 84384 (75.8%) graphs 648\nlayer 39: cold 68732 / 84384 (81.5%) graphs 648\n",
+  "dauer_s": 116.7
+ }
+]

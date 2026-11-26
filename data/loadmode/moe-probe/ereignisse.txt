@@ -1,0 +1,5 @@
+2026-11-06T03:00:20+01:00 1-dio_kalt_moe256 start cache=kalt cat=0 gguf_cache=0 avail=30309 swap=88 pswpout=1282767 extra=--moe-cache-mib 256 governor=powersave
+2026-11-06T03:00:34+01:00 1-dio_kalt_moe256 bereit nach 14.2 s, avail=8932 swap=88 pswpout=1282767 gguf_cache=10 rssshmem=20439 free=8963
+2026-11-06T03:00:41+01:00 1-dio_kalt_moe256 1-interaktiv zeile=239
+2026-11-06T03:01:17+01:00 1-dio_kalt_moe256 2-agent-kalt zeile=425
+2026-11-06T03:02:07+01:00 1-dio_kalt_moe256 fertig zeile=608 avail=7004 swap=88 pswpout=1282767 anon=2426 shm=20439 hwm=23046

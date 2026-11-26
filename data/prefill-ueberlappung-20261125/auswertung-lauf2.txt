@@ -1,0 +1,59 @@
+## Lauf 2: echter Prefill über llama-server, Profilargumente, echter Text
+
+| Profil | Prompt | Dienst-Binary t/s (Mittel, Einzelwerte) | Messbuild t/s | prof/Dienst |
+|---|---|---|---|---|
+| coding | 4096 | 1409 (1398, 1437, 1390) | 1382 | 0.981 |
+| coding | 16384 | 1403 (1415, 1400, 1395) | 1421 | 1.013 |
+| coding | 65536 | 1249 (1251, 1248, 1248) | 1257 | 1.006 |
+| coding-dio | 4096 | 1650 (1618, 1674, 1656) | 1577 | 0.956 |
+| coding-dio | 16384 | 1618 (1639, 1611, 1605) | 1639 | 1.013 |
+| coding-dio | 65536 | 1420 (1421, 1419, 1421) | 1420 | 1.000 |
+
+dio/mmap 4096: 1.171
+dio/mmap 16384: 1.153
+dio/mmap 65536: 1.137
+
+### Zeitanteile je Anfrage (Messbuild, echter Text), normiert auf ms je 4096 Token
+
+Summen über alle ubatches der Anfrage (inkl. des 4-Token-Rest-ubatch vor dem Checkpoint), geteilt durch n/4096. **up** = ids holen + H2D der benutzten Experten; **exp** = MUL_MAT_ID gate/up/down + SWIGLU (reines Expertenrechnen); **attn+** = übriges Rechnen der Layer (Attention/Gated-DeltaNet, Shared Expert, Router, Norms, Rest-ubatch); **in** = Aktivierungs-Kopien; **außer** = prompt_ms minus Graph-Zeit (Graph bauen, Inputs, Server).
+
+| Profil | Prompt | prompt_ms | je 4k | up | exp | attn+ | in | außer | up % | exp % | attn+ % | GB H2D je 4k | GB/s | Bytes benutzt |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| coding | 4096 | 2963 | 2963 | 1912 | 322 | 649 | 13 | 67 | 65% | 11% | 22% | 18.72 | 9.9 | 97.8% |
+| coding | 16384 | 11528 | 2882 | 1870 | 314 | 627 | 16 | 56 | 65% | 11% | 22% | 18.02 | 9.8 | 94.1% |
+| coding | 65536 | 52135 | 3258 | 1923 | 315 | 931 | 32 | 58 | 59% | 10% | 29% | 18.82 | 9.9 | 98.3% |
+| coding-dio | 4096 | 2597 | 2597 | 1545 | 320 | 653 | 13 | 65 | 59% | 12% | 25% | 18.72 | 12.3 | 97.8% |
+| coding-dio | 16384 | 9994 | 2499 | 1485 | 314 | 628 | 16 | 56 | 59% | 13% | 25% | 18.02 | 12.3 | 94.1% |
+| coding-dio | 65536 | 46155 | 2885 | 1547 | 315 | 933 | 32 | 58 | 54% | 11% | 32% | 18.82 | 12.3 | 98.3% |
+
+### Verlauf über die ubatches, 64k (ubatch-Gesamtzeit / up / exp / attn+ ms)
+
+- coding: 2761/1914/317/519, 2793/1893/316/570, 2873/1917/315/624, 2926/1916/315/677, 2988/1924/313/729, 3047/1923/314/786, 3110/1928/314/840, 3153/1912/316/894, 3228/1931/316/948, 3291/1936/315/1005, 3343/1929/314/1061, 3395/1924/314/1116, 3457/1924/314/1175, 3523/1934/313/1230, 3575/1925/313/1287, 3642/1933/313/1343, 99/0/0/97
+- coding-dio: 2394/1545/317/521, 2418/1514/317/573, 2506/1546/316/627, 2552/1540/314/679, 2609/1541/314/732, 2673/1550/314/785, 2736/1557/313/839, 2769/1531/316/892, 2857/1558/316/950, 2919/1563/315/1007, 2968/1553/314/1062, 3017/1549/314/1113, 3079/1546/314/1176, 3152/1559/314/1233, 3202/1549/315/1288, 3271/1558/314/1347, 102/0/0/100
+
+### Expertennutzung, echter Text (je Layer und ubatch, 256 Experten, top-k aus dem Modell)
+
+- coding 65536 (16 ubatches, Token je ubatch [4092, 4096]): benutzt Mittel 98.3%, Median 98.4%, min 89.8%, max 100.0%, alle 256 in 14.3% der Layer-ubatches
+  schwächste Layer (Mittel benutzt): 14: 245, 15: 246, 20: 246, 16: 248, 8: 248; stärkste: 3: 255, 6: 255, 2: 256
+- coding 16384 (4 ubatches, Token je ubatch [4092, 4096]): benutzt Mittel 94.1%, Median 94.5%, min 87.9%, max 99.2%, alle 256 in 0.0% der Layer-ubatches
+  schwächste Layer (Mittel benutzt): 37: 232, 38: 232, 32: 232, 36: 232, 34: 233; stärkste: 15: 248, 2: 249, 5: 249
+- coding 4096 (1 ubatches, Token je ubatch [4092]): benutzt Mittel 97.8%, Median 97.7%, min 94.9%, max 100.0%, alle 256 in 7.7% der Layer-ubatches
+  schwächste Layer (Mittel benutzt): 37: 243, 20: 244, 36: 244, 16: 246, 18: 246; stärkste: 0: 256, 2: 256, 3: 256
+
+### Abschätzung Überlappung (ganze Anfrage, ms)
+
+Modell je Layer und ubatch. Upload je Layer aus den E-Zeilen (gemessen, ids inklusive). Rechnen je Layer: exp/40 + in/40 + b, in den 10 Full-Attention-Layern (3, 7, …, 39) zusätzlich g; b = attn+ des ersten ubatch / 40, g = (attn+ − 40·b)/10 (der Zuwachs mit der KV-Länge geht nur in die Attention-Layer). Rest-ubatch und außer bleiben unverändert.
+
+- **A** routing-abhängig, nur innerhalb des Layers: Upload von up/down läuft, während gate/up rechnen. Spart je Layer das Rechnen von gate und up (Anteil an exp nach Bytes 214/370 = 58 %).
+- **B** Vorabladen *aller* 256 Experten von Layer l+1 auf einem 2. Stream, während Layer l rechnet: T = U_all(0) + Σ max(R(l), U_all(l+1)), U_all = gemessener Upload × (alle Bytes / benutzte Bytes).
+- **C** wie B, aber nur die benutzten Experten (Orakel, braucht das Routing vorab, nicht baubar, obere Schranke).
+- **Untergrenze** = reines Rechnen ohne Upload.
+
+| Profil | Prompt | T gemessen | A | B (alle) | C (Orakel) | nur Rechnen | Gewinn A | Gewinn B | Gewinn C | t/s jetzt → B |
+|---|---|---|---|---|---|---|---|---|---|---|
+| coding | 4096 | 2963 | 2777 | 2186 | 2142 | 1051 | +7% | +36% | +38% | 1382 → 1874 |
+| coding | 16384 | 11528 | 10799 | 8484 | 8018 | 4049 | +7% | +36% | +44% | 1421 → 1931 |
+| coding | 65536 | 52135 | 49216 | 36301 | 35837 | 21370 | +6% | +44% | +45% | 1257 → 1805 |
+| coding-dio | 4096 | 2597 | 2411 | 1815 | 1780 | 1052 | +8% | +43% | +46% | 1577 → 2257 |
+| coding-dio | 16384 | 9994 | 9267 | 6852 | 6485 | 4053 | +8% | +46% | +54% | 1639 → 2391 |
+| coding-dio | 65536 | 46155 | 43234 | 31143 | 30788 | 21397 | +7% | +48% | +50% | 1420 → 2104 |

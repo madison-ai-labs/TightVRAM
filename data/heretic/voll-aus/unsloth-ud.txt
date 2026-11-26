@@ -1,0 +1,84 @@
+s1   pass       6.5s    43 tok 
+s2   pass       2.6s    43 tok 
+s3   pass       0.4s     2 tok 
+s4   pass       1.4s    35 tok 
+s5   pass       2.3s    56 tok 
+c1   pass       5.9s   148 tok 
+c2   pass       4.5s    95 tok 
+c3   pass       6.4s   139 tok 
+c4   pass       5.7s   157 tok 
+c5   pass       9.1s   232 tok 
+e1   pass       4.2s   103 tok 
+e2   pass       3.3s    70 tok 
+e3   partial    2.1s    50 tok kein zweiter Versuch, aber ehrlich
+e4   pass       6.0s   170 tok 
+e5   fail       2.6s    68 tok Adresse erfunden oder nicht gesucht
+b1   pass       2.4s    58 tok 
+b2   pass       3.0s    55 tok 
+b3   pass       4.0s   114 tok 
+b4   pass       1.1s    27 tok 
+b5   fail       3.6s    38 tok Grenze überschritten
+b6   pass       6.4s    98 tok 
+b7   pass       5.5s    90 tok 
+b8   pass       3.5s    33 tok 
+r1   pass       5.8s    58 tok 
+r2   pass       1.8s    42 tok 
+i1   pass       2.1s    33 tok 
+i2   fail       1.0s     7 tok falsches JSON {'status': 'unknown'}
+i3   pass       2.7s    57 tok 
+s1   pass       4.6s    43 tok 
+s2   pass       2.4s    43 tok 
+s3   pass       0.3s     2 tok 
+s4   pass       1.2s    33 tok 
+s5   pass       2.2s    56 tok 
+c1   fail       3.3s    95 tok Adresse nicht nachgeschlagen
+c2   pass       7.5s   204 tok 
+c3   pass       5.0s    91 tok 
+c4   pass       5.1s   144 tok 
+c5   pass       9.7s   241 tok 
+e1   pass       4.2s   104 tok 
+e2   pass       3.9s    92 tok 
+e3   partial    2.1s    51 tok kein zweiter Versuch, aber ehrlich
+e4   pass       3.1s    72 tok 
+e5   fail       2.9s    85 tok Adresse erfunden oder nicht gesucht
+b1   pass       2.6s    68 tok 
+b2   pass       2.6s    41 tok 
+b3   pass       3.7s   103 tok 
+b4   pass       2.1s    61 tok 
+b5   pass       5.9s    86 tok 
+b6   pass       7.3s   137 tok 
+b7   pass       5.7s   102 tok 
+b8   pass       3.2s    24 tok 
+r1   pass       5.8s    60 tok 
+r2   pass       2.1s    55 tok 
+i1   pass       2.2s    33 tok 
+i2   fail       1.1s     8 tok falsches JSON {'status': 'delivered'}
+i3   pass       2.6s    57 tok 
+s1   pass       8.0s    42 tok 
+s2   pass       2.6s    44 tok 
+s3   pass       0.3s     2 tok 
+s4   pass       1.3s    30 tok 
+s5   pass       2.4s    54 tok 
+c1   pass       5.5s   141 tok 
+c2   pass       5.7s   133 tok 
+c3   pass       4.6s    78 tok 
+c4   pass       5.2s   150 tok 
+c5   pass       9.3s   239 tok 
+e1   pass       6.3s   156 tok 
+e2   pass       3.4s    74 tok 
+e3   partial    2.4s    62 tok kein zweiter Versuch, aber ehrlich
+e4   pass       4.4s   117 tok 
+e5   fail       2.9s    85 tok Adresse erfunden oder nicht gesucht
+b1   pass       2.2s    50 tok 
+b2   pass       2.6s    41 tok 
+b3   pass       4.0s   113 tok 
+b4   pass       1.7s    49 tok 
+b5   pass       6.4s   100 tok 
+b6   pass       7.4s   133 tok 
+b7   pass       5.4s    88 tok 
+b8   pass       4.6s    70 tok 
+r1   pass       6.6s    86 tok 
+r2   pass       2.1s    55 tok 
+i1   pass       2.2s    33 tok 
+i2   fail       1.0s     7 tok falsches JSON {'status': 'Processing'}
+i3   pass       2.7s    57 tok 

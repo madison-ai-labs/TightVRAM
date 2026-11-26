@@ -1,0 +1,7 @@
+level 1 thread 0x776cf335a800 affinity 0,10
+level 1 thread 0x776c32ffc6c0 affinity 2,12
+level 1 thread 0x776c327fb6c0 affinity 4,14
+level 1 thread 0x776c31ffa6c0 affinity 6,16
+level 1 thread 0x776c317f96c0 affinity 8,18
+level 1 thread 0x776c30ff86c0 affinity 9,19
+threads=6 copy=16.5 GB/s triad=15.0 GB/s (check 118097.0)

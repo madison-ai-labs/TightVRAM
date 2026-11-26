@@ -1,0 +1,13 @@
+# 4-dio_kalt_moe128-1-interaktiv  n_ctx=131072  → ~/bench/loadmode/moe/4-dio_kalt_moe128.jsonl
+interaktiv  n=5  TTFT median 0.65 s  gesamt median 5.81 s  tg median 17.0 t/s  fehler 0
+# 5 Requests in 1 Durchläufen, 0 Fehler
+# 4-dio_kalt_moe128-2-agent-kalt  n_ctx=131072  → ~/bench/loadmode/moe/4-dio_kalt_moe128.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    16.8   10.46     15216        0    1460  107    16.8
+               2     6.6    2.06      1323    15322     654   77    16.6
+               3     6.8    2.05      1369    16721     679   80    16.7
+               4     4.9    2.04      1245    18169     622   48    16.7
+               5     5.7    2.13      1406    19461     673   61    16.7
+               6     6.2    2.17      1488    20927     701   68    16.6
+            gesamt (kalt): 47.0 s
+# 6 Requests in 1 Durchläufen, 0 Fehler

@@ -1,0 +1,40 @@
+2026-11-06T02:15:33+01:00 1-auto start cache=warm cat=1 gguf_cache=21324 avail=30386 swap=88 pswpout=1281571 extra= governor=powersave
+2026-11-06T02:15:35+01:00 1-auto bereit nach 1.8 s, avail=28687 swap=88 pswpout=1281571 gguf_cache=21324 rssshmem=1164 free=7373
+2026-11-06T02:15:42+01:00 1-auto 1-interaktiv zeile=355
+2026-11-06T02:16:00+01:00 1-auto 2-agent-kalt zeile=545
+2026-11-06T02:16:35+01:00 1-auto 3-dokument zeile=726
+2026-11-06T02:18:03+01:00 1-auto 4-agent-warm zeile=915
+2026-11-06T02:18:27+01:00 1-auto 5-agent-neu zeile=1104
+2026-11-06T02:19:04+01:00 1-auto 6-interaktiv zeile=1307
+2026-11-06T02:19:22+01:00 1-auto 7-agent-wieder zeile=1549
+2026-11-06T02:19:49+01:00 1-auto fertig zeile=1740 avail=25199 swap=88 pswpout=1281571 anon=3815 shm=1164 hwm=27745
+2026-11-06T02:19:55+01:00 2-dio_kalt start cache=kalt cat=0 gguf_cache=0 avail=30283 swap=88 pswpout=1281571 extra= governor=powersave
+2026-11-06T02:20:09+01:00 2-dio_kalt bereit nach 14.0 s, avail=8950 swap=88 pswpout=1281571 gguf_cache=10 rssshmem=20439 free=8974
+2026-11-06T02:20:16+01:00 2-dio_kalt 1-interaktiv zeile=234
+2026-11-06T02:20:34+01:00 2-dio_kalt 2-agent-kalt zeile=424
+2026-11-06T02:21:05+01:00 2-dio_kalt 3-dokument zeile=605
+2026-11-06T02:22:24+01:00 2-dio_kalt 4-agent-warm zeile=794
+2026-11-06T02:22:45+01:00 2-dio_kalt 5-agent-neu zeile=983
+2026-11-06T02:23:19+01:00 2-dio_kalt 6-interaktiv zeile=1186
+2026-11-06T02:23:36+01:00 2-dio_kalt 7-agent-wieder zeile=1428
+2026-11-06T02:24:02+01:00 2-dio_kalt fertig zeile=1619 avail=5576 swap=88 pswpout=1281599 anon=3815 shm=20439 hwm=26225
+2026-11-06T02:24:09+01:00 3-dio_kalt start cache=kalt cat=0 gguf_cache=0 avail=30259 swap=88 pswpout=1281599 extra= governor=powersave
+2026-11-06T02:24:23+01:00 3-dio_kalt bereit nach 14.0 s, avail=8905 swap=88 pswpout=1281599 gguf_cache=10 rssshmem=20439 free=8965
+2026-11-06T02:24:30+01:00 3-dio_kalt 1-interaktiv zeile=234
+2026-11-06T02:24:47+01:00 3-dio_kalt 2-agent-kalt zeile=424
+2026-11-06T02:25:19+01:00 3-dio_kalt 3-dokument zeile=605
+2026-11-06T02:26:37+01:00 3-dio_kalt 4-agent-warm zeile=794
+2026-11-06T02:26:59+01:00 3-dio_kalt 5-agent-neu zeile=983
+2026-11-06T02:27:32+01:00 3-dio_kalt 6-interaktiv zeile=1186
+2026-11-06T02:27:50+01:00 3-dio_kalt 7-agent-wieder zeile=1428
+2026-11-06T02:28:16+01:00 3-dio_kalt fertig zeile=1619 avail=5521 swap=88 pswpout=1281599 anon=3814 shm=20439 hwm=26225
+2026-11-06T02:28:30+01:00 4-auto start cache=warm cat=1 gguf_cache=21324 avail=30276 swap=88 pswpout=1281599 extra= governor=powersave
+2026-11-06T02:28:31+01:00 4-auto bereit nach 1.8 s, avail=28635 swap=88 pswpout=1281599 gguf_cache=21324 rssshmem=1164 free=7395
+2026-11-06T02:28:39+01:00 4-auto 1-interaktiv zeile=355
+2026-11-06T02:28:58+01:00 4-auto 2-agent-kalt zeile=545
+2026-11-06T02:29:33+01:00 4-auto 3-dokument zeile=726
+2026-11-06T02:31:01+01:00 4-auto 4-agent-warm zeile=916
+2026-11-06T02:31:26+01:00 4-auto 5-agent-neu zeile=1105
+2026-11-06T02:32:03+01:00 4-auto 6-interaktiv zeile=1309
+2026-11-06T02:32:22+01:00 4-auto 7-agent-wieder zeile=1551
+2026-11-06T02:32:50+01:00 4-auto fertig zeile=1742 avail=25097 swap=88 pswpout=1281599 anon=3815 shm=1164 hwm=27747

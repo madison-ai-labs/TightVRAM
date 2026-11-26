@@ -1,0 +1,11 @@
+      61 MiB    22 x  rw-s /dev/nvidiactl 
+     155 MiB     1 x  rw-p [heap] 
+      37 MiB     1 x  r-xp /usr/lib/x86_64-linux-gnu/libcublasLt.so.12.4.5.8 
+     206 MiB    54 x  rw-p  
+      21 MiB     3 x  r--p ~/src/llama.cpp/build/bin/libggml-cuda.so.0.29.0 
+   20798 MiB     2 x  r--s ~/models/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf 
+    1164 MiB     7 x  rw-s /dev/zero (deleted)
+FilePmdMapped: 0 kB
+ShmemPmdMapped: 0 kB
+AnonHugePages: 0 kB
+Locked: 0 kB

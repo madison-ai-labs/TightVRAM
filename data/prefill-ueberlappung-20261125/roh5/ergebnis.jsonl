@@ -1,0 +1,51 @@
+{"art": "alloc", "ub": 2048, "ctx": 131072, "geladen": true, "vram_idle": 5925}
+{"art": "alloc", "ub": 4096, "ctx": 131072, "geladen": true, "vram_idle": 7047}
+{"art": "alloc", "ub": 6144, "ctx": 131072, "geladen": false, "vram_idle": 33}
+{"art": "alloc", "ub": 8192, "ctx": 131072, "geladen": false, "vram_idle": 33}
+{"art": "alloc", "ub": 4096, "ctx": 65536, "geladen": true, "vram_idle": 5253}
+{"art": "alloc", "ub": 8192, "ctx": 65536, "geladen": true, "vram_idle": 6471}
+{"art": "laden", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "geladen": true, "lade_s": 15.3, "vram_idle": 7047, "ram_vorher": {"used": 1204, "avail": 30209}, "ram": {"used": 23317, "avail": 8097}}
+{"art": "text", "n_tokens": 1043483}
+{"art": "laenge", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "n": 48000, "wall_s": 22.9, "vram_peak": 7773, "fehler": null, "prompt_n": 48000, "pp_ts": 2149.3, "tg_ts": 30.5}
+{"art": "laenge", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "n": 8000, "wall_s": 4.36, "vram_peak": 7775, "fehler": null, "prompt_n": 8000, "pp_ts": 2361.7, "tg_ts": 33.4}
+{"art": "laenge", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "n": 1000, "wall_s": 2.41, "vram_peak": 7773, "fehler": null, "prompt_n": 1000, "pp_ts": 603.6, "tg_ts": 34.3}
+{"art": "laenge", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "n": 500, "wall_s": 2.4, "vram_peak": 7773, "fehler": null, "prompt_n": 500, "pp_ts": 298.9, "tg_ts": 34.6}
+{"art": "laenge", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "n": 66536, "wall_s": 34.1, "vram_peak": 7773, "fehler": null, "prompt_n": 66536, "pp_ts": 1989.8, "tg_ts": 30.8}
+{"art": "laenge", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "n": 2000, "wall_s": 3.97, "vram_peak": 7775, "fehler": null, "prompt_n": 2000, "pp_ts": 1188.9, "tg_ts": 32.4}
+{"art": "laenge", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "n": 32000, "wall_s": 14.69, "vram_peak": 7773, "fehler": null, "prompt_n": 32000, "pp_ts": 2279.8, "tg_ts": 32.9}
+{"art": "laenge", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "n": 16000, "wall_s": 7.61, "vram_peak": 7775, "fehler": null, "prompt_n": 16000, "pp_ts": 2384.0, "tg_ts": 33.3}
+{"art": "laenge", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "n": 130000, "wall_s": 79.58, "vram_peak": 7775, "fehler": null, "prompt_n": 130000, "pp_ts": 1653.8, "tg_ts": 27.8}
+{"art": "reuse", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "turn": 0, "wall_s": 17.15, "vram_peak": 7779, "fehler": null, "prompt_n": 30036, "cache_n": 0, "pp_ts": 2150.1, "antwort": "Der Text enthält den C++-Quellcode der Quantisierungs- und Sampler-Implementierung von llama.cpp, der Funktionen zur Kon"}
+{"art": "reuse", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "turn": 1, "wall_s": 3.1, "vram_peak": 7775, "fehler": null, "prompt_n": 27, "cache_n": 30098, "pp_ts": 70.7, "antwort": "Detail Nummer 1: Die Funktion `llama_model_quantize_impl` lädt das Eingabemodell, bestimmt für jeden Tensor basierend au"}
+{"art": "reuse", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "turn": 2, "wall_s": 3.32, "vram_peak": 7775, "fehler": null, "prompt_n": 28, "cache_n": 30204, "pp_ts": 42.8, "antwort": "Detail Nummer 2: Die Funktion `llama_tensor_get_type_impl` enthält die komplexe Logik zur Auswahl des spezifischen Quant"}
+{"art": "reuse", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "turn": 3, "wall_s": 4.6, "vram_peak": 7789, "fehler": null, "prompt_n": 112, "cache_n": 30228, "pp_ts": 57.4, "antwort": "Detail Nummer 3: Die Funktion `llama_tensor_get_type_impl` enthält die komplexe Logik zur Auswahl des spezifischen Quant"}
+{"art": "reuse", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "turn": 4, "wall_s": 3.85, "vram_peak": 7789, "fehler": null, "prompt_n": 28, "cache_n": 30419, "pp_ts": 26.5, "antwort": "Detail Nummer 4: Die Funktion `llama_tensor_get_type_impl` enthält die komplexe Logik zur Auswahl des spezifischen Quant"}
+{"art": "wiederholt", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "i": 0, "prompt_n": 8000, "cache_n": 0, "text": " \"lfm2\"             },\n"}
+{"art": "wiederholt", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "i": 1, "prompt_n": 4, "cache_n": 7996, "text": " \"lfm2\"             },\n"}
+{"art": "wiederholt", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "i": 2, "prompt_n": 4, "cache_n": 7996, "text": " \"lfm2\"             },\n"}
+{"art": "tool", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "modell_antwort": "qwen3.6-35b-a3b-pf", "tool_calls": [{"type": "function", "function": {"name": "wetter", "arguments": "{\"stadt\":\"Graz\"}"}, "id": "4mPr4JiVyFCjy0Q5XI7QAJsMqorLNl7X"}], "finish": "tool_calls", "final": "Das Wetter in Graz ist aktuell bewölkt mit einer Temperatur von 7 Grad Celsius."}
+{"art": "bild", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "antwort": "Rot", "prompt_n": 33}
+{"art": "parallel", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "ergebnis": {"0": {"ok": true, "wall_s": 7.24, "pp_ts": 2383.8}, "1": {"ok": true, "wall_s": 14.52, "pp_ts": 2389.5}}, "vram_peak": 7789}
+{"art": "ende", "profil": "coding-pf", "ub": 4096, "ctx": 131072, "lebt": true, "vram": 7789, "vram_peak_gesamt": 7789, "ram": {"used": 26559, "avail": 4855}, "log_fehler": [], "prefetch_slots": []}
+{"art": "laden", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "geladen": true, "lade_s": 15.3, "vram_idle": 6471, "ram_vorher": {"used": 1422, "avail": 29992}, "ram": {"used": 23941, "avail": 7473}}
+{"art": "laenge", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "n": 48000, "wall_s": 16.65, "vram_peak": 7269, "fehler": null, "prompt_n": 48000, "pp_ts": 2981.1, "tg_ts": 30.4}
+{"art": "laenge", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "n": 8000, "wall_s": 3.03, "vram_peak": 7271, "fehler": null, "prompt_n": 8000, "pp_ts": 3700.6, "tg_ts": 31.8}
+{"art": "laenge", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "n": 1000, "wall_s": 2.39, "vram_peak": 7269, "fehler": null, "prompt_n": 1000, "pp_ts": 602.5, "tg_ts": 32.8}
+{"art": "laenge", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "n": 500, "wall_s": 2.41, "vram_peak": 7269, "fehler": null, "prompt_n": 500, "pp_ts": 299.5, "tg_ts": 32.7}
+{"art": "laenge", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "n": 33768, "wall_s": 12.36, "vram_peak": 7269, "fehler": null, "prompt_n": 33768, "pp_ts": 2908.2, "tg_ts": 31.3}
+{"art": "laenge", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "n": 2000, "wall_s": 2.63, "vram_peak": 7271, "fehler": null, "prompt_n": 2000, "pp_ts": 1184.8, "tg_ts": 32.9}
+{"art": "laenge", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "n": 32000, "wall_s": 10.62, "vram_peak": 7269, "fehler": null, "prompt_n": 32000, "pp_ts": 3275.5, "tg_ts": 30.5}
+{"art": "laenge", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "n": 16000, "wall_s": 5.45, "vram_peak": 7269, "fehler": null, "prompt_n": 16000, "pp_ts": 3579.8, "tg_ts": 30.3}
+{"art": "laenge", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "n": 64500, "wall_s": 24.27, "vram_peak": 7269, "fehler": null, "prompt_n": 64500, "pp_ts": 2762.2, "tg_ts": 29.8}
+{"art": "reuse", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "turn": 0, "wall_s": 12.6, "vram_peak": 7271, "fehler": null, "prompt_n": 30036, "cache_n": 0, "pp_ts": 3090.8, "antwort": "Der vorliegende Code-Abschnitt implementiert die Kernlogik für die Quantisierung von LLM-Modellen (einschließlich Typzuw"}
+{"art": "reuse", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "turn": 1, "wall_s": 2.84, "vram_peak": 7271, "fehler": null, "prompt_n": 27, "cache_n": 30112, "pp_ts": 60.5, "antwort": "Detail 1: Die Funktion `llama_tensor_get_type_impl` bestimmt den Ziel-Quantisierungstyp für jeden Tensor basierend auf s"}
+{"art": "reuse", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "turn": 2, "wall_s": 5.89, "vram_peak": 7271, "fehler": null, "prompt_n": 105, "cache_n": 30135, "pp_ts": 33.2, "antwort": "Detail 2: Die Funktion `llama_model_quantize_impl` orchestriert den gesamten Quantisierungsprozess, indem sie das Eingab"}
+{"art": "reuse", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "turn": 3, "wall_s": 2.42, "vram_peak": 7271, "fehler": null, "prompt_n": 27, "cache_n": 30319, "pp_ts": 63.8, "antwort": "Detail 3: Die Implementierung enthält eine Ringpuffer-Datenstruktur (`ring_buffer`), die als effiziente, festkapazitätsb"}
+{"art": "reuse", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "turn": 4, "wall_s": 2.88, "vram_peak": 7271, "fehler": null, "prompt_n": 27, "cache_n": 30403, "pp_ts": 66.0, "antwort": "Detail 4: Der `llama_sampler_chain` ermöglicht die Verkettung mehrerer Sampler, indem er deren `apply`, `accept` und `re"}
+{"art": "wiederholt", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "i": 0, "prompt_n": 8000, "cache_n": 0, "text": " \"lfm2\"             },\n"}
+{"art": "wiederholt", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "i": 1, "prompt_n": 4, "cache_n": 7996, "text": " \"lfm2\"             },\n"}
+{"art": "wiederholt", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "i": 2, "prompt_n": 4, "cache_n": 7996, "text": " \"lfm2\"             },\n"}
+{"art": "tool", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "modell_antwort": "qwen3.6-35b-a3b-fast", "tool_calls": [{"type": "function", "function": {"name": "wetter", "arguments": "{\"stadt\":\"Graz\"}"}, "id": "WaJWCK7yaQ80mUqQsIAwPpp58LT78gL9"}], "finish": "tool_calls", "final": "Das Wetter in Graz ist aktuell bewölkt mit einer Temperatur von 7 Grad Celsius."}
+{"art": "bild", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "antwort": "Rot", "prompt_n": 33}
+{"art": "parallel", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "ergebnis": {"0": {"ok": true, "wall_s": 5.06, "pp_ts": 3549.4}, "1": {"ok": true, "wall_s": 10.14, "pp_ts": 3587.1}}, "vram_peak": 7271}
+{"art": "ende", "profil": "coding-fast", "ub": 8192, "ctx": 65536, "lebt": true, "vram": 7271, "vram_peak_gesamt": 7271, "ram": {"used": 26614, "avail": 4799}, "log_fehler": [], "prefetch_slots": []}

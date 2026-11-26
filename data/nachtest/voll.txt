@@ -1,0 +1,6 @@
+# voll-c131072  n_ctx=131072  → ~/bench/nachtest/voll.jsonl
+dokument    ctx 125072  prompt_n 124857  prefill 113.4 s (1101 t/s)  wall 120.4 s  VRAM-Spitze 7105 MiB  ok
+# 1 Requests in 1 Durchläufen, 0 Fehler
+# voll-c155648  n_ctx=155648  → ~/bench/nachtest/voll.jsonl
+dokument    ctx 149648  prompt_n 149344  prefill 142.6 s (1047 t/s)  wall 149.8 s  VRAM-Spitze 7777 MiB  ok
+# 1 Requests in 1 Durchläufen, 0 Fehler

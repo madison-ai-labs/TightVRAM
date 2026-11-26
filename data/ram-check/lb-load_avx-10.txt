@@ -1,0 +1,44 @@
+Running without Marker API. Activate Marker API with -m on commandline.
+Allocate: Process running on hwthread 0 (Domain S0) - Vector length 375000000/3000000000 Offset 0 Alignment 512
+Initialization: First thread in domain initializes the whole stream
+--------------------------------------------------------------------------------
+LIKWID MICRO BENCHMARK
+Test: load_avx
+--------------------------------------------------------------------------------
+Using 1 work groups
+Using 10 threads
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Group: 0 Thread 0 Global Thread 0 running on hwthread 0 - Vector length 37500000 Offset 0
+Group: 0 Thread 1 Global Thread 1 running on hwthread 10 - Vector length 37500000 Offset 37500000
+Group: 0 Thread 2 Global Thread 2 running on hwthread 1 - Vector length 37500000 Offset 75000000
+Group: 0 Thread 3 Global Thread 3 running on hwthread 11 - Vector length 37500000 Offset 112500000
+Group: 0 Thread 4 Global Thread 4 running on hwthread 2 - Vector length 37500000 Offset 150000000
+Group: 0 Thread 5 Global Thread 5 running on hwthread 12 - Vector length 37500000 Offset 187500000
+Group: 0 Thread 7 Global Thread 7 running on hwthread 13 - Vector length 37500000 Offset 262500000
+Group: 0 Thread 6 Global Thread 6 running on hwthread 3 - Vector length 37500000 Offset 225000000
+Group: 0 Thread 8 Global Thread 8 running on hwthread 4 - Vector length 37500000 Offset 300000000
+Group: 0 Thread 9 Global Thread 9 running on hwthread 14 - Vector length 37500000 Offset 337500000
+--------------------------------------------------------------------------------
+Cycles:			38936560314
+CPU Clock:		3600018239
+Cycle Clock:		3600018239
+Time:			1.081566e+01 sec
+Iterations:		640
+Iterations per thread:	64
+Inner loop executions:	2343750
+Size (Byte):		3000000000
+Size per thread:	300000000
+Number of Flops:	0
+MFlops/s:		0.00
+Data volume (Byte):	192000000000
+MByte/s:		17752.04
+Cycles per update:	1.622357
+Cycles per cacheline:	12.978853
+Loads per update:	1
+Stores per update:	0
+Load bytes per element:	8
+Store bytes per elem.:	0
+Instructions:		10500000016
+UOPs:			9000000000
+--------------------------------------------------------------------------------

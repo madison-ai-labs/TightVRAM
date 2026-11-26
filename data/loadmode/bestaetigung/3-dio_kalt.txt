@@ -1,0 +1,50 @@
+# 3-dio_kalt-1-interaktiv  n_ctx=131072  → ~/bench/loadmode/bestaetigung/3-dio_kalt.jsonl
+interaktiv  n=5  TTFT median 0.59 s  gesamt median 2.98 s  tg median 35.7 t/s  fehler 0
+# 5 Requests in 1 Durchläufen, 0 Fehler
+# 3-dio_kalt-2-agent-kalt  n_ctx=131072  → ~/bench/loadmode/bestaetigung/3-dio_kalt.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    12.7   10.45     15216        0    1464   80    35.2
+               2     3.7    2.00      1323    15295     671   55    32.4
+               3     4.0    1.99      1369    16672     698   68    33.2
+               4     3.8    1.97      1245    18108     644   62    33.1
+               5     3.7    2.07      1406    19414     692   54    32.5
+               6     3.3    2.32      1488    20873     724   40    32.7
+            gesamt (kalt): 31.2 s
+# 6 Requests in 1 Durchläufen, 0 Fehler
+# 3-dio_kalt-3-dokument  n_ctx=131072  → ~/bench/loadmode/bestaetigung/3-dio_kalt.jsonl
+dokument    ctx  32000  prompt_n 31090  prefill 20.4 s (1523 t/s)  wall 26.5 s  VRAM-Spitze 7141 MiB  ok
+dokument    ctx  64000  prompt_n 63786  prefill 44.7 s (1428 t/s)  wall 51.1 s  VRAM-Spitze 7141 MiB  ok
+# 2 Requests in 1 Durchläufen, 0 Fehler
+# 3-dio_kalt-4-agent-warm  n_ctx=131072  → ~/bench/loadmode/bestaetigung/3-dio_kalt.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1     2.9    0.64         4    15212      35   80    35.1
+               2     3.6    2.00      1323    15295     670   55    34.5
+               3     4.1    2.00      1369    16672     698   68    32.3
+               4     3.8    1.97      1245    18108     644   62    33.0
+               5     3.7    2.07      1406    19414     692   54    32.4
+               6     3.3    2.32      1488    20873     724   40    32.6
+            gesamt (kalt): 21.4 s
+# 6 Requests in 1 Durchläufen, 0 Fehler
+# 3-dio_kalt-5-agent-neu  n_ctx=131072  → ~/bench/loadmode/bestaetigung/3-dio_kalt.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    13.6   10.56     15216        0    1465  102    33.7
+               2     4.0    2.00      1323    15317     670   67    33.9
+               3     4.4    2.00      1369    16706     697   83    34.1
+               4     3.6    1.97      1245    18157     643   56    33.3
+               5     3.9    2.07      1406    19457     692   60    32.5
+               6     3.7    2.10      1488    20922     723   52    31.9
+            gesamt (kalt): 33.1 s
+# 6 Requests in 1 Durchläufen, 0 Fehler
+# 3-dio_kalt-6-interaktiv  n_ctx=131072  → ~/bench/loadmode/bestaetigung/3-dio_kalt.jsonl
+interaktiv  n=5  TTFT median 0.60 s  gesamt median 3.08 s  tg median 35.9 t/s  fehler 0
+# 5 Requests in 1 Durchläufen, 0 Fehler
+# 3-dio_kalt-7-agent-wieder  n_ctx=131072  → ~/bench/loadmode/bestaetigung/3-dio_kalt.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1     2.5    0.25         4    15212      34   80    34.5
+               2     3.6    2.00      1323    15295     670   55    34.6
+               3     4.1    2.00      1369    16672     697   68    32.6
+               4     3.9    1.97      1245    18108     643   62    32.3
+               5     3.7    2.07      1406    19414     692   54    32.6
+               6     3.3    2.32      1488    20873     724   40    31.8
+            gesamt (kalt): 21.1 s
+# 6 Requests in 1 Durchläufen, 0 Fehler

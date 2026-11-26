@@ -1,0 +1,38 @@
+Running without Marker API. Activate Marker API with -m on commandline.
+Allocate: Process running on hwthread 0 (Domain S0) - Vector length 187500000/1500000000 Offset 0 Alignment 512
+Allocate: Process running on hwthread 0 (Domain S0) - Vector length 187500000/1500000000 Offset 0 Alignment 512
+Initialization: First thread in domain initializes the whole stream
+--------------------------------------------------------------------------------
+LIKWID MICRO BENCHMARK
+Test: copy_avx
+--------------------------------------------------------------------------------
+Using 1 work groups
+Using 2 threads
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Group: 0 Thread 0 Global Thread 0 running on hwthread 0 - Vector length 93750000 Offset 0
+Group: 0 Thread 1 Global Thread 1 running on hwthread 10 - Vector length 93750000 Offset 93750000
+--------------------------------------------------------------------------------
+Cycles:			11309396278
+CPU Clock:		3600023329
+Cycle Clock:		3600023329
+Time:			3.141479e+00 sec
+Iterations:		32
+Iterations per thread:	16
+Inner loop executions:	5859375
+Size (Byte):		3000000000
+Size per thread:	1500000000
+Number of Flops:	0
+MFlops/s:		0.00
+Data volume (Byte):	48000000000
+MByte/s:		15279.43
+Cycles per update:	3.769799
+Cycles per cacheline:	30.158390
+Loads per update:	1
+Stores per update:	1
+Load bytes per element:	8
+Store bytes per elem.:	8
+Load/store ratio:	1.00
+Instructions:		2062500016
+UOPs:			2625000000
+--------------------------------------------------------------------------------

@@ -1,0 +1,21 @@
+## bereit
+andere    size     871 rss      91 swap       2 locked       0 MiB
+anon      size   49567 rss     189 swap     171 locked       0 MiB
+dev-zero  size   20439 rss    2577 swap       0 locked       0 MiB
+nvidia    size      65 rss      63 swap       0 locked       0 MiB
+gguf-page-cache 8689 MiB, MemFree: 697744 kB Inactive(file): 9050572 kB 
+workingset_refault_anon 329585 workingset_refault_file 130316569 pswpout 710012 pgscan_anon 216149359 pgscan_file 165601217 pgsteal_anon 890043 pgsteal_file 149678786 swpout_zero 174081 
+## nach-agent-warm
+andere    size     871 rss      63 swap       5 locked       0 MiB
+anon      size   53458 rss    3930 swap     353 locked       0 MiB
+dev-zero  size   20439 rss   17313 swap       0 locked       0 MiB
+nvidia    size      65 rss      63 swap       0 locked       0 MiB
+gguf-page-cache 2791 MiB, MemFree: 2907980 kB Inactive(file): 2888672 kB 
+workingset_refault_anon 360164 workingset_refault_file 130334325 pswpout 759306 pgscan_anon 226262749 pgscan_file 167161062 pgsteal_anon 980902 pgsteal_file 151227971 swpout_zero 212923 
+## ende
+andere    size     871 rss      63 swap       5 locked       0 MiB
+anon      size   52983 rss    3456 swap     352 locked       0 MiB
+dev-zero  size   20439 rss   17707 swap       0 locked       0 MiB
+nvidia    size      65 rss      63 swap       0 locked       0 MiB
+gguf-page-cache 1958 MiB, MemFree: 4262460 kB Inactive(file): 2035456 kB 
+workingset_refault_anon 360345 workingset_refault_file 130335633 pswpout 759316 pgscan_anon 226262801 pgscan_file 167374440 pgsteal_anon 980932 pgsteal_file 151441327 swpout_zero 212923 

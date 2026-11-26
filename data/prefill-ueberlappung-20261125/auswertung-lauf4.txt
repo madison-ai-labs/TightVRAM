@@ -1,0 +1,21 @@
+| Profil | ub | ctx | Prefetch | kalt 4k | 4k | 16k | 64k | 120k | tg 16k | VRAM idle | VRAM Peak | RAM avail |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| coding-dio | 4096 | 131072 | nein | 1542 | 1643 | 1629 | 1418 | 1237 | 31.0 | 7047 | 7163 | 8940 |
+| coding-dio | 4096 | 131072 | ja | 2259 | 2384 | 2438 | 2051 | 1696 | 30.5 | 7047 | 7793 | 8989 |
+| coding-dio | 8192 | 65536 | nein | 1539 | 1645 | 2285 | 1917 | – | 31.0 | 6471 | 6657 | 8572 |
+| coding-dio | 8192 | 65536 | ja | 2213 | 2384 | 3590 | 2768 | – | 32.5 | 6471 | 7285 | 8546 |
+| coding-dio | 6144 | 131072 | nein (lädt nicht) | 0 | – | – | – | – | – | 33 | – | 30010 |
+| coding-dio | 6144 | 131072 | ja (lädt nicht) | 0 | – | – | – | – | – | 33 | – | 30081 |
+| coding | 4096 | 131072 | nein | 1204 | 1408 | 1402 | 1241 | – | 32.5 | 7009 | 7123 | 27656 |
+| coding | 4096 | 131072 | ja | 1849 | 1934 | 1983 | 1740 | – | 31.4 | 7009 | 7753 | 27522 |
+
+Gewinn Prefetch je Paar (pf/ref - 1):
+  coding-dio ub4096 c131072: 4096: +45%, 16384: +50%, 65024: +45%, 122880: +37%
+  coding-dio ub8192 c65536: 4096: +45%, 16384: +57%, 65024: +44%
+  coding-dio ub6144 c131072: 
+  coding ub4096 c131072: 4096: +37%, 16384: +41%, 65024: +40%
+
+Decode-Vergleich ref vs pf (64 Token temp 0, top-10 logprobs):
+  coding-dio ub4096 c131072: Text identisch=True, tg 31.0 -> 30.5, max |Δ logprob top1| = 0.00e+00
+  coding-dio ub8192 c65536: Text identisch=True, tg 31.0 -> 32.5, max |Δ logprob top1| = 0.00e+00
+  coding ub4096 c131072: Text identisch=True, tg 32.5 -> 31.4, max |Δ logprob top1| = 0.00e+00

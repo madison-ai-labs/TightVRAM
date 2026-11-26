@@ -1,0 +1,72 @@
+# Je Schritt und Variante, Spanne über die Instanzen: Wandzeit-Summe, tg (Summe Token / Summe Zeit), TTFT med, Draft angenommen/erzeugt
+
+## 1-repetitiv-json
+dio_kalt               n=3 wall  130.02 [129.63–130.63] tg  35.68 [35.51–35.79] ttft  0.09 [0.09–0.10] Token [4500, 4500, 4500] Draft 0/0 Fehler/ungültig 0
+dio_kalt_spec          n=3 wall  186.99 [185.99–187.51] tg  24.58 [24.51–24.71] ttft  0.10 [0.10–0.10] Token [4500, 4500, 4500] Draft 10968/22305 (49 %) Fehler/ungültig 0
+
+## 2-repetitiv-code
+dio_kalt               n=3 wall   33.22 [33.14–33.30] tg  36.08 [35.98–36.17] ttft  0.09 [0.09–0.09] Token [1140, 1140, 1140] Draft 0/0 Fehler/ungültig 0
+dio_kalt_spec          n=3 wall   30.47 [30.40–30.48] tg  39.52 [39.51–39.63] ttft  0.09 [0.09–0.09] Token [1140, 1140, 1140] Draft 2925/4224 (69 %) Fehler/ungültig 0
+
+## 3-neuartig
+dio_kalt               n=3 wall   35.90 [34.47–36.50] tg  34.95 [34.35–36.50] ttft  0.49 [0.49–0.49] Token [1193, 1193, 1193] Draft 0/0 Fehler/ungültig 0
+dio_kalt_spec          n=3 wall   34.73 [34.51–34.85] tg  36.19 [36.06–36.42] ttft  0.49 [0.49–0.49] Token [1193, 1193, 1193] Draft 0/0 Fehler/ungültig 0
+
+## 4-agent-kalt
+dio_kalt               n=3 wall   31.50 [31.16–31.51] tg  32.81 [32.80–33.91] ttft  2.00 [2.00–2.00] Token [359, 359, 359] Draft 0/0 Fehler/ungültig 0
+dio_kalt_spec          n=3 wall   31.69 [31.65–32.01] tg  32.18 [31.31–32.40] ttft  2.01 [2.00–2.01] Token [358, 358, 358] Draft 51/192 (27 %) Fehler/ungültig 0
+
+## 5-agent-warm
+dio_kalt               n=3 wall   21.04 [20.77–21.39] tg  33.35 [32.30–34.21] ttft  2.01 [2.00–2.01] Token [359, 359, 359] Draft 0/0 Fehler/ungültig 0
+dio_kalt_spec          n=3 wall   27.25 [27.20–27.44] tg  26.30 [26.01–26.37] ttft  2.04 [2.04–2.04] Token [445, 445, 445] Draft 45/960 (5 %) Fehler/ungültig 0
+
+# Ausgabe gleich? Volle Antwort (sha256) je Request
+21 Requests, 7 mit abweichendem Text
+  ('4-agent-kalt', 5) {'dio_kalt': ['e3b0c44298fc'], 'dio_kalt_spec': ['a6d0a3d666de']}
+  ('5-agent-warm', 0) {'dio_kalt': ['0793082f8852'], 'dio_kalt_spec': ['594a3e1c56ac']}
+  ('5-agent-warm', 1) {'dio_kalt': ['bd47072c07b2'], 'dio_kalt_spec': ['e70887271cc6']}
+  ('5-agent-warm', 2) {'dio_kalt': ['2c732e0437f8'], 'dio_kalt_spec': ['5a3a421d4504']}
+  ('5-agent-warm', 3) {'dio_kalt': ['493a6bcb44a7'], 'dio_kalt_spec': ['34d5b0eb7841']}
+  ('5-agent-warm', 4) {'dio_kalt': ['ee5c098b1722'], 'dio_kalt_spec': ['2e2c92ff39f6']}
+  ('5-agent-warm', 5) {'dio_kalt': ['e3b0c44298fc'], 'dio_kalt_spec': ['bd6b63fb655c']}
+
+# Speicher und Logs je Instanz
+1-dio_kalt                 VRAM max 7143 anon max 2641 avail min 6778 swap-out 0.0 MiB PSI full 0 ms Checkpoints 39 (2450 MiB)
+2-dio_kalt_spec            VRAM max 7167 anon max 2744 avail min 6617 swap-out 0.0 MiB PSI full 0 ms Checkpoints 39 (2450 MiB)
+    slot print_timing: id  0 | task 0 | draft acceptance = 0.41325 (  936 accepted /  2265 generated), mean len = 27.00
+    slot print_timing: id  0 | task 568 | draft acceptance = 0.52611 ( 1360 accepted /  2585 generated), mean len = 34.17
+    slot print_timing: id  0 | task 709 | draft acceptance = 0.52611 ( 1360 accepted /  2585 generated), mean len = 34.17
+    slot print_timing: id  0 | task 850 | draft acceptance = 0.63802 (  245 accepted /   384 generated), mean len = 41.83
+    slot print_timing: id  0 | task 987 | draft acceptance = 0.71289 (  365 accepted /   512 generated), mean len = 46.62
+    slot print_timing: id  0 | task 1003 | draft acceptance = 0.71289 (  365 accepted /   512 generated), mean len = 46.62
+    slot print_timing: id  0 | task 2496 | draft acceptance = 0.26562 (   17 accepted /    64 generated), mean len = 18.00
+    slot print_timing: id  0 | task 2577 | draft acceptance = 0.12500 (    8 accepted /    64 generated), mean len =  9.00
+    slot print_timing: id  0 | task 2658 | draft acceptance = 0.00000 (    0 accepted /    64 generated), mean len =  1.00
+    slot print_timing: id  0 | task 2746 | draft acceptance = 0.03125 (    4 accepted /   128 generated), mean len =  3.00
+    slot print_timing: id  0 | task 2900 | draft acceptance = 0.04688 (    3 accepted /    64 generated), mean len =  4.00
+3-dio_kalt_spec            VRAM max 7167 anon max 2705 avail min 6635 swap-out 0.0 MiB PSI full 0 ms Checkpoints 39 (2450 MiB)
+    slot print_timing: id  0 | task 0 | draft acceptance = 0.41325 (  936 accepted /  2265 generated), mean len = 27.00
+    slot print_timing: id  0 | task 568 | draft acceptance = 0.52611 ( 1360 accepted /  2585 generated), mean len = 34.17
+    slot print_timing: id  0 | task 709 | draft acceptance = 0.52611 ( 1360 accepted /  2585 generated), mean len = 34.17
+    slot print_timing: id  0 | task 850 | draft acceptance = 0.63802 (  245 accepted /   384 generated), mean len = 41.83
+    slot print_timing: id  0 | task 987 | draft acceptance = 0.71289 (  365 accepted /   512 generated), mean len = 46.62
+    slot print_timing: id  0 | task 1003 | draft acceptance = 0.71289 (  365 accepted /   512 generated), mean len = 46.62
+    slot print_timing: id  0 | task 2496 | draft acceptance = 0.26562 (   17 accepted /    64 generated), mean len = 18.00
+    slot print_timing: id  0 | task 2577 | draft acceptance = 0.12500 (    8 accepted /    64 generated), mean len =  9.00
+    slot print_timing: id  0 | task 2658 | draft acceptance = 0.00000 (    0 accepted /    64 generated), mean len =  1.00
+    slot print_timing: id  0 | task 2746 | draft acceptance = 0.03125 (    4 accepted /   128 generated), mean len =  3.00
+    slot print_timing: id  0 | task 2900 | draft acceptance = 0.04688 (    3 accepted /    64 generated), mean len =  4.00
+4-dio_kalt                 VRAM max 7143 anon max 2641 avail min 6748 swap-out 0.0 MiB PSI full 0 ms Checkpoints 39 (2450 MiB)
+5-dio_kalt                 VRAM max 7143 anon max 2641 avail min 6773 swap-out 0.0 MiB PSI full 0 ms Checkpoints 39 (2450 MiB)
+6-dio_kalt_spec            VRAM max 7167 anon max 2735 avail min 6599 swap-out 0.0 MiB PSI full 0 ms Checkpoints 39 (2450 MiB)
+    slot print_timing: id  0 | task 0 | draft acceptance = 0.41325 (  936 accepted /  2265 generated), mean len = 27.00
+    slot print_timing: id  0 | task 568 | draft acceptance = 0.52611 ( 1360 accepted /  2585 generated), mean len = 34.17
+    slot print_timing: id  0 | task 709 | draft acceptance = 0.52611 ( 1360 accepted /  2585 generated), mean len = 34.17
+    slot print_timing: id  0 | task 850 | draft acceptance = 0.63802 (  245 accepted /   384 generated), mean len = 41.83
+    slot print_timing: id  0 | task 987 | draft acceptance = 0.71289 (  365 accepted /   512 generated), mean len = 46.62
+    slot print_timing: id  0 | task 1003 | draft acceptance = 0.71289 (  365 accepted /   512 generated), mean len = 46.62
+    slot print_timing: id  0 | task 2496 | draft acceptance = 0.26562 (   17 accepted /    64 generated), mean len = 18.00
+    slot print_timing: id  0 | task 2577 | draft acceptance = 0.12500 (    8 accepted /    64 generated), mean len =  9.00
+    slot print_timing: id  0 | task 2658 | draft acceptance = 0.00000 (    0 accepted /    64 generated), mean len =  1.00
+    slot print_timing: id  0 | task 2746 | draft acceptance = 0.03125 (    4 accepted /   128 generated), mean len =  3.00
+    slot print_timing: id  0 | task 2900 | draft acceptance = 0.04688 (    3 accepted /    64 generated), mean len =  4.00

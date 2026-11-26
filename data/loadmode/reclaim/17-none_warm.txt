@@ -1,0 +1,13 @@
+# 17-none_warm-1-interaktiv  n_ctx=131072  → ~/bench/loadmode/reclaim/17-none_warm.jsonl
+interaktiv  n=5  TTFT median 0.59 s  gesamt median 2.91 s  tg median 35.6 t/s  fehler 0
+# 5 Requests in 1 Durchläufen, 0 Fehler
+# 17-none_warm-2-agent-kalt  n_ctx=131072  → ~/bench/loadmode/reclaim/17-none_warm.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    12.7   10.42     15216        0    1467   80    34.1
+               2     3.6    2.00      1323    15295     672   55    33.8
+               3     4.0    1.99      1369    16672     699   68    32.8
+               4     3.8    1.97      1245    18108     644   62    32.6
+               5     3.6    2.07      1406    19414     693   54    33.8
+               6     3.3    2.32      1488    20873     726   40    33.4
+            gesamt (kalt): 31.1 s
+# 6 Requests in 1 Durchläufen, 0 Fehler

@@ -1,0 +1,16 @@
+# 3-none-1-agent-kalt  n_ctx=131072  → ~/bench/loadmode/langkontext/3-none.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    12.9   10.61     15216        0    1438   80    34.7
+               2     3.6    2.01      1323    15295     670   55    33.7
+               3     4.0    2.00      1369    16672     698   68    34.2
+               4     3.8    1.97      1245    18108     644   62    33.4
+               5     3.7    2.07      1406    19414     692   54    32.7
+               6     3.3    2.32      1488    20873     723   40    33.2
+            gesamt (kalt): 31.2 s
+# 6 Requests in 1 Durchläufen, 0 Fehler
+# 3-none-2-dokument-64k  n_ctx=131072  → ~/bench/loadmode/langkontext/3-none.jsonl
+dokument    ctx  64000  prompt_n 63786  prefill 44.7 s (1427 t/s)  wall 51.3 s  VRAM-Spitze 7141 MiB  ok
+# 1 Requests in 1 Durchläufen, 0 Fehler
+# 3-none-3-dokument-115k  n_ctx=131072  → ~/bench/loadmode/langkontext/3-none.jsonl
+dokument    ctx 115000  prompt_n None  prefill 0.0 s (0 t/s)  wall 33.3 s  VRAM-Spitze 7143 MiB  ok
+# 1 Requests in 1 Durchläufen, 0 Fehler

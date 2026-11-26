@@ -1,0 +1,40 @@
+2026-11-06T00:20:11+01:00 1-auto start avail=30334 swap=95 pswpout=759316 governor=powersave
+2026-11-06T00:20:13+01:00 1-auto bereit nach 2.1 s, avail=28660 swap=95 pswpout=759316
+2026-11-06T00:20:20+01:00 1-auto 1-interaktiv zeile=355
+2026-11-06T00:20:38+01:00 1-auto 2-agent-kalt zeile=545
+2026-11-06T00:21:13+01:00 1-auto 3-dokument zeile=726
+2026-11-06T00:22:40+01:00 1-auto 4-agent-warm zeile=915
+2026-11-06T00:23:04+01:00 1-auto 5-agent-neu zeile=1104
+2026-11-06T00:23:41+01:00 1-auto 6-interaktiv zeile=1307
+2026-11-06T00:23:59+01:00 1-auto 7-agent-wieder zeile=1549
+2026-11-06T00:24:26+01:00 1-auto fertig zeile=1740 avail=25209 swap=95 pswpout=759316 anon=3815 shm=1164 hwm=27746
+2026-11-06T00:24:31+01:00 2-none start avail=30224 swap=95 pswpout=759316 governor=powersave
+2026-11-06T00:24:47+01:00 2-none bereit nach 15.6 s, avail=9273 swap=261 pswpout=804804
+2026-11-06T00:24:54+01:00 2-none 1-interaktiv zeile=234
+2026-11-06T00:25:12+01:00 2-none 2-agent-kalt zeile=424
+2026-11-06T00:25:44+01:00 2-none 3-dokument zeile=605
+2026-11-06T00:27:03+01:00 2-none 4-agent-warm zeile=794
+2026-11-06T00:27:25+01:00 2-none 5-agent-neu zeile=983
+2026-11-06T00:27:58+01:00 2-none 6-interaktiv zeile=1186
+2026-11-06T00:28:15+01:00 2-none 7-agent-wieder zeile=1428
+2026-11-06T00:28:41+01:00 2-none fertig zeile=1619 avail=5712 swap=260 pswpout=804804 anon=3728 shm=20417 hwm=26070
+2026-11-06T00:28:54+01:00 3-none start avail=30294 swap=97 pswpout=804804 governor=powersave
+2026-11-06T00:29:08+01:00 3-none bereit nach 14.4 s, avail=9191 swap=151 pswpout=819612
+2026-11-06T00:29:16+01:00 3-none 1-interaktiv zeile=234
+2026-11-06T00:29:34+01:00 3-none 2-agent-kalt zeile=424
+2026-11-06T00:30:05+01:00 3-none 3-dokument zeile=605
+2026-11-06T00:31:24+01:00 3-none 4-agent-warm zeile=794
+2026-11-06T00:31:46+01:00 3-none 5-agent-neu zeile=983
+2026-11-06T00:32:19+01:00 3-none 6-interaktiv zeile=1186
+2026-11-06T00:32:37+01:00 3-none 7-agent-wieder zeile=1428
+2026-11-06T00:33:02+01:00 3-none fertig zeile=1619 avail=5647 swap=151 pswpout=819733 anon=3787 shm=20438 hwm=26195
+2026-11-06T00:33:15+01:00 4-auto start avail=30281 swap=97 pswpout=819733 governor=powersave
+2026-11-06T00:33:17+01:00 4-auto bereit nach 1.8 s, avail=28616 swap=97 pswpout=819733
+2026-11-06T00:33:24+01:00 4-auto 1-interaktiv zeile=355
+2026-11-06T00:33:42+01:00 4-auto 2-agent-kalt zeile=544
+2026-11-06T00:34:17+01:00 4-auto 3-dokument zeile=725
+2026-11-06T00:35:45+01:00 4-auto 4-agent-warm zeile=914
+2026-11-06T00:36:09+01:00 4-auto 5-agent-neu zeile=1103
+2026-11-06T00:36:46+01:00 4-auto 6-interaktiv zeile=1306
+2026-11-06T00:37:04+01:00 4-auto 7-agent-wieder zeile=1548
+2026-11-06T00:37:31+01:00 4-auto fertig zeile=1739 avail=25198 swap=97 pswpout=819733 anon=3815 shm=1164 hwm=27746

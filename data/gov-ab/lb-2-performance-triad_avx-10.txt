@@ -1,0 +1,49 @@
+Running without Marker API. Activate Marker API with -m on commandline.
+Warning: Sanitizing vector length to a multiple of the loop stride 16 and thread count 10 from 93750000 elements (750000000 bytes) to 93749920 elements (749999360 bytes)
+Allocate: Process running on hwthread 0 (Domain S0) - Vector length 93749920/749999360 Offset 0 Alignment 512
+Allocate: Process running on hwthread 0 (Domain S0) - Vector length 93749920/749999360 Offset 0 Alignment 512
+Allocate: Process running on hwthread 0 (Domain S0) - Vector length 93749920/749999360 Offset 0 Alignment 512
+Allocate: Process running on hwthread 0 (Domain S0) - Vector length 93749920/749999360 Offset 0 Alignment 512
+Initialization: First thread in domain initializes the whole stream
+--------------------------------------------------------------------------------
+LIKWID MICRO BENCHMARK
+Test: triad_avx
+--------------------------------------------------------------------------------
+Using 1 work groups
+Using 10 threads
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Group: 0 Thread 0 Global Thread 0 running on hwthread 0 - Vector length 9374992 Offset 0
+Group: 0 Thread 1 Global Thread 1 running on hwthread 10 - Vector length 9374992 Offset 9374992
+Group: 0 Thread 3 Global Thread 3 running on hwthread 11 - Vector length 9374992 Offset 28124976
+Group: 0 Thread 2 Global Thread 2 running on hwthread 1 - Vector length 9374992 Offset 18749984
+Group: 0 Thread 4 Global Thread 4 running on hwthread 2 - Vector length 9374992 Offset 37499968
+Group: 0 Thread 5 Global Thread 5 running on hwthread 12 - Vector length 9374992 Offset 46874960
+Group: 0 Thread 6 Global Thread 6 running on hwthread 3 - Vector length 9374992 Offset 56249952
+Group: 0 Thread 7 Global Thread 7 running on hwthread 13 - Vector length 9374992 Offset 65624944
+Group: 0 Thread 8 Global Thread 8 running on hwthread 4 - Vector length 9374992 Offset 74999936
+Group: 0 Thread 9 Global Thread 9 running on hwthread 14 - Vector length 9374992 Offset 84374928
+--------------------------------------------------------------------------------
+Cycles:			61714437188
+CPU Clock:		3600023155
+Cycle Clock:		3600023155
+Time:			1.714279e+01 sec
+Iterations:		1280
+Iterations per thread:	128
+Inner loop executions:	585937
+Size (Byte):		2999997440
+Size per thread:	299999744
+Number of Flops:	23999979520
+MFlops/s:		1400.00
+Data volume (Byte):	383999672320
+MByte/s:		22400.07
+Cycles per update:	5.142874
+Cycles per cacheline:	41.142993
+Loads per update:	3
+Stores per update:	1
+Load bytes per element:	24
+Store bytes per elem.:	8
+Load/store ratio:	3.00
+Instructions:		14249987856
+UOPs:			22499980800
+--------------------------------------------------------------------------------

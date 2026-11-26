@@ -1,0 +1,50 @@
+# 2-none-1-interaktiv  n_ctx=131072  → ~/bench/loadmode/replay/2-none.jsonl
+interaktiv  n=5  TTFT median 0.63 s  gesamt median 3.16 s  tg median 35.1 t/s  fehler 0
+# 5 Requests in 1 Durchläufen, 0 Fehler
+# 2-none-2-agent-kalt  n_ctx=131072  → ~/bench/loadmode/replay/2-none.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    12.8   10.45     15216        0    1464   80    33.7
+               2     3.6    2.01      1323    15295     670   55    34.5
+               3     4.1    2.02      1369    16672     696   68    32.9
+               4     3.8    1.98      1245    18108     643   62    32.8
+               5     3.7    2.08      1406    19414     692   54    32.4
+               6     3.3    2.34      1488    20873     722   40    32.6
+            gesamt (kalt): 31.4 s
+# 6 Requests in 1 Durchläufen, 0 Fehler
+# 2-none-3-dokument  n_ctx=131072  → ~/bench/loadmode/replay/2-none.jsonl
+dokument    ctx  32000  prompt_n 31090  prefill 20.4 s (1522 t/s)  wall 26.6 s  VRAM-Spitze 7141 MiB  ok
+dokument    ctx  64000  prompt_n 63786  prefill 44.7 s (1427 t/s)  wall 51.2 s  VRAM-Spitze 7141 MiB  ok
+# 2 Requests in 1 Durchläufen, 0 Fehler
+# 2-none-4-agent-warm  n_ctx=131072  → ~/bench/loadmode/replay/2-none.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1     3.1    0.74         4    15212      18   80    33.8
+               2     3.6    2.01      1323    15295     669   55    33.3
+               3     4.0    1.99      1369    16672     699   68    34.2
+               4     3.8    1.97      1245    18108     644   62    32.9
+               5     3.7    2.07      1406    19414     692   54    32.4
+               6     3.3    2.32      1488    20873     724   40    32.6
+            gesamt (kalt): 21.5 s
+# 6 Requests in 1 Durchläufen, 0 Fehler
+# 2-none-5-agent-neu  n_ctx=131072  → ~/bench/loadmode/replay/2-none.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    13.4   10.56     15216        0    1465  102    35.1
+               2     3.9    2.01      1323    15317     670   67    34.1
+               3     4.4    2.00      1369    16706     698   83    34.4
+               4     3.6    1.98      1245    18157     643   56    34.1
+               5     3.8    2.08      1406    19457     691   60    33.6
+               6     3.6    2.11      1488    20922     723   52    33.2
+            gesamt (kalt): 32.9 s
+# 6 Requests in 1 Durchläufen, 0 Fehler
+# 2-none-6-interaktiv  n_ctx=131072  → ~/bench/loadmode/replay/2-none.jsonl
+interaktiv  n=5  TTFT median 0.60 s  gesamt median 3.10 s  tg median 36.2 t/s  fehler 0
+# 5 Requests in 1 Durchläufen, 0 Fehler
+# 2-none-7-agent-wieder  n_ctx=131072  → ~/bench/loadmode/replay/2-none.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1     2.5    0.24         4    15212      35   80    35.4
+               2     3.6    2.00      1323    15295     671   55    33.1
+               3     4.0    2.00      1369    16672     698   68    33.9
+               4     3.8    1.97      1245    18108     644   62    32.8
+               5     3.7    2.07      1406    19414     693   54    32.1
+               6     3.3    2.32      1488    20873     725   40    31.8
+            gesamt (kalt): 21.0 s
+# 6 Requests in 1 Durchläufen, 0 Fehler

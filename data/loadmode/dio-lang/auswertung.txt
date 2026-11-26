@@ -1,0 +1,8 @@
+run                       cat gguf_st gguf_ber free_ber laden shm_ber so_lad so_nach psi_full ttft1 agent  avail_min dz_rss/sw  host cpu_map afile ifile abbruch
+1-dio_kalt                0         0       10     8863  14.0   20439    0.0     0.0        0 10.49  31.8       3843   20439/0    j       n   129   154 
+2-dio_warm                1     21324     6893     2278  14.1   20439    0.2     0.0        0 10.48  31.3       3897   20439/0    j       n    95  7048 
+3-dio_kalt                0         0       10     9113  14.0   20439    0.0     0.0        0 10.48  31.2       3860   20439/0    j       n   101   172 
+
+variante          n bursts abbr  laden med [spanne]   shm_ber min   so_nach max/med  psi_full max  ttft1 med/max    agent med [spanne]   avail_min
+dio_kalt           2   0    0    14.0 [14.0–14.0]     20439     0.0/  0.0         0   10.49/10.49    31.5 [31.2–31.8]  3843
+dio_warm           1   0    0    14.1 [14.1–14.1]     20439     0.0/  0.0         0   10.48/10.48    31.3 [31.3–31.3]  3897

@@ -1,0 +1,90 @@
+{
+  "at": "2026-11-13T07:55:13.582Z",
+  "mode": "direct",
+  "url": "http://localhost:8080",
+  "status": 200,
+  "headers": {},
+  "request": {
+    "model": "",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are an assistant. Use the tools when you need them. Answer in the language of the user."
+      },
+      {
+        "role": "user",
+        "content": "Wie ist das Wetter gerade in Graz?"
+      }
+    ],
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "get_weather",
+          "description": "Current weather for a city.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "city"
+            ],
+            "properties": {
+              "city": {
+                "type": "string",
+                "description": "city name"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "stream": false,
+    "max_tokens": 4000
+  },
+  "response": {
+    "choices": [
+      {
+        "finish_reason": "tool_calls",
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "",
+          "reasoning_content": "Thinking Process:\n1.  Identify the user's request: The user is asking for the current weather in Graz.\n2.  Identify the required tool: `get_weather` takes a `city` parameter.\n3.  Extract the entity: City = \"Graz\".\n4.  Construct the function call: `get_weather(city=\"Graz\")`.\n5.  Execute the function call.\n6.  Process the response and answer the user in German. \nWait, let's call the tool first. \nTool call: `{\"name\": \"get_weather\", \"arguments\": {\"city\": \"Graz\"}}`\nDone. \nOutput matches exactly.",
+          "tool_calls": [
+            {
+              "type": "function",
+              "function": {
+                "name": "get_weather",
+                "arguments": "{\"city\":\"Graz\"}"
+              },
+              "id": "JQ2xscCpbu2SnLVHhkv9i1T12TNSrlY5"
+            }
+          ]
+        }
+      }
+    ],
+    "created": 1794556513,
+    "model": "qwen3.6-35b-a3b",
+    "system_fingerprint": "b12156-45b6604b2",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 170,
+      "prompt_tokens": 303,
+      "total_tokens": 473,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "id": "chatcmpl-wXJCEroOdhtb1MvcpvsTIQic4QjDPeWq",
+    "timings": {
+      "cache_n": 0,
+      "prompt_n": 303,
+      "prompt_ms": 2173.237,
+      "prompt_per_token_ms": 7.172399339933993,
+      "prompt_per_second": 139.42335787583224,
+      "predicted_n": 170,
+      "predicted_ms": 4683.872,
+      "predicted_per_token_ms": 27.715218934911245,
+      "predicted_per_second": 36.08125926583818
+    }
+  }
+}

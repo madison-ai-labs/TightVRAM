@@ -1,0 +1,45 @@
+2026-11-06T03:03:07+01:00 1-dio_kalt_moe0 start cache=kalt cat=0 gguf_cache=0 avail=30300 swap=88 pswpout=1282767 extra=--moe-cache-mib 0 governor=powersave
+2026-11-06T03:03:21+01:00 1-dio_kalt_moe0 bereit nach 14.0 s, avail=9005 swap=88 pswpout=1282767 gguf_cache=10 rssshmem=20439 free=9029
+2026-11-06T03:03:28+01:00 1-dio_kalt_moe0 1-interaktiv zeile=234
+2026-11-06T03:03:45+01:00 1-dio_kalt_moe0 2-agent-kalt zeile=424
+2026-11-06T03:04:21+01:00 1-dio_kalt_moe0 fertig zeile=605 avail=7019 swap=88 pswpout=1282767 anon=2413 shm=20439 hwm=23033
+2026-11-06T03:04:28+01:00 2-dio_kalt_moe128 start cache=kalt cat=0 gguf_cache=0 avail=30311 swap=88 pswpout=1282767 extra=--moe-cache-mib 128 governor=powersave
+2026-11-06T03:04:42+01:00 2-dio_kalt_moe128 bereit nach 14.2 s, avail=9072 swap=88 pswpout=1282767 gguf_cache=10 rssshmem=20439 free=9096
+2026-11-06T03:04:49+01:00 2-dio_kalt_moe128 1-interaktiv zeile=240
+2026-11-06T03:05:24+01:00 2-dio_kalt_moe128 2-agent-kalt zeile=426
+2026-11-06T03:06:15+01:00 2-dio_kalt_moe128 fertig zeile=609 avail=6988 swap=88 pswpout=1282767 anon=2427 shm=20439 hwm=23047
+2026-11-06T03:06:22+01:00 3-dio_kalt_moe256 start cache=kalt cat=0 gguf_cache=0 avail=30309 swap=88 pswpout=1282767 extra=--moe-cache-mib 256 governor=powersave
+2026-11-06T03:06:36+01:00 3-dio_kalt_moe256 bereit nach 14.1 s, avail=9063 swap=88 pswpout=1282767 gguf_cache=10 rssshmem=20439 free=9085
+2026-11-06T03:06:43+01:00 3-dio_kalt_moe256 1-interaktiv zeile=239
+2026-11-06T03:07:19+01:00 3-dio_kalt_moe256 2-agent-kalt zeile=425
+2026-11-06T03:08:10+01:00 3-dio_kalt_moe256 fertig zeile=608 avail=6973 swap=88 pswpout=1282767 anon=2426 shm=20439 hwm=23046
+2026-11-06T03:08:17+01:00 4-dio_kalt_moe128 start cache=kalt cat=0 gguf_cache=0 avail=30282 swap=88 pswpout=1282767 extra=--moe-cache-mib 128 governor=powersave
+2026-11-06T03:08:31+01:00 4-dio_kalt_moe128 bereit nach 14.1 s, avail=8969 swap=88 pswpout=1282767 gguf_cache=10 rssshmem=20439 free=8991
+2026-11-06T03:08:38+01:00 4-dio_kalt_moe128 1-interaktiv zeile=240
+2026-11-06T03:09:12+01:00 4-dio_kalt_moe128 2-agent-kalt zeile=426
+2026-11-06T03:10:04+01:00 4-dio_kalt_moe128 fertig zeile=609 avail=6975 swap=88 pswpout=1282767 anon=2427 shm=20439 hwm=23047
+2026-11-06T03:10:11+01:00 5-dio_kalt_moe256 start cache=kalt cat=0 gguf_cache=0 avail=30294 swap=88 pswpout=1282767 extra=--moe-cache-mib 256 governor=powersave
+2026-11-06T03:10:25+01:00 5-dio_kalt_moe256 bereit nach 14.1 s, avail=8952 swap=88 pswpout=1282767 gguf_cache=10 rssshmem=20439 free=8973
+2026-11-06T03:10:32+01:00 5-dio_kalt_moe256 1-interaktiv zeile=239
+2026-11-06T03:11:08+01:00 5-dio_kalt_moe256 2-agent-kalt zeile=425
+2026-11-06T03:11:58+01:00 5-dio_kalt_moe256 fertig zeile=608 avail=6971 swap=88 pswpout=1282767 anon=2426 shm=20439 hwm=23046
+2026-11-06T03:12:05+01:00 6-dio_kalt_moe0 start cache=kalt cat=0 gguf_cache=0 avail=30308 swap=88 pswpout=1282767 extra=--moe-cache-mib 0 governor=powersave
+2026-11-06T03:12:19+01:00 6-dio_kalt_moe0 bereit nach 14.2 s, avail=9065 swap=88 pswpout=1282767 gguf_cache=10 rssshmem=20439 free=9085
+2026-11-06T03:12:27+01:00 6-dio_kalt_moe0 1-interaktiv zeile=234
+2026-11-06T03:12:44+01:00 6-dio_kalt_moe0 2-agent-kalt zeile=424
+2026-11-06T03:13:20+01:00 6-dio_kalt_moe0 fertig zeile=605 avail=7022 swap=88 pswpout=1282767 anon=2413 shm=20439 hwm=23033
+2026-11-06T03:13:27+01:00 7-dio_kalt_moe256 start cache=kalt cat=0 gguf_cache=0 avail=30304 swap=88 pswpout=1282767 extra=--moe-cache-mib 256 governor=powersave
+2026-11-06T03:13:41+01:00 7-dio_kalt_moe256 bereit nach 14.1 s, avail=8980 swap=88 pswpout=1282767 gguf_cache=10 rssshmem=20439 free=9001
+2026-11-06T03:13:48+01:00 7-dio_kalt_moe256 1-interaktiv zeile=239
+2026-11-06T03:14:24+01:00 7-dio_kalt_moe256 2-agent-kalt zeile=425
+2026-11-06T03:15:14+01:00 7-dio_kalt_moe256 fertig zeile=608 avail=7000 swap=88 pswpout=1282767 anon=2426 shm=20439 hwm=23046
+2026-11-06T03:15:21+01:00 8-dio_kalt_moe0 start cache=kalt cat=0 gguf_cache=0 avail=30307 swap=88 pswpout=1282767 extra=--moe-cache-mib 0 governor=powersave
+2026-11-06T03:15:36+01:00 8-dio_kalt_moe0 bereit nach 14.2 s, avail=9063 swap=88 pswpout=1282767 gguf_cache=10 rssshmem=20439 free=9082
+2026-11-06T03:15:43+01:00 8-dio_kalt_moe0 1-interaktiv zeile=234
+2026-11-06T03:16:00+01:00 8-dio_kalt_moe0 2-agent-kalt zeile=424
+2026-11-06T03:16:36+01:00 8-dio_kalt_moe0 fertig zeile=605 avail=7002 swap=88 pswpout=1282767 anon=2413 shm=20439 hwm=23033
+2026-11-06T03:16:43+01:00 9-dio_kalt_moe128 start cache=kalt cat=0 gguf_cache=0 avail=30303 swap=88 pswpout=1282767 extra=--moe-cache-mib 128 governor=powersave
+2026-11-06T03:16:57+01:00 9-dio_kalt_moe128 bereit nach 14.1 s, avail=9041 swap=88 pswpout=1282767 gguf_cache=10 rssshmem=20439 free=9060
+2026-11-06T03:17:04+01:00 9-dio_kalt_moe128 1-interaktiv zeile=240
+2026-11-06T03:17:38+01:00 9-dio_kalt_moe128 2-agent-kalt zeile=426
+2026-11-06T03:18:30+01:00 9-dio_kalt_moe128 fertig zeile=609 avail=6983 swap=88 pswpout=1282767 anon=2427 shm=20439 hwm=23047

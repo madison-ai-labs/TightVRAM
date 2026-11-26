@@ -1,0 +1,43 @@
+Running without Marker API. Activate Marker API with -m on commandline.
+Warning: Sanitizing vector length to a multiple of the loop stride 16 and thread count 8 from 375000000 elements (3000000000 bytes) to 374999936 elements (2999999488 bytes)
+Allocate: Process running on hwthread 0 (Domain S0) - Vector length 374999936/2999999488 Offset 0 Alignment 512
+Initialization: First thread in domain initializes the whole stream
+--------------------------------------------------------------------------------
+LIKWID MICRO BENCHMARK
+Test: load_avx
+--------------------------------------------------------------------------------
+Using 1 work groups
+Using 8 threads
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Group: 0 Thread 0 Global Thread 0 running on hwthread 0 - Vector length 46874992 Offset 0
+Group: 0 Thread 1 Global Thread 1 running on hwthread 10 - Vector length 46874992 Offset 46874992
+Group: 0 Thread 3 Global Thread 3 running on hwthread 11 - Vector length 46874992 Offset 140624976
+Group: 0 Thread 2 Global Thread 2 running on hwthread 1 - Vector length 46874992 Offset 93749984
+Group: 0 Thread 5 Global Thread 5 running on hwthread 12 - Vector length 46874992 Offset 234374960
+Group: 0 Thread 4 Global Thread 4 running on hwthread 2 - Vector length 46874992 Offset 187499968
+Group: 0 Thread 6 Global Thread 6 running on hwthread 3 - Vector length 46874992 Offset 281249952
+Group: 0 Thread 7 Global Thread 7 running on hwthread 13 - Vector length 46874992 Offset 328124944
+--------------------------------------------------------------------------------
+Cycles:			41077923822
+CPU Clock:		3600020202
+Cycle Clock:		3600020202
+Time:			1.141047e+01 sec
+Iterations:		512
+Iterations per thread:	64
+Inner loop executions:	2929687
+Size (Byte):		2999999488
+Size per thread:	374999936
+Number of Flops:	0
+MFlops/s:		0.00
+Data volume (Byte):	191999967232
+MByte/s:		16826.65
+Cycles per update:	1.711580
+Cycles per cacheline:	13.692644
+Loads per update:	1
+Stores per update:	0
+Load bytes per element:	8
+Store bytes per elem.:	0
+Instructions:		10499998224
+UOPs:			8999998464
+--------------------------------------------------------------------------------

@@ -1,0 +1,60 @@
+diff --git a/ggml/src/ggml-alloc.c b/ggml/src/ggml-alloc.c
+index b0c067b49..4d8a1b466 100644
+--- a/ggml/src/ggml-alloc.c
++++ b/ggml/src/ggml-alloc.c
+@@ -13,7 +13,8 @@
+ #define MAX(a, b) ((a) > (b) ? (a) : (b))
+ #define MAX_FREE_BLOCKS 256
+ 
+-//#define GGML_ALLOCATOR_DEBUG
++#define GGML_ALLOCATOR_DEBUG
++#include <stdio.h>
+ 
+ //#define AT_PRINTF(...) GGML_LOG_DEBUG(__VA_ARGS__)
+ #define AT_PRINTF(...)
+@@ -129,6 +130,7 @@ struct ggml_dyn_tallocr {
+         const struct ggml_tensor * tensor;
+         struct buffer_address addr;
+     } allocated_tensors[1024];
++    char dbg_name[64];
+ #endif
+ };
+ 
+@@ -287,17 +289,20 @@ static struct buffer_address ggml_dyn_tallocr_alloc(struct ggml_dyn_tallocr * al
+                 }
+             }
+         }
+-        GGML_LOG_DEBUG("max_size[%d] = %.2f MB: tensors: ", addr.chunk, cur_max / 1024.0 / 1024.0);
+-        for (int i = 0; i < 1024; i++) {
+-            if (alloc->allocated_tensors[i].tensor) {
+-                GGML_LOG_DEBUG("%s [%d: %zx-%zx] (%.2f MB) ", alloc->allocated_tensors[i].tensor->name,
+-                    alloc->allocated_tensors[i].addr.chunk,
+-                    alloc->allocated_tensors[i].addr.offset,
+-                    alloc->allocated_tensors[i].addr.offset + ggml_nbytes(alloc->allocated_tensors[i].tensor),
+-                    ggml_nbytes(alloc->allocated_tensors[i].tensor) / 1024.0 / 1024.0);
++        if (getenv("GGML_ALLOC_DUMP") && cur_max / 1048576 > chunk->max_size / 1048576) {
++            double small = 0; int n_small = 0;
++            fprintf(stderr, "ALLOCDUMP %s max[%d]=%.2f MiB new=%s(%s) live:", alloc->dbg_name, addr.chunk, cur_max/1048576.0, tensor->name, ggml_op_desc(tensor));
++            for (int i = 0; i < 1024; i++) {
++                const struct ggml_tensor * t = alloc->allocated_tensors[i].tensor;
++                if (!t) continue;
++                double mb = ggml_nbytes(t)/1048576.0;
++                if (mb < 8) { small += mb; n_small++; continue; }
++                fprintf(stderr, " %s|%s|%s|%lldx%lldx%lldx%lld|@%.1f|%.2f;", t->name, ggml_op_desc(t), ggml_type_name(t->type),
++                    (long long)t->ne[0], (long long)t->ne[1], (long long)t->ne[2], (long long)t->ne[3],
++                    alloc->allocated_tensors[i].addr.offset/1048576.0, mb);
+             }
++            fprintf(stderr, " SMALL n=%d %.2f\n", n_small, small);
+         }
+-        GGML_LOG_DEBUG("\n");
+     }
+ #endif
+ 
+@@ -524,6 +529,7 @@ ggml_gallocr_t ggml_gallocr_new_n(ggml_backend_buffer_type_t * bufts, int n_bufs
+             size_t alignment = ggml_backend_buft_get_alignment(bufts[i]);
+             size_t max_size = ggml_backend_buft_get_max_size(bufts[i]);
+             galloc->buf_tallocs[i] = ggml_dyn_tallocr_new(alignment, max_size);
++            snprintf(galloc->buf_tallocs[i]->dbg_name, sizeof(galloc->buf_tallocs[i]->dbg_name), "%s", ggml_backend_buft_name(bufts[i]));
+         }
+     }
+     galloc->n_buffers = n_bufs;

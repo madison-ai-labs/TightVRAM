@@ -1,0 +1,4 @@
+2026-11-06T00:12:43+01:00 1-none start avail=30301 swap=93 pswpout=562899 governor=powersave
+2026-11-06T00:12:56+01:00 1-none bereit nach 12.3 s, avail=9132 swap=93 pswpout=562913
+2026-11-06T00:13:03+01:00 1-none 1-interaktiv zeile=234
+2026-11-06T00:13:37+01:00 1-none ABBRUCH in 1-interaktiv: Swap-Out seit Ladeende 367 MiB

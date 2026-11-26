@@ -1,0 +1,10 @@
+2026-11-06T00:15:17+01:00 1-none start avail=30188 swap=93 pswpout=678265 governor=powersave
+2026-11-06T00:15:30+01:00 1-none bereit nach 13.2 s, avail=9155 swap=291 pswpout=710012
+2026-11-06T00:15:37+01:00 1-none 1-interaktiv zeile=234
+2026-11-06T00:15:59+01:00 1-none 2-agent-kalt zeile=424
+2026-11-06T00:16:32+01:00 1-none 3-dokument zeile=605
+2026-11-06T00:17:51+01:00 1-none 4-agent-warm zeile=795
+2026-11-06T00:18:13+01:00 1-none 5-agent-neu zeile=984
+2026-11-06T00:18:47+01:00 1-none 6-interaktiv zeile=1188
+2026-11-06T00:19:05+01:00 1-none 7-agent-wieder zeile=1430
+2026-11-06T00:19:31+01:00 1-none fertig zeile=1621 avail=5978 swap=551 pswpout=759316 anon=3457 shm=17707 hwm=22946

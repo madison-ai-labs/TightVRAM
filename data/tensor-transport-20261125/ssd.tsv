@@ -1,0 +1,16 @@
+ssd	block_kib=256	threads=1	bytes=1073741824	sek=0.448	gbs=2.397
+ssd	block_kib=256	threads=2	bytes=1073741824	sek=0.452	gbs=2.376
+ssd	block_kib=256	threads=4	bytes=1073741824	sek=0.401	gbs=2.679
+ssd	block_kib=256	threads=8	bytes=1073741824	sek=0.426	gbs=2.521
+ssd	block_kib=1024	threads=1	bytes=1073741824	sek=0.367	gbs=2.923
+ssd	block_kib=1024	threads=2	bytes=1073741824	sek=0.308	gbs=3.484
+ssd	block_kib=1024	threads=4	bytes=1073741824	sek=0.310	gbs=3.465
+ssd	block_kib=1024	threads=8	bytes=1073741824	sek=0.307	gbs=3.493
+ssd	block_kib=4096	threads=1	bytes=1073741824	sek=0.347	gbs=3.091
+ssd	block_kib=4096	threads=2	bytes=1073741824	sek=0.300	gbs=3.583
+ssd	block_kib=4096	threads=4	bytes=1073741824	sek=0.425	gbs=2.524
+ssd	block_kib=4096	threads=8	bytes=1073741824	sek=0.440	gbs=2.438
+ssd	block_kib=16384	threads=1	bytes=1073741824	sek=0.329	gbs=3.262
+ssd	block_kib=16384	threads=2	bytes=1073741824	sek=0.383	gbs=2.802
+ssd	block_kib=16384	threads=4	bytes=1073741824	sek=0.447	gbs=2.403
+ssd	block_kib=16384	threads=8	bytes=1073741824	sek=0.481	gbs=2.231

@@ -1,0 +1,4 @@
+2026-11-05T20:46:42+01:00
+powersave
+balance_performance
+      2 	Configured Memory Speed: 3000 MT/s

@@ -1,0 +1,1 @@
+threads=10 copy=20.5 GB/s triad=23.2 GB/s (check 118097.0)

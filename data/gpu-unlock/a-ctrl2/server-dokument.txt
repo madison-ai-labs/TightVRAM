@@ -1,0 +1,5 @@
+# a-ctrl2  n_ctx=131072  → ~/bench/gpu-unlock/a-ctrl2/server-dokument.jsonl
+dokument    ctx  16000  prompt_n 15273  prefill 12.2 s (1256 t/s)  wall 17.4 s  VRAM-Spitze 7105 MiB  ok
+dokument    ctx  64000  prompt_n 63988  prefill 52.3 s (1223 t/s)  wall 59.4 s  VRAM-Spitze 7105 MiB  ok
+dokument    ctx 115000  prompt_n 114690  prefill 101.9 s (1125 t/s)  wall 109.4 s  VRAM-Spitze 7107 MiB  ok
+# 3 Requests in 1 Durchläufen, 0 Fehler

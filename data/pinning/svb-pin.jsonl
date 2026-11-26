@@ -1,0 +1,16 @@
+{"runde": 0, "art": "text", "n": 16384, "wall": 15.495643854141235, "prompt_n": 16384, "cache_n": 0, "pp_tps": 1406.7345872881644, "predicted_n": 128, "tg_tps": 33.04730500528757, "n_vocab": 248320}
+{"runde": 0, "art": "zufall", "n": 16384, "wall": 14.643528938293457, "prompt_n": 16384, "cache_n": 0, "pp_tps": 1502.6539947493322, "predicted_n": 128, "tg_tps": 35.04637435598838, "n_vocab": 248320}
+{"runde": 0, "art": "text", "n": 32, "wall": 3.951612710952759, "prompt_n": 32, "cache_n": 0, "pp_tps": 101.72648925990799, "predicted_n": 128, "tg_tps": 35.99491649746222, "n_vocab": 248320}
+{"runde": 0, "art": "zufall", "n": 32, "wall": 3.889498710632324, "prompt_n": 32, "cache_n": 0, "pp_tps": 96.58686177212745, "predicted_n": 128, "tg_tps": 35.90728230785999, "n_vocab": 248320}
+{"runde": 1, "art": "zufall", "n": 16384, "wall": 14.655722618103027, "prompt_n": 16384, "cache_n": 0, "pp_tps": 1508.955601762818, "predicted_n": 128, "tg_tps": 33.70213732586013, "n_vocab": 248320}
+{"runde": 1, "art": "text", "n": 16384, "wall": 15.458052635192871, "prompt_n": 16384, "cache_n": 0, "pp_tps": 1416.0819336156278, "predicted_n": 128, "tg_tps": 33.710626916794205, "n_vocab": 248320}
+{"runde": 1, "art": "zufall", "n": 32, "wall": 4.04782772064209, "prompt_n": 32, "cache_n": 0, "pp_tps": 97.27685601201368, "predicted_n": 128, "tg_tps": 35.2414008207084, "n_vocab": 248320}
+{"runde": 1, "art": "text", "n": 32, "wall": 3.9773097038269043, "prompt_n": 32, "cache_n": 0, "pp_tps": 100.8375821668736, "predicted_n": 128, "tg_tps": 34.903332883529224, "n_vocab": 248320}
+{"runde": 0, "art": "text", "n": 16384, "wall": 15.315935611724854, "prompt_n": 16384, "cache_n": 0, "pp_tps": 1417.5179575490401, "predicted_n": 128, "tg_tps": 33.849967349440945, "n_vocab": 248320}
+{"runde": 0, "art": "zufall", "n": 16384, "wall": 14.86694598197937, "prompt_n": 16384, "cache_n": 0, "pp_tps": 1511.0932636174323, "predicted_n": 128, "tg_tps": 32.49726651929454, "n_vocab": 248320}
+{"runde": 0, "art": "text", "n": 32, "wall": 4.190656900405884, "prompt_n": 32, "cache_n": 0, "pp_tps": 105.30784444715027, "predicted_n": 128, "tg_tps": 33.616274723843624, "n_vocab": 248320}
+{"runde": 0, "art": "zufall", "n": 32, "wall": 4.034332990646362, "prompt_n": 32, "cache_n": 0, "pp_tps": 96.70770699982472, "predicted_n": 128, "tg_tps": 34.477301040861576, "n_vocab": 248320}
+{"runde": 1, "art": "zufall", "n": 16384, "wall": 14.48359489440918, "prompt_n": 16384, "cache_n": 0, "pp_tps": 1518.0600408312193, "predicted_n": 128, "tg_tps": 34.67019228853025, "n_vocab": 248320}
+{"runde": 1, "art": "text", "n": 16384, "wall": 15.208791017532349, "prompt_n": 16384, "cache_n": 0, "pp_tps": 1426.5915302919523, "predicted_n": 128, "tg_tps": 35.244657589826005, "n_vocab": 248320}
+{"runde": 1, "art": "zufall", "n": 32, "wall": 4.027871370315552, "prompt_n": 32, "cache_n": 0, "pp_tps": 97.15104558812814, "predicted_n": 128, "tg_tps": 35.44318917258014, "n_vocab": 248320}
+{"runde": 1, "art": "text", "n": 32, "wall": 3.958209991455078, "prompt_n": 32, "cache_n": 0, "pp_tps": 103.21215581165072, "predicted_n": 128, "tg_tps": 35.015994313623096, "n_vocab": 248320}

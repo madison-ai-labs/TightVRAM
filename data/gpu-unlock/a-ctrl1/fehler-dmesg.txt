@@ -1,0 +1,8 @@
+[    0.310963] acpi PNP0A08:00: _OSC: OS now controls [AER PCIeCapability LTR DPC]
+[    0.408097] pcieport 0000:00:01.0: AER: enabled with IRQ 121
+[    0.408409] pcieport 0000:00:1b.2: AER: enabled with IRQ 123
+[    0.408674] pcieport 0000:00:1b.3: AER: enabled with IRQ 124
+[    0.408956] pcieport 0000:00:1b.4: AER: enabled with IRQ 125
+[    0.409279] pcieport 0000:00:1c.4: AER: enabled with IRQ 127
+[    0.409550] pcieport 0000:00:1d.0: AER: enabled with IRQ 128
+[    0.451717] pcieport 0000:00:1c.4: AER: Correctable error message received from 0000:00:1c.4

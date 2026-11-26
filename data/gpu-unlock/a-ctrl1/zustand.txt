@@ -1,0 +1,7 @@
+BOOT_IMAGE=/vmlinuz-7.0.0-42-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro crashkernel=2G-4G:320M,4G-32G:512M,32G-64G:1024M,64G-128G:2048M,128G-:4096M nmi_watchdog=1 hardlockup_panic=1 softlockup_panic=1 panic=10
+7.0.0-42-generic
+ 09:09:19 up 0 min,  1 user,  load average: 0.18, 0.06, 0.02
+595.91.07, 94.04.3A.40.DB, 270.00 W, 0x0000000000000001, 36
+[    0.872067] gpu_unlock: loading out-of-tree module taints kernel.
+[    0.872072] gpu_unlock: module verification failed: signature and/or required key missing - tainting kernel
+[    5.558923] NVRM: loading NVIDIA UNIX Open Kernel Module for x86_64  595.91.07  Release Build  (dvs-builder@U22-I3-B08-02-2)  Wed Jul 29 03:01:16 UTC 2026

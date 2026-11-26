@@ -1,0 +1,12 @@
+text 16384 pp 1408  tg 30.8  prompt_n 16384 cache_n 0
+zufall 16384 pp 1506  tg 32.0  prompt_n 16384 cache_n 0
+text 32 pp 99  tg 30.8  prompt_n 32 cache_n 0
+zufall 32 pp 96  tg 31.1  prompt_n 32 cache_n 0
+zufall 16384 pp 1514  tg 32.2  prompt_n 16384 cache_n 0
+text 16384 pp 1417  tg 32.0  prompt_n 16384 cache_n 0
+zufall 32 pp 98  tg 33.0  prompt_n 32 cache_n 0
+text 32 pp 103  tg 32.8  prompt_n 32 cache_n 0
+text 16384 pp 1416  tg 31.8  prompt_n 16384 cache_n 0
+zufall 16384 pp 1503  tg 31.6  prompt_n 16384 cache_n 0
+text 32 pp 103  tg 30.4  prompt_n 32 cache_n 0
+zufall 32 pp 94  tg 31.7  prompt_n 32 cache_n 0

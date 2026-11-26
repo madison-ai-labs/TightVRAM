@@ -1,0 +1,29 @@
+# 1-dio_kalt-1-agent-kalt  n_ctx=131072  → ~/bench/loadmode/dio-lang/1-dio_kalt.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    12.9   10.49     15216        0    1454   80    32.3
+               2     3.7    2.01      1323    15295     670   55    32.4
+               3     4.1    2.00      1369    16672     698   68    31.5
+               4     3.9    1.97      1245    18108     644   62    32.4
+               5     3.8    2.07      1406    19414     693   54    31.2
+               6     3.4    2.33      1488    20873     725   40    30.3
+            gesamt (kalt): 31.8 s
+# 6 Requests in 1 Durchläufen, 0 Fehler
+# 1-dio_kalt-2-dokument-64k  n_ctx=131072  → ~/bench/loadmode/dio-lang/1-dio_kalt.jsonl
+dokument    ctx  64000  prompt_n 63786  prefill 44.7 s (1428 t/s)  wall 51.0 s  VRAM-Spitze 7141 MiB  ok
+# 1 Requests in 1 Durchläufen, 0 Fehler
+# 1-dio_kalt-3-dokument-115k  n_ctx=131072  → ~/bench/loadmode/dio-lang/1-dio_kalt.jsonl
+dokument    ctx 115000  prompt_n 114668  prefill 89.8 s (1276 t/s)  wall 93.5 s  VRAM-Spitze 7143 MiB  ok
+# 1 Requests in 1 Durchläufen, 0 Fehler
+# 1-dio_kalt-4-agent-wieder  n_ctx=131072  → ~/bench/loadmode/dio-lang/1-dio_kalt.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    13.5   11.10     15216        0    1464   80    33.2
+               2     3.7    2.01      1323    15295     669   55    31.9
+               3     4.1    2.00      1369    16672     697   68    31.4
+               4     3.9    1.97      1245    18108     643   62    30.9
+               5     3.8    2.07      1406    19414     691   54    30.6
+               6     3.4    2.33      1488    20873     723   40    30.7
+            gesamt (kalt): 32.4 s
+# 6 Requests in 1 Durchläufen, 0 Fehler
+# 1-dio_kalt-5-interaktiv  n_ctx=131072  → ~/bench/loadmode/dio-lang/1-dio_kalt.jsonl
+interaktiv  n=5  TTFT median 0.61 s  gesamt median 3.17 s  tg median 35.2 t/s  fehler 0
+# 5 Requests in 1 Durchläufen, 0 Fehler

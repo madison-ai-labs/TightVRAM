@@ -1,0 +1,18 @@
+# Je Schritt und Variante, Spanne über die Instanzen: Wandzeit-Summe, tg (Summe Token / Summe Zeit), TTFT med, Draft angenommen/erzeugt
+
+## 1-interaktiv
+dio_kalt_moe512        n=1 wall   35.90 [35.90–35.90] tg  16.73 [16.73–16.73] ttft  0.62 [0.62–0.62] Token [543] Draft 0/0 Fehler/ungültig 0
+
+## 2-agent-kalt
+dio_kalt_moe512        n=1 wall   45.63 [45.63–45.63] tg  16.37 [16.37–16.37] ttft  2.03 [2.03–2.03] Token [409] Draft 0/0 Fehler/ungültig 0
+
+# Ausgabe gleich? Volle Antwort (sha256) je Request
+11 Requests, 0 mit abweichendem Text
+
+# Speicher und Logs je Instanz
+1-dio_kalt_moe512          VRAM max 7649 anon max 2425 avail min 6973 swap-out 0.0 MiB PSI full 0 ms Checkpoints 23 (1445 MiB)
+    impl: MoE cache budget is too small for 1 layers, they are not cached
+    impl:      CUDA0 MoE cache size =   493.84 MiB for 18760.00 MiB of host experts
+    llama_moe_cache: ubatch <= 8: hits = 4820, misses = 296941, hit rate = 1.60%, uploaded = 540586.09 MiB
+    llama_moe_cache: ubatch  > 8: hits = 0, misses = 8495, hit rate = 0.00%, uploaded = 15397.19 MiB
+    llama_moe_cache: large batches: 8589 experts copied from the cache, 5205.39 MiB

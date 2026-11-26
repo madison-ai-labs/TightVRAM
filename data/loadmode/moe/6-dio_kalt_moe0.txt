@@ -1,0 +1,13 @@
+# 6-dio_kalt_moe0-1-interaktiv  n_ctx=131072  → ~/bench/loadmode/moe/6-dio_kalt_moe0.jsonl
+interaktiv  n=5  TTFT median 0.59 s  gesamt median 2.95 s  tg median 35.8 t/s  fehler 0
+# 5 Requests in 1 Durchläufen, 0 Fehler
+# 6-dio_kalt_moe0-2-agent-kalt  n_ctx=131072  → ~/bench/loadmode/moe/6-dio_kalt_moe0.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    12.7   10.45     15216        0    1462   80    34.8
+               2     3.7    2.01      1323    15295     670   55    32.8
+               3     4.0    2.00      1369    16672     696   68    34.0
+               4     3.8    1.98      1245    18108     642   62    33.5
+               5     3.7    2.08      1406    19414     690   54    32.1
+               6     3.3    2.33      1488    20873     723   40    32.0
+            gesamt (kalt): 31.2 s
+# 6 Requests in 1 Durchläufen, 0 Fehler

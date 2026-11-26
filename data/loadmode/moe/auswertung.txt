@@ -1,0 +1,62 @@
+# Je Schritt und Variante, Spanne über die Instanzen: Wandzeit-Summe, tg (Summe Token / Summe Zeit), TTFT med, Draft angenommen/erzeugt
+
+## 1-interaktiv
+dio_kalt_moe0          n=3 wall   17.42 [17.38–17.46] tg  36.29 [36.20–36.42] ttft  0.48 [0.48–0.49] Token [541, 541, 541] Draft 0/0 Fehler/ungültig 0
+dio_kalt_moe128        n=3 wall   34.36 [34.35–34.37] tg  17.20 [17.20–17.21] ttft  0.53 [0.53–0.53] Token [543, 543, 543] Draft 0/0 Fehler/ungültig 0
+dio_kalt_moe256        n=3 wall   35.67 [35.66–35.68] tg  16.45 [16.45–16.45] ttft  0.53 [0.53–0.54] Token [541, 541, 541] Draft 0/0 Fehler/ungültig 0
+
+## 2-agent-kalt
+dio_kalt_moe0          n=3 wall   31.16 [31.03–31.20] tg  33.93 [33.93–34.41] ttft  2.01 [2.01–2.01] Token [359, 359, 359] Draft 0/0 Fehler/ungültig 0
+dio_kalt_moe128        n=3 wall   46.92 [46.92–46.96] tg  16.93 [16.93–16.94] ttft  2.05 [2.05–2.06] Token [441, 441, 441] Draft 0/0 Fehler/ungültig 0
+dio_kalt_moe256        n=3 wall   46.01 [45.99–46.01] tg  16.23 [16.23–16.23] ttft  2.04 [2.04–2.05] Token [409, 409, 409] Draft 0/0 Fehler/ungültig 0
+
+# Ausgabe gleich? Volle Antwort (sha256) je Request
+11 Requests, 10 mit abweichendem Text
+  ('1-interaktiv', 0) {'dio_kalt_moe0': ['dec57ad8f6e9'], 'dio_kalt_moe128': ['fb6e84692c4e'], 'dio_kalt_moe256': ['afcf2454acee']}
+  ('1-interaktiv', 1) {'dio_kalt_moe0': ['7990e4f424dc'], 'dio_kalt_moe128': ['616aca98666d'], 'dio_kalt_moe256': ['616aca98666d']}
+  ('1-interaktiv', 3) {'dio_kalt_moe0': ['2e1c7132297e'], 'dio_kalt_moe128': ['2e1c7132297e'], 'dio_kalt_moe256': ['ad1fa169d36b']}
+  ('1-interaktiv', 4) {'dio_kalt_moe0': ['b55b1c33befa'], 'dio_kalt_moe128': ['485866d71f4b'], 'dio_kalt_moe256': ['485866d71f4b']}
+  ('2-agent-kalt', 0) {'dio_kalt_moe0': ['0793082f8852'], 'dio_kalt_moe128': ['203123039c42'], 'dio_kalt_moe256': ['203123039c42']}
+  ('2-agent-kalt', 1) {'dio_kalt_moe0': ['bd47072c07b2'], 'dio_kalt_moe128': ['29b5ad28c540'], 'dio_kalt_moe256': ['29b5ad28c540']}
+  ('2-agent-kalt', 2) {'dio_kalt_moe0': ['2c732e0437f8'], 'dio_kalt_moe128': ['4467dd71e00d'], 'dio_kalt_moe256': ['3f03d221afcd']}
+  ('2-agent-kalt', 3) {'dio_kalt_moe0': ['493a6bcb44a7'], 'dio_kalt_moe128': ['1adb60085451'], 'dio_kalt_moe256': ['8a9194336c41']}
+  ('2-agent-kalt', 4) {'dio_kalt_moe0': ['ee5c098b1722'], 'dio_kalt_moe128': ['84f6a6fc26f6'], 'dio_kalt_moe256': ['33d5da1c8ef6']}
+  ('2-agent-kalt', 5) {'dio_kalt_moe0': ['e3b0c44298fc'], 'dio_kalt_moe128': ['32570a79799c'], 'dio_kalt_moe256': ['9ab8242eeadc']}
+
+# Speicher und Logs je Instanz
+1-dio_kalt_moe0            VRAM max 7141 anon max 2413 avail min 7014 swap-out 0.0 MiB PSI full 0 ms Checkpoints 23 (1445 MiB)
+2-dio_kalt_moe128          VRAM max 7269 anon max 2427 avail min 7006 swap-out 0.0 MiB PSI full 0 ms Checkpoints 23 (1445 MiB)
+    impl: MoE cache budget is too small for 1 layers, they are not cached
+    impl: MoE cache budget is too small for 3 layers, they are not cached
+    impl:      CUDA0 MoE cache size =   112.38 MiB for 18760.00 MiB of host experts
+    llama_moe_cache: ubatch <= 8: hits = 0, misses = 288248, hit rate = 0.00%, uploaded = 522449.50 MiB
+    llama_moe_cache: large batches: 2055 experts copied from the cache, 1241.56 MiB
+3-dio_kalt_moe256          VRAM max 7403 anon max 2426 avail min 6959 swap-out 0.0 MiB PSI full 0 ms Checkpoints 23 (1445 MiB)
+    impl: MoE cache budget is too small for 1 layers, they are not cached
+    impl:      CUDA0 MoE cache size =   246.02 MiB for 18760.00 MiB of host experts
+    llama_moe_cache: ubatch <= 8: hits = 211, misses = 300876, hit rate = 0.07%, uploaded = 548316.60 MiB
+    llama_moe_cache: large batches: 4131 experts copied from the cache, 2497.14 MiB
+4-dio_kalt_moe128          VRAM max 7269 anon max 2427 avail min 6977 swap-out 0.0 MiB PSI full 0 ms Checkpoints 23 (1445 MiB)
+    impl: MoE cache budget is too small for 1 layers, they are not cached
+    impl: MoE cache budget is too small for 3 layers, they are not cached
+    impl:      CUDA0 MoE cache size =   112.38 MiB for 18760.00 MiB of host experts
+    llama_moe_cache: ubatch <= 8: hits = 0, misses = 288248, hit rate = 0.00%, uploaded = 522449.50 MiB
+    llama_moe_cache: large batches: 2055 experts copied from the cache, 1241.56 MiB
+5-dio_kalt_moe256          VRAM max 7403 anon max 2426 avail min 6985 swap-out 0.0 MiB PSI full 0 ms Checkpoints 23 (1445 MiB)
+    impl: MoE cache budget is too small for 1 layers, they are not cached
+    impl:      CUDA0 MoE cache size =   246.02 MiB for 18760.00 MiB of host experts
+    llama_moe_cache: ubatch <= 8: hits = 211, misses = 300876, hit rate = 0.07%, uploaded = 548316.60 MiB
+    llama_moe_cache: large batches: 4131 experts copied from the cache, 2497.14 MiB
+6-dio_kalt_moe0            VRAM max 7141 anon max 2413 avail min 7007 swap-out 0.0 MiB PSI full 0 ms Checkpoints 23 (1445 MiB)
+7-dio_kalt_moe256          VRAM max 7403 anon max 2426 avail min 6985 swap-out 0.0 MiB PSI full 0 ms Checkpoints 23 (1445 MiB)
+    impl: MoE cache budget is too small for 1 layers, they are not cached
+    impl:      CUDA0 MoE cache size =   246.02 MiB for 18760.00 MiB of host experts
+    llama_moe_cache: ubatch <= 8: hits = 211, misses = 300876, hit rate = 0.07%, uploaded = 548316.60 MiB
+    llama_moe_cache: large batches: 4131 experts copied from the cache, 2497.14 MiB
+8-dio_kalt_moe0            VRAM max 7141 anon max 2413 avail min 6974 swap-out 0.0 MiB PSI full 0 ms Checkpoints 23 (1445 MiB)
+9-dio_kalt_moe128          VRAM max 7269 anon max 2427 avail min 6992 swap-out 0.0 MiB PSI full 0 ms Checkpoints 23 (1445 MiB)
+    impl: MoE cache budget is too small for 1 layers, they are not cached
+    impl: MoE cache budget is too small for 3 layers, they are not cached
+    impl:      CUDA0 MoE cache size =   112.38 MiB for 18760.00 MiB of host experts
+    llama_moe_cache: ubatch <= 8: hits = 0, misses = 288248, hit rate = 0.00%, uploaded = 522449.50 MiB
+    llama_moe_cache: large batches: 2055 experts copied from the cache, 1241.56 MiB

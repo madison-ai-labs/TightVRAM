@@ -1,0 +1,30 @@
+2026-11-06T02:46:13+01:00 1-none_warm start cache=warm cat=1 gguf_cache=21324 avail=30312 swap=88 pswpout=1281639 extra= governor=powersave
+2026-11-06T02:46:25+01:00 1-none_warm bereit nach 12.4 s, avail=9106 swap=88 pswpout=1281735 gguf_cache=8747 rssshmem=20439 free=386
+2026-11-06T02:46:32+01:00 1-none_warm 1-interaktiv zeile=234
+2026-11-06T02:46:50+01:00 1-none_warm 2-agent-kalt zeile=423
+2026-11-06T02:47:21+01:00 1-none_warm 3-dokument zeile=604
+2026-11-06T02:48:39+01:00 1-none_warm 4-agent-warm zeile=793
+2026-11-06T02:49:01+01:00 1-none_warm 5-agent-neu zeile=982
+2026-11-06T02:49:34+01:00 1-none_warm 6-interaktiv zeile=1185
+2026-11-06T02:49:52+01:00 1-none_warm 7-agent-wieder zeile=1427
+2026-11-06T02:50:17+01:00 1-none_warm fertig zeile=1618 avail=5618 swap=88 pswpout=1281735 anon=3815 shm=20439 hwm=26226
+2026-11-06T02:50:31+01:00 2-none_warm start cache=warm cat=1 gguf_cache=21324 avail=30387 swap=88 pswpout=1281735 extra= governor=powersave
+2026-11-06T02:50:43+01:00 2-none_warm bereit nach 12.3 s, avail=9101 swap=88 pswpout=1281735 gguf_cache=8780 rssshmem=20439 free=357
+2026-11-06T02:50:51+01:00 2-none_warm 1-interaktiv zeile=234
+2026-11-06T02:51:10+01:00 2-none_warm 2-agent-kalt zeile=424
+2026-11-06T02:51:42+01:00 2-none_warm 3-dokument zeile=605
+2026-11-06T02:53:01+01:00 2-none_warm 4-agent-warm zeile=795
+2026-11-06T02:53:24+01:00 2-none_warm 5-agent-neu zeile=984
+2026-11-06T02:53:58+01:00 2-none_warm 6-interaktiv zeile=1188
+2026-11-06T02:54:17+01:00 2-none_warm 7-agent-wieder zeile=1430
+2026-11-06T02:54:43+01:00 2-none_warm fertig zeile=1621 avail=5595 swap=88 pswpout=1281735 anon=3815 shm=20439 hwm=26225
+2026-11-06T02:54:57+01:00 3-none_warm start cache=warm cat=1 gguf_cache=21324 avail=30285 swap=88 pswpout=1281735 extra= governor=powersave
+2026-11-06T02:55:10+01:00 3-none_warm bereit nach 12.6 s, avail=9146 swap=93 pswpout=1282767 gguf_cache=8928 rssshmem=20439 free=347
+2026-11-06T02:55:17+01:00 3-none_warm 1-interaktiv zeile=234
+2026-11-06T02:55:35+01:00 3-none_warm 2-agent-kalt zeile=424
+2026-11-06T02:56:07+01:00 3-none_warm 3-dokument zeile=605
+2026-11-06T02:57:26+01:00 3-none_warm 4-agent-warm zeile=795
+2026-11-06T02:57:48+01:00 3-none_warm 5-agent-neu zeile=984
+2026-11-06T02:58:22+01:00 3-none_warm 6-interaktiv zeile=1188
+2026-11-06T02:58:40+01:00 3-none_warm 7-agent-wieder zeile=1430
+2026-11-06T02:59:06+01:00 3-none_warm fertig zeile=1621 avail=5576 swap=93 pswpout=1282767 anon=3815 shm=20439 hwm=26185

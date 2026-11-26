@@ -1,0 +1,13 @@
+# 12-none_evict-1-interaktiv  n_ctx=131072  → ~/bench/loadmode/reclaim/12-none_evict.jsonl
+interaktiv  n=5  TTFT median 0.59 s  gesamt median 2.91 s  tg median 36.2 t/s  fehler 0
+# 5 Requests in 1 Durchläufen, 0 Fehler
+# 12-none_evict-2-agent-kalt  n_ctx=131072  → ~/bench/loadmode/reclaim/12-none_evict.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    12.7   10.42     15216        0    1467   80    35.0
+               2     3.5    2.00      1323    15295     671   55    34.9
+               3     4.0    1.99      1369    16672     699   68    33.2
+               4     3.8    1.97      1245    18108     645   62    32.5
+               5     3.7    2.07      1406    19414     693   54    33.3
+               6     3.3    2.32      1488    20873     724   40    33.4
+            gesamt (kalt): 31.0 s
+# 6 Requests in 1 Durchläufen, 0 Fehler

@@ -1,0 +1,29 @@
+# 2-none-1-agent-kalt  n_ctx=131072  → ~/bench/loadmode/langkontext/2-none.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    12.8   10.53     15216        0    1449   80    35.0
+               2     3.6    2.01      1323    15295     670   55    33.9
+               3     4.0    2.00      1369    16672     697   68    33.4
+               4     3.8    1.97      1245    18108     644   62    33.5
+               5     3.7    2.07      1406    19414     692   54    33.2
+               6     3.3    2.32      1488    20873     724   40    32.9
+            gesamt (kalt): 31.1 s
+# 6 Requests in 1 Durchläufen, 0 Fehler
+# 2-none-2-dokument-64k  n_ctx=131072  → ~/bench/loadmode/langkontext/2-none.jsonl
+dokument    ctx  64000  prompt_n 63786  prefill 44.7 s (1426 t/s)  wall 51.1 s  VRAM-Spitze 7141 MiB  ok
+# 1 Requests in 1 Durchläufen, 0 Fehler
+# 2-none-3-dokument-115k  n_ctx=131072  → ~/bench/loadmode/langkontext/2-none.jsonl
+dokument    ctx 115000  prompt_n 114668  prefill 89.9 s (1276 t/s)  wall 93.4 s  VRAM-Spitze 7143 MiB  ok
+# 1 Requests in 1 Durchläufen, 0 Fehler
+# 2-none-4-agent-wieder  n_ctx=131072  → ~/bench/loadmode/langkontext/2-none.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    13.4   11.11     15216        0    1463   80    34.6
+               2     3.6    2.01      1323    15295     669   55    32.9
+               3     4.0    2.00      1369    16672     697   68    33.6
+               4     3.8    1.97      1245    18108     644   62    33.4
+               5     3.7    2.07      1406    19414     692   54    32.3
+               6     3.3    2.32      1488    20873     723   40    32.3
+            gesamt (kalt): 31.9 s
+# 6 Requests in 1 Durchläufen, 0 Fehler
+# 2-none-5-interaktiv  n_ctx=131072  → ~/bench/loadmode/langkontext/2-none.jsonl
+interaktiv  n=5  TTFT median 0.60 s  gesamt median 3.05 s  tg median 36.0 t/s  fehler 0
+# 5 Requests in 1 Durchläufen, 0 Fehler

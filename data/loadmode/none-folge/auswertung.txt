@@ -1,0 +1,7 @@
+run                       cat gguf_st gguf_ber free_ber laden shm_ber so_lad so_nach psi_full ttft1 agent  avail_min dz_rss/sw  host cpu_map afile ifile abbruch
+1-none_warm               1     21324     8747      386  12.4   20439    0.4     0.0        6  0.59  31.1       3878   20439/0    j       n    97  8906 
+2-none_warm               1     21324     8780      357  12.3   20439    0.0     0.0       12  0.59  31.9       3807   20439/0    j       n    99  8943 
+3-none_warm               1     21324     8928      347  12.6   20439    4.0     0.0        2  0.63  31.6       3823   20439/0    j       n    66  9016 
+
+variante          n bursts abbr  laden med [spanne]   shm_ber min   so_nach max/med  psi_full max  ttft1 med/max    agent med [spanne]   avail_min
+none_warm          3   0    0    12.4 [12.3–12.6]     20439     0.0/  0.0        12   0.59/0.63    31.6 [31.1–31.9]  3807

@@ -1,0 +1,35 @@
+{
+  "art": "kontrollmessung",
+  "werkzeug": "tool-test.py",
+  "tool_test_sha256": "a8f4ffd66d3cf50e815c59d8e2ef81e0ccdcd3cfdf4d07e9cbfcc6df3fe156b8",
+  "tool_test": "~/bench/kontrolle-tools/tool-test.py",
+  "profil": "coding",
+  "profile_hash_erwartet": "31dd2a7cf4cc",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "think": true,
+  "port": 8080,
+  "build": "version: 0.9.0-dev (build 12156, commit 45b6604b2)",
+  "exe": "/opt/llama.cpp/b12156-45b6604b2/llama-server",
+  "beginn": "2026-11-13T10:13:26+01:00",
+  "ende": "2026-11-13T10:30:25+01:00",
+  "vorher": {
+    "profil": "coding",
+    "profile_hash": "31dd2a7cf4cc67147607311873284e38742f668b1b15f762bf48ae6db56abb30",
+    "pid": 21796,
+    "seit": "Fri 2026-11-13 10:10:20 CET",
+    "alias": "qwen3.6-35b-a3b"
+  },
+  "nachher": {
+    "profil": "coding",
+    "profile_hash": "31dd2a7cf4cc67147607311873284e38742f668b1b15f762bf48ae6db56abb30",
+    "pid": 21796,
+    "seit": "Fri 2026-11-13 10:10:20 CET",
+    "alias": "qwen3.6-35b-a3b"
+  },
+  "fertig": true,
+  "grund": null
+}

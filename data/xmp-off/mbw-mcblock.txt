@@ -1,0 +1,6 @@
+0	Method: MCBLOCK	Elapsed: 0.54378	MiB: 4096.00000	Copy: 7532.430 MiB/s
+1	Method: MCBLOCK	Elapsed: 0.55124	MiB: 4096.00000	Copy: 7430.534 MiB/s
+2	Method: MCBLOCK	Elapsed: 0.55026	MiB: 4096.00000	Copy: 7443.808 MiB/s
+3	Method: MCBLOCK	Elapsed: 0.55066	MiB: 4096.00000	Copy: 7438.306 MiB/s
+4	Method: MCBLOCK	Elapsed: 0.54737	MiB: 4096.00000	Copy: 7483.096 MiB/s
+AVG	Method: MCBLOCK	Elapsed: 0.54866	MiB: 4096.00000	Copy: 7465.442 MiB/s

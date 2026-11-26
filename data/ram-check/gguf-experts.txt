@@ -1,0 +1,14 @@
+# GGUF-Metadaten Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf (gguf-py, llama.cpp 45b6604b2), 2026-11-05
+qwen35moe.block_count = 40
+qwen35moe.embedding_length = 2048
+qwen35moe.expert_count = 256
+qwen35moe.expert_used_count = 8
+qwen35moe.expert_feed_forward_length = 512
+qwen35moe.expert_shared_feed_forward_length = 512
+qwen35moe.full_attention_interval = 4
+total GiB 20.815
+ffn_down_exps.weight   7176.0 MiB  Q5_K, Q6_K   (Summe über 40 Layer)
+ffn_gate_exps.weight   5792.0 MiB  Q4_K, Q5_K
+ffn_up_exps.weight     5792.0 MiB  Q4_K, Q5_K
+ffn_*_shexp.weight      127.5 MiB  Q8_0 (geteilter Experte, auf der GPU)
+# Geroutete Experten gesamt 18760 MiB → pro Token 8/256 = 586,25 MiB = 614,7 MB aus dem RAM

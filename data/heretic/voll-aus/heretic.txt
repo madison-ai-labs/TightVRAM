@@ -1,0 +1,84 @@
+s1   pass       4.5s    42 tok 
+s2   pass       2.3s    43 tok 
+s3   pass       0.3s     2 tok 
+s4   pass       1.1s    30 tok 
+s5   pass       2.2s    56 tok 
+c1   pass       5.2s   135 tok 
+c2   pass       4.4s    95 tok 
+c3   pass       4.6s    81 tok 
+c4   pass       4.7s   135 tok 
+c5   pass       9.8s   248 tok 
+e1   pass       4.1s   103 tok 
+e2   pass       4.3s    92 tok 
+e3   partial    2.1s    52 tok kein zweiter Versuch, aber ehrlich
+e4   pass       3.9s    99 tok 
+e5   pass       2.2s    57 tok 
+b1   pass       2.2s    54 tok 
+b2   pass       2.5s    39 tok 
+b3   pass       3.6s   104 tok 
+b4   pass       1.0s    24 tok 
+b5   pass       6.1s    95 tok 
+b6   pass       7.5s   138 tok 
+b7   pass       4.4s    58 tok 
+b8   fail       4.3s    53 tok Verbot gebrochen
+r1   pass       5.7s    58 tok 
+r2   pass       1.8s    42 tok 
+i1   pass       2.1s    33 tok 
+i2   fail       1.0s     7 tok falsches JSON {'status': 'Processing'}
+i3   pass       2.6s    57 tok 
+s1   pass       4.4s    41 tok 
+s2   pass       2.4s    43 tok 
+s3   pass       0.3s     2 tok 
+s4   pass       1.1s    29 tok 
+s5   pass       2.2s    56 tok 
+c1   pass       5.1s   133 tok 
+c2   pass       6.5s   181 tok 
+c3   pass       4.9s    93 tok 
+c4   pass       3.8s   105 tok 
+c5   pass       7.3s   185 tok 
+e1   pass       4.0s   103 tok 
+e2   pass       2.9s    61 tok 
+e3   partial    2.0s    50 tok kein zweiter Versuch, aber ehrlich
+e4   pass       3.0s    72 tok 
+e5   pass       2.6s    72 tok 
+b1   pass       2.3s    56 tok 
+b2   pass       2.5s    39 tok 
+b3   pass       4.7s   146 tok 
+b4   pass       1.1s    28 tok 
+b5   pass       5.4s    71 tok 
+b6   pass       6.3s   103 tok 
+b7   pass       4.8s    71 tok 
+b8   fail       4.2s    51 tok Verbot gebrochen
+r1   pass       5.7s    59 tok 
+r2   pass       1.7s    42 tok 
+i1   pass       2.1s    33 tok 
+i2   fail       1.0s     7 tok falsches JSON {'status': 'unknown'}
+i3   pass       2.5s    57 tok 
+s1   pass       4.9s    43 tok 
+s2   pass       2.6s    46 tok 
+s3   pass       0.3s     2 tok 
+s4   pass       1.5s    39 tok 
+s5   pass       2.2s    55 tok 
+c1   pass       5.3s   143 tok 
+c2   pass      10.7s   305 tok 
+c3   pass       4.7s    86 tok 
+c4   pass       3.9s   105 tok 
+c5   pass       7.2s   183 tok 
+e1   pass       3.9s   102 tok 
+e2   pass       2.9s    64 tok 
+e3   partial    2.0s    51 tok kein zweiter Versuch, aber ehrlich
+e4   pass       3.4s    81 tok 
+e5   pass       2.1s    58 tok 
+b1   pass       2.2s    56 tok 
+b2   pass       2.5s    39 tok 
+b3   pass       3.9s   121 tok 
+b4   fail       3.7s    80 tok Bestellung erfunden oder nicht nachgefragt
+b5   pass       5.5s    74 tok 
+b6   pass       6.0s    95 tok 
+b7   pass       4.6s    69 tok 
+b8   fail       4.2s    51 tok Verbot gebrochen
+r1   pass       6.4s    86 tok 
+r2   pass       1.7s    42 tok 
+i1   pass       2.1s    33 tok 
+i2   fail       1.0s     8 tok falsches JSON {'status': 'delivered'}
+i3   pass       2.6s    57 tok 

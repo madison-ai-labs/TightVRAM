@@ -1,0 +1,13 @@
+# 7-dio_kalt_moe256-1-interaktiv  n_ctx=131072  → ~/bench/loadmode/moe/7-dio_kalt_moe256.jsonl
+interaktiv  n=5  TTFT median 0.65 s  gesamt median 5.99 s  tg median 16.3 t/s  fehler 0
+# 5 Requests in 1 Durchläufen, 0 Fehler
+# 7-dio_kalt_moe256-2-agent-kalt  n_ctx=131072  → ~/bench/loadmode/moe/7-dio_kalt_moe256.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    17.0   10.43     15216        0    1465  107    16.1
+               2     6.8    2.04      1323    15322     657   77    16.0
+               3     7.2    2.04      1369    16721     683   84    16.0
+               4     4.8    2.02      1245    18173     627   45    16.0
+               5     5.6    2.12      1406    19462     675   57    15.9
+               6     4.5    2.14      1488    20924     708   39    16.0
+            gesamt (kalt): 46.0 s
+# 6 Requests in 1 Durchläufen, 0 Fehler

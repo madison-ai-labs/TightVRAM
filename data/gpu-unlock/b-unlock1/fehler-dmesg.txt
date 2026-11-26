@@ -1,0 +1,7 @@
+[    0.308887] acpi PNP0A08:00: _OSC: OS now controls [AER PCIeCapability LTR DPC]
+[    0.412133] pcieport 0000:00:01.0: AER: enabled with IRQ 121
+[    0.412438] pcieport 0000:00:1b.2: AER: enabled with IRQ 123
+[    0.412703] pcieport 0000:00:1b.3: AER: enabled with IRQ 124
+[    0.412974] pcieport 0000:00:1b.4: AER: enabled with IRQ 125
+[    0.413280] pcieport 0000:00:1c.4: AER: enabled with IRQ 127
+[    0.413552] pcieport 0000:00:1d.0: AER: enabled with IRQ 128

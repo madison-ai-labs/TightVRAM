@@ -1,0 +1,6 @@
+2026-11-05T21:06:34+01:00 ausgang governor=powersave epp=balance_performance
+1-powersave gov=powersave epp=balance_performance
+2-performance gov=performance epp=performance
+3-powersave gov=powersave epp=balance_performance
+4-performance gov=performance epp=performance
+ende governor=powersave epp=balance_performance

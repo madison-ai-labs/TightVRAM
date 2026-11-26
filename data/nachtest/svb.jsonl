@@ -1,0 +1,12 @@
+{"runde": 0, "art": "text", "n": 16384, "wall": 15.763479948043823, "prompt_n": 16384, "cache_n": 0, "pp_tps": 1408.2840002726487, "predicted_n": 128, "tg_tps": 30.797009634614092, "n_vocab": 248320}
+{"runde": 0, "art": "zufall", "n": 16384, "wall": 14.967415809631348, "prompt_n": 16384, "cache_n": 0, "pp_tps": 1506.0657662812798, "predicted_n": 128, "tg_tps": 31.955457614733927, "n_vocab": 248320}
+{"runde": 0, "art": "text", "n": 32, "wall": 4.554964303970337, "prompt_n": 32, "cache_n": 0, "pp_tps": 98.97590864523633, "predicted_n": 128, "tg_tps": 30.791566311213995, "n_vocab": 248320}
+{"runde": 0, "art": "zufall", "n": 32, "wall": 4.435755252838135, "prompt_n": 32, "cache_n": 0, "pp_tps": 96.36348305809513, "predicted_n": 128, "tg_tps": 31.107391287628005, "n_vocab": 248320}
+{"runde": 1, "art": "zufall", "n": 16384, "wall": 14.796308040618896, "prompt_n": 16384, "cache_n": 0, "pp_tps": 1513.660173313351, "predicted_n": 128, "tg_tps": 32.20696040598015, "n_vocab": 248320}
+{"runde": 1, "art": "text", "n": 16384, "wall": 15.638503551483154, "prompt_n": 16384, "cache_n": 0, "pp_tps": 1416.82831256042, "predicted_n": 128, "tg_tps": 32.04773952404817, "n_vocab": 248320}
+{"runde": 1, "art": "zufall", "n": 32, "wall": 4.2884132862091064, "prompt_n": 32, "cache_n": 0, "pp_tps": 97.69053470303604, "predicted_n": 128, "tg_tps": 33.01796411233283, "n_vocab": 248320}
+{"runde": 1, "art": "text", "n": 32, "wall": 4.20084810256958, "prompt_n": 32, "cache_n": 0, "pp_tps": 102.78845814100649, "predicted_n": 128, "tg_tps": 32.82851521020072, "n_vocab": 248320}
+{"runde": 2, "art": "text", "n": 16384, "wall": 15.58098840713501, "prompt_n": 16384, "cache_n": 0, "pp_tps": 1416.3735339401449, "predicted_n": 128, "tg_tps": 31.84894671520747, "n_vocab": 248320}
+{"runde": 2, "art": "zufall", "n": 16384, "wall": 15.045461893081665, "prompt_n": 16384, "cache_n": 0, "pp_tps": 1503.030463154287, "predicted_n": 128, "tg_tps": 31.580884364229547, "n_vocab": 248320}
+{"runde": 2, "art": "text", "n": 32, "wall": 4.773550510406494, "prompt_n": 32, "cache_n": 0, "pp_tps": 103.10208395087186, "predicted_n": 128, "tg_tps": 30.4369864507478, "n_vocab": 248320}
+{"runde": 2, "art": "zufall", "n": 32, "wall": 4.377170562744141, "prompt_n": 32, "cache_n": 0, "pp_tps": 93.55439457150625, "predicted_n": 128, "tg_tps": 31.658349079415093, "n_vocab": 248320}

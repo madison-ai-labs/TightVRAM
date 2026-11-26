@@ -1,0 +1,13 @@
+# 20-dio_kalt-1-interaktiv  n_ctx=131072  → ~/bench/loadmode/reclaim/20-dio_kalt.jsonl
+interaktiv  n=5  TTFT median 0.59 s  gesamt median 2.95 s  tg median 35.8 t/s  fehler 0
+# 5 Requests in 1 Durchläufen, 0 Fehler
+# 20-dio_kalt-2-agent-kalt  n_ctx=131072  → ~/bench/loadmode/reclaim/20-dio_kalt.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    12.7   10.43     15216        0    1466   80    35.3
+               2     3.5    2.00      1323    15295     671   55    35.4
+               3     4.1    2.00      1369    16672     697   68    32.6
+               4     3.8    1.97      1245    18108     643   62    32.6
+               5     3.7    2.07      1406    19414     693   54    33.3
+               6     3.3    2.32      1488    20873     725   40    32.3
+            gesamt (kalt): 31.1 s
+# 6 Requests in 1 Durchläufen, 0 Fehler

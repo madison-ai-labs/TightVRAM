@@ -1,0 +1,2 @@
+2026-11-05T23:04:48+01:00 start dauer=27000s memtester=1024MiB server=42957
+2026-11-05T23:12:07+01:00 aufgeräumt (signal)

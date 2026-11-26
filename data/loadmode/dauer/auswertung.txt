@@ -1,0 +1,17 @@
+Proben 1618, Dauer 55.5 min
+Größe (MiB)     Start  Q1med  Q2med  Q3med  Q4med   Ende   Min   Max  Steigung/h ganz  2. Hälfte
+vram             7065   7141   7141   7141   7141   7141   7065   7141        2.8        0.0
+anon              681   4586   4640   4649   4649   4069    681   5594      416.8      -64.8
+shm             20439  20439  20439  20439  20439  20439  20439  20439        0.0        0.0
+file              179    180    180    180    180    180    179    180        0.0        0.0
+avail            8726   4792   4729   4724   4750   5244   3802   8735     -402.5       66.7
+free             8725   4808   4773   4745   4769   5262   3826   8734     -394.9       53.3
+cached          20748  20748  20710  20713  20715  20715  20701  20749      -33.1        7.7
+swap               88     88     88     88     88     88     88     88        0.0        0.0
+hwm             21300  26050  26198  26211  26212  26212  21300  26214      743.1        2.5
+Swap-Out 0.0 MiB, Swap-In 0.1 MiB, Major Faults 0, PSI some 26 ms, PSI full 26 ms
+Requests 504, Fehler 0, Tool-Calls ungültig 0, cache_n > 0 beim ersten Agent-Turn: 0 Dokumente mit Cache-Treffer
+Szenario          Viertel: tg-Median / TTFT-Median / Prefill t/s
+interaktiv   n= 210  33.9/ 0.63/    0   33.9/ 0.64/    0   33.9/ 0.64/    0   33.8/ 0.63/    0
+agent        n= 252  31.9/ 2.07/  697   31.8/ 2.09/  694   31.7/ 2.08/  696   31.8/ 2.07/  694
+dokument     n=  42  32.3/21.10/ 1501   32.4/21.11/ 1501   32.3/21.12/ 1500   32.3/21.11/ 1501

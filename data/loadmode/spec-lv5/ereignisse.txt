@@ -1,0 +1,5 @@
+2026-11-06T04:55:02+01:00 1-dio_kalt_spec start cache=kalt cat=0 gguf_cache=0 avail=30305 swap=88 pswpout=1282767 extra=--spec-type ngram-mod governor=powersave
+2026-11-06T04:55:16+01:00 1-dio_kalt_spec bereit nach 14.0 s, avail=8944 swap=88 pswpout=1282767 gguf_cache=10 rssshmem=20439 free=8933
+2026-11-06T04:55:23+01:00 1-dio_kalt_spec 1-repetitiv-json zeile=2895
+2026-11-06T04:55:38+01:00 1-dio_kalt_spec 2-agent zeile=8342
+2026-11-06T04:56:14+01:00 1-dio_kalt_spec fertig zeile=20119 avail=7472 swap=88 pswpout=1282767 anon=1885 shm=20499 hwm=22569

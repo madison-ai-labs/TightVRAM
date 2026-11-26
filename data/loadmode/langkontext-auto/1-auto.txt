@@ -1,0 +1,29 @@
+# 1-auto-1-agent-kalt  n_ctx=131072  → ~/bench/loadmode/langkontext-auto/1-auto.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    14.6   12.29     15216        0    1241   80    33.9
+               2     4.0    2.42      1323    15295     554   55    34.1
+               3     4.4    2.42      1369    16672     575   68    33.0
+               4     4.2    2.39      1245    18108     530   62    32.8
+               5     4.1    2.48      1406    19414     576   54    32.8
+               6     3.7    2.73      1488    20873     604   40    31.7
+            gesamt (kalt): 35.2 s
+# 6 Requests in 1 Durchläufen, 0 Fehler
+# 1-auto-2-dokument-64k  n_ctx=131072  → ~/bench/loadmode/langkontext-auto/1-auto.jsonl
+dokument    ctx  64000  prompt_n 63786  prefill 51.3 s (1243 t/s)  wall 57.7 s  VRAM-Spitze 7103 MiB  ok
+# 1 Requests in 1 Durchläufen, 0 Fehler
+# 1-auto-3-dokument-115k  n_ctx=131072  → ~/bench/loadmode/langkontext-auto/1-auto.jsonl
+dokument    ctx 115000  prompt_n 114668  prefill 101.3 s (1132 t/s)  wall 104.8 s  VRAM-Spitze 7105 MiB  ok
+# 1 Requests in 1 Durchläufen, 0 Fehler
+# 1-auto-4-agent-wieder  n_ctx=131072  → ~/bench/loadmode/langkontext-auto/1-auto.jsonl
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    15.2   12.93     15216        0    1246   80    34.5
+               2     4.0    2.42      1323    15295     554   55    34.9
+               3     4.4    2.41      1369    16672     576   68    33.2
+               4     4.3    2.39      1245    18108     530   62    32.3
+               5     4.1    2.48      1406    19414     576   54    32.3
+               6     3.8    2.74      1488    20873     601   40    31.7
+            gesamt (kalt): 35.8 s
+# 6 Requests in 1 Durchläufen, 0 Fehler
+# 1-auto-5-interaktiv  n_ctx=131072  → ~/bench/loadmode/langkontext-auto/1-auto.jsonl
+interaktiv  n=5  TTFT median 0.76 s  gesamt median 3.33 s  tg median 33.3 t/s  fehler 0
+# 5 Requests in 1 Durchläufen, 0 Fehler

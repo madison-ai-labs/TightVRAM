@@ -1,0 +1,14 @@
+## bereit
+andere    size     871 rss      94 swap       0 locked       0 MiB
+anon      size   49567 rss     361 swap       0 locked       0 MiB
+dev-zero  size   20439 rss   20439 swap       0 locked       0 MiB
+nvidia    size      65 rss      63 swap       0 locked       0 MiB
+gguf-page-cache 0 MiB, MemFree: 9375992 kB Active(file): 94680 kB Inactive(file): 199860 kB 
+workingset_refault_anon 455532 workingset_refault_file 263848398 pswpout 1281571 allocstall_normal 51925 allocstall_movable 1049 pgsteal_kswapd 307124094 pgsteal_direct 3204056 pgscan_anon 266357952 pgscan_file 325088740 pgsteal_anon 1572921 pgsteal_file 308755229 compact_stall 2906 swpout_zero 280914 
+## ende
+andere    size     871 rss     123 swap       0 locked       0 MiB
+anon      size   51664 rss    2407 swap       0 locked       0 MiB
+dev-zero  size   20439 rss   20439 swap       0 locked       0 MiB
+nvidia    size      65 rss      63 swap       0 locked       0 MiB
+gguf-page-cache 0 MiB, MemFree: 7221940 kB Active(file): 94736 kB Inactive(file): 206096 kB 
+workingset_refault_anon 455532 workingset_refault_file 263848421 pswpout 1281571 allocstall_normal 51925 allocstall_movable 1049 pgsteal_kswapd 307124094 pgsteal_direct 3204056 pgscan_anon 266357952 pgscan_file 325088740 pgsteal_anon 1572921 pgsteal_file 308755229 compact_stall 2906 swpout_zero 280914 

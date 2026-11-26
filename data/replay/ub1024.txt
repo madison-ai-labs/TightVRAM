@@ -1,0 +1,26 @@
+# ub1024  n_ctx=131072  → ~/bench/replay/ub1024.jsonl
+interaktiv  n=5  TTFT median 0.57 s  gesamt median 2.93 s  tg median 35.9 t/s  fehler 0
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    35.5   32.78     15246        0     466   90    32.7
+               2     6.5    4.04      1323    15335     330   84    34.0
+               3     6.5    4.08      1369    16741     339   81    33.6
+               4     5.3    3.90      1245    18190     322   46    32.9
+               5     6.4    4.21      1406    19480     338   74    33.0
+               6     6.0    4.26      1488    20959     353   58    32.4
+            gesamt (kalt): 66.2 s
+dokument    ctx  32000  prompt_n 31113  prefill 64.5 s (482 t/s)  wall 69.8 s  VRAM-Spitze 5623 MiB  ok
+dokument    ctx  64000  prompt_n 63811  prefill 135.5 s (471 t/s)  wall 141.9 s  VRAM-Spitze 5625 MiB  ok
+# 13 Requests in 1 Durchläufen, 0 Fehler
+# ub1024  n_ctx=131072  → ~/bench/replay/ub1024.jsonl
+interaktiv  n=5  TTFT median 0.57 s  gesamt median 3.03 s  tg median 33.9 t/s  fehler 0
+agent       turn  wall_s  ttft_s  prompt_n  cache_n  pp_t/s  gen  tg_t/s
+               1    35.1   32.24     15247        0     474   90    31.2
+               2     6.3    3.96      1323    15336     336   73    31.3
+               3     6.3    4.13      1445    16655     353   71    32.1
+               4     5.7    3.84      1245    18170     328   60    32.3
+               5     6.1    4.15      1406    19474     342   63    31.9
+               6     6.3    4.20      1488    20942     358   67    32.2
+            gesamt (kalt): 65.7 s
+dokument    ctx  32000  prompt_n 31111  prefill 63.7 s (488 t/s)  wall 70.0 s  VRAM-Spitze 5623 MiB  ok
+dokument    ctx  64000  prompt_n 63804  prefill 133.5 s (478 t/s)  wall 140.3 s  VRAM-Spitze 5625 MiB  ok
+# 13 Requests in 1 Durchläufen, 0 Fehler
