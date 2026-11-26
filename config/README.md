@@ -68,8 +68,8 @@ don't affect them. For agent use, the sampling post decided on the model card's 
 --temp 0.6 --top-p 0.95 --top-k 20 --min-p 0.0 --presence-penalty 0.0 --repeat-penalty 1.0
 ```
 
-These flags are **not** in the profiles above, because they aren't in the live profiles on the box either
-(checked 2026-11-26). Add them if your clients don't send their own sampling fields.
+All profiles above carry these flags, as the live profiles on the box do since 2026-11-26. They are only the
+server default: a client that sends its own sampling fields overrides them.
 
 ## Reproducing the reference numbers
 
